@@ -26,5 +26,5 @@
     }
   },
   "tags": [],
-  "implicitDependencies": ["app"]
+  "implicitDependencies": ["client"]
 }

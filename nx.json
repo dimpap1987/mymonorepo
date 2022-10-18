@@ -80,5 +80,5 @@
       "style": "scss"
     }
   },
-  "defaultProject": "app"
+  "defaultProject": "client"
 }
