@@ -22,7 +22,10 @@
           "apps/client/src/assets"
         ],
         "styles": [
-          "apps/client/src/styles.scss"
+          "apps/client/src/styles.scss",
+          "node_modules/primeicons/primeicons.css",
+          "node_modules/primeng/resources/themes/md-dark-deeppurple/theme.css",
+          "node_modules/primeng/resources/primeng.min.css"
         ],
         "scripts": []
       },
