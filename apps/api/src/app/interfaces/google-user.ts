@@ -3,5 +3,7 @@ export interface GoogleUser {
   firstName: string;
   lastName: string;
   picture: string
-  accessToken: string;
+  accessToken?: string;
+  jwt?: string;
+  profileId: string
 }

@@ -1,19 +1,21 @@
-import {Controller, Get, Req, UseGuards} from '@nestjs/common';
+import {Controller, Get, Req, Res, UseGuards} from '@nestjs/common';
 import {AuthGuard} from '@nestjs/passport';
-import {AuthService} from "../services/auth.service";
 
-@Controller('google')
+@Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
 
-  @Get()
+  @Get('google/login')
   @UseGuards(AuthGuard('google'))
-  async googleAuth(@Req() req) { /* TODO document why this async method 'googleAuth' is empty */ }
+  async googleAuth(@Req() req) { /* TODO document why this async method 'googleAuth' is empty */
+  }
 
-  @Get('redirect')
+  @Get('google/redirect')
   @UseGuards(AuthGuard('google'))
-  googleAuthRedirect(@Req() req) {
-    return this.authService.googleLogin(req)
+  googleAuthRedirect(@Req() req, @Res() res) {
+    const jwt = req.user?.jwt;
+    let loginUrl = process.env.LOGIN_URL;
+    if (jwt) loginUrl = `${loginUrl}?token=${jwt}`;
+    res.redirect(loginUrl);
   }
 }
 
