@@ -18,8 +18,8 @@ export const loadUserFailure = createAction(
 
 export const removeUser = createAction(
   '[User Effect] Remove User',
-  props<{ user: User }>()
 );
+
 export const saveUser = createAction(
   "[User Effect] Save User",
   props<{ user: User }>()

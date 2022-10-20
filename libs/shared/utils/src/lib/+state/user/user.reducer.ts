@@ -22,8 +22,8 @@ const userReducer = createReducer(
       ...state, loggedIn: false, error,
     })),
   on(
-    UserActions.removeUser, (state, {user}) => ({
-      ...user, loggedIn: false
+    UserActions.removeUser, (state) => ({
+      loggedIn: false
     })),
   on(
     UserActions.saveUser, (state, {user}) => ({

@@ -5,9 +5,12 @@
 
   </div>
 
-  <div *ngIf="isNotLogin | async" class="p-toolbar-group-right">
+  <div *ngIf="!loggedIn" class="p-toolbar-group-right">
     <a routerLink="/login">
       <p-button>Login</p-button>
     </a>
+  </div>
+  <div *ngIf="loggedIn" class="p-toolbar-group-right" (click)="logOut()">
+    <p-button>Logout</p-button>
   </div>
 </p-toolbar>

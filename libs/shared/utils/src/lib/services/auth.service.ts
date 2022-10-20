@@ -1,11 +1,14 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
+import {removeUser, User} from "../+state";
+import {Store} from "@ngrx/store";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor() {}
+  constructor(private store: Store<{ user: User }>) {
+  }
 
   public parseJwt(token: string) {
     const base64Url = token.split('.')[1];
@@ -15,5 +18,10 @@ export class AuthService {
     }).join(''));
 
     return JSON.parse(jsonPayload);
+  }
+
+  logOut() {
+    sessionStorage.removeItem('token');
+    this.store.dispatch(removeUser())
   }
 }

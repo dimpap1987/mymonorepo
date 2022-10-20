@@ -1,6 +1,6 @@
-import {Component, OnInit} from '@angular/core';
-import {map, Observable} from "rxjs";
-import {isLogin, User} from "@mymonorepo/shared/utils";
+import {Component} from '@angular/core';
+import {Observable} from "rxjs";
+import {AuthService, isLogin, User} from "@mymonorepo/shared/utils";
 import {Store} from "@ngrx/store";
 
 @Component({
@@ -8,15 +8,19 @@ import {Store} from "@ngrx/store";
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss'],
 })
-export class NavbarComponent implements OnInit {
-  isNotLogin: Observable<boolean> = this.store.select(isLogin)
-    .pipe(
-      map(loggedIn => !loggedIn)
-    );
+export class NavbarComponent {
 
-  constructor(private store: Store<{ user: User }>) {
+  loggedIn = false;
+
+  isLogin: Observable<boolean> = this.store.select(isLogin);
+
+  constructor(private store: Store<{ user: User }>,
+              private authService: AuthService) {
+
+    this.isLogin.subscribe(logged => this.loggedIn = logged)
   }
 
-  ngOnInit(): void {
+  logOut() {
+    this.authService.logOut();
   }
 }
