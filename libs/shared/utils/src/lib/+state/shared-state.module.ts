@@ -5,6 +5,7 @@ import {EffectsModule} from "@ngrx/effects";
 import {combinedReducers} from "./reducers";
 import {UserEffects} from "./user/user.effects";
 import {StoreDevtoolsModule} from "@ngrx/store-devtools";
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import {environment} from "../../../../../../apps/client/src/environments/environment";
 
 

@@ -21,6 +21,7 @@ export class LoginPageComponent implements OnInit {
       filter(token => !!token),
       tap((token) => {
         if (token) {
+          sessionStorage.setItem('token', token);
           const paredJwt = this.authService.parseJwt(token);
           this.store.dispatch(saveUser({user: paredJwt}));
         }

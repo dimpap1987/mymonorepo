@@ -13,7 +13,8 @@ const routes: Routes = [
 ]
 
 @NgModule({
-  imports: [CommonModule,
+  imports: [
+    CommonModule,
     GoogleButtonModule,
     RouterModule.forChild(routes),],
   declarations: [LoginPageComponent],

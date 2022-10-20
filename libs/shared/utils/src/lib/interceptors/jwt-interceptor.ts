@@ -9,7 +9,7 @@ export class JwtInterceptor implements HttpInterceptor {
   }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    //TODO check if he is loggedin first
+    //TODO check the url
     const token = sessionStorage.getItem("token")
     if (token) {
       request = request.clone({

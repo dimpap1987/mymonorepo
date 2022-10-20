@@ -1,4 +1,3 @@
-export * from './lib/shared-utils';
 export * from './lib/services/';
 export * from './lib/+state/';
 export * from './lib/interceptors/';
