@@ -3,7 +3,7 @@ import {AuthGuard} from "@nestjs/passport";
 import {GoogleUser} from "../interfaces/google-user";
 import {AuthService} from "../services/auth.service";
 
-@Controller('user')
+@Controller('users')
 export class UserController {
   constructor(private readonly authService: AuthService) {
   }

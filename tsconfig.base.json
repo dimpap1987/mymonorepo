@@ -18,7 +18,8 @@
       "@mymonorepo/api-interfaces": ["libs/api-interfaces/src/index.ts"],
       "@mymonorepo/shared/ui/google-button": [
         "libs/shared/ui/google-button/src/index.ts"
-      ]
+      ],
+      "@mymonorepo/shared/utils": ["libs/shared/utils/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

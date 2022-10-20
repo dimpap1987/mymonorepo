@@ -1,7 +1,5 @@
 import {Controller, Get} from '@nestjs/common';
 
-import {Message} from '@mymonorepo/api-interfaces';
-
 import {AppService} from '../services/app.service';
 
 @Controller()
@@ -10,7 +8,7 @@ export class AppController {
   }
 
   @Get('hello')
-  getData(): Message {
+  getData() {
     return this.appService.getData();
   }
 }
