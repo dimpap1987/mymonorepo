@@ -2,7 +2,9 @@ import {Action, createReducer, on} from "@ngrx/store";
 import * as UserActions from "./user.actions";
 import {User} from "./user.model";
 
-export const initialState: UserState | null = {};
+export const initialState: UserState = {
+  loggedIn: false
+};
 
 export const userFeatureKey = 'user';
 
@@ -17,10 +19,16 @@ const userReducer = createReducer(
   ),
   on(
     UserActions.loadUserFailure, (state, {error}) => ({
-      ...state, error,
+      ...state, loggedIn: false, error,
     })),
   on(
-    UserActions.removeUser, (state, {user}) => ({...user, loggedIn: false}))
+    UserActions.removeUser, (state, {user}) => ({
+      ...user, loggedIn: false
+    })),
+  on(
+    UserActions.saveUser, (state, {user}) => ({
+      ...user, loggedIn: true
+    })),
 );
 
 export function reducer(state: UserState | undefined, action: Action) {

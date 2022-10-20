@@ -1,13 +1,26 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {RouterModule} from "@angular/router";
+import {RouterModule, Routes} from "@angular/router";
+import {LoginGuard} from "@mymonorepo/shared/utils";
 
+const routes: Routes = [
+  {
+    path: 'login',
+    canActivate: [LoginGuard],
+    loadChildren: () => import('@mymonorepo/shared/ui/login').then(m => m.SharedUiLoginModule)
+  },
+  {
+    path: '',
+    redirectTo: '',
+    pathMatch: 'full'
+  },
+]
 
 @NgModule({
   declarations: [],
   imports: [
     CommonModule,
-    RouterModule.forRoot([], {initialNavigation: 'enabledNonBlocking'}),
+    RouterModule.forRoot(routes, {initialNavigation: 'enabledNonBlocking'}),
   ]
 })
 export class AppRoutingModule {

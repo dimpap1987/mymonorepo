@@ -8,6 +8,10 @@ export const getUser = createSelector(
   (state: UserState) => state
 );
 
+export const isLogin = createSelector(
+  getUserState,
+  (state: UserState) => state.loggedIn
+);
 
 export const getUserError = createSelector(
   getUserState,

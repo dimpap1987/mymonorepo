@@ -1,8 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {ActivatedRoute} from "@angular/router";
-import {filter, map, take} from "rxjs";
-import {UserApiService} from "@mymonorepo/shared/utils";
+import {Observable} from "rxjs";
+import {getUser, User, UserState} from "@mymonorepo/shared/utils";
+import {Store} from "@ngrx/store";
 
 @Component({
   selector: 'dp-app',
@@ -10,17 +9,11 @@ import {UserApiService} from "@mymonorepo/shared/utils";
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
+  user$: Observable<UserState> = this.store.select(getUser);
 
-  constructor(private http: HttpClient, private route: ActivatedRoute,private userApiService:UserApiService) {
+  constructor(private store: Store<{ user: User }>) {
   }
 
   ngOnInit(): void {
-    // this.route.queryParams.pipe(
-    //   map(param => param['token']),
-    //   filter(Boolean),
-    //   take(1)
-    // ).subscribe(token => {
-    //   sessionStorage.setItem("token",token)
-    // });
   }
 }

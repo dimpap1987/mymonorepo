@@ -1,44 +1,26 @@
 import {Injectable} from "@angular/core";
 import {Actions, createEffect, ofType} from "@ngrx/effects";
 import * as UserActions from './user.actions';
-import {catchError, map, mergeMap, take, tap} from "rxjs/operators";
-import {UserApiService} from "../../services";
-import {filter, of} from "rxjs";
-import {ActivatedRoute} from "@angular/router";
+import {map} from "rxjs/operators";
+import {AuthService} from "../../services";
+import {filter} from "rxjs";
 
 
 @Injectable()
 export class UserEffects {
 
   constructor(private actions$: Actions,
-              private userApiService: UserApiService,
-              private route: ActivatedRoute) {
+              private authService: AuthService) {
   }
 
   loadUser$ = createEffect(() =>
     this.actions$.pipe(
+      filter(() => !!sessionStorage.getItem("token")),
       ofType(UserActions.loadUser),
-      mergeMap(() =>
-        this.route.queryParams.pipe(
-          map(param => param['token']),
-          filter(token => {
-            return (!!token || !!sessionStorage.getItem("token"));
-          }),
-          tap((token) => {
-            if (token) sessionStorage.setItem("token", token)
-          }),
-        )
-      ),
-      mergeMap(() =>
-        this.userApiService.getUser().pipe(
-          take(1),
-          map((user) =>
-            UserActions.loadUserSuccess({user: {...user, loggedIn: true}, loaded: true})
-          ),
-          catchError((error) =>
-            of(UserActions.loadUserFailure({error: error}))
-          )
-        )
+      map(() => {
+          const user = this.authService.parseJwt(sessionStorage.getItem('token') as string);
+          return UserActions.saveUser({user: {...user, loggedIn: true}})
+        }
       )
     )
   );

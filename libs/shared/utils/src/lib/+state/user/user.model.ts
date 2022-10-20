@@ -5,7 +5,7 @@ export interface User {
   picture?: string
   profileId?: string
   roles?: Roles[];
-  loggedIn?: boolean;
+  loggedIn: boolean;
 }
 
 export enum Roles {

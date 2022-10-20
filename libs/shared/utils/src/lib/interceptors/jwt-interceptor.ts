@@ -12,7 +12,6 @@ export class JwtInterceptor implements HttpInterceptor {
     //TODO check if he is loggedin first
     const token = sessionStorage.getItem("token")
     if (token) {
-      console.log('token found', token)
       request = request.clone({
         setHeaders: {Authorization: `Bearer ${token}`}
       });

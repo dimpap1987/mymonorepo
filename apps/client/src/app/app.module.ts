@@ -6,6 +6,8 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {GoogleButtonModule} from "@mymonorepo/shared/ui/google-button";
 import {AppRoutingModule} from './app-routing.module';
 import {AppLoader, JwtInterceptor, SharedStateModule} from "@mymonorepo/shared/utils";
+import {SharedUiNavbarModule} from "@mymonorepo/shared/ui/navbar";
+import {RouterModule} from "@angular/router";
 
 export function load(loader: AppLoader) {
   return () => loader.init();
@@ -17,7 +19,9 @@ export function load(loader: AppLoader) {
     HttpClientModule,
     GoogleButtonModule,
     AppRoutingModule,
-    SharedStateModule
+    SharedStateModule,
+    SharedUiNavbarModule,
+    RouterModule
   ],
   providers: [
     AppLoader,
