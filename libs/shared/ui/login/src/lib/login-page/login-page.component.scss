@@ -18,3 +18,11 @@ h1 {
   border-radius: 5px;
   height: 30vh;
 }
+
+.login-buttons{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
