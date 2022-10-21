@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {filter, map, tap} from "rxjs";
+import {filter, map} from "rxjs";
 import {AuthService, saveUser, User} from "@mymonorepo/shared/utils";
 import {ActivatedRoute} from "@angular/router";
 import {Store} from "@ngrx/store";
@@ -18,14 +18,11 @@ export class LoginPageComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.queryParams.pipe(
       map(param => param['token']),
-      filter(token => !!token),
-      tap((token) => {
-        if (token) {
-          sessionStorage.setItem('token', token);
-          const paredJwt = this.authService.parseJwt(token);
-          this.store.dispatch(saveUser({user: paredJwt}));
-        }
-      })
-    ).subscribe()
+      filter(token => !!token)
+    ).subscribe((token) => {
+      sessionStorage.setItem('token', token);
+      const paredJwt = this.authService.parseJwt(token);
+      this.store.dispatch(saveUser({user: paredJwt}));
+    })
   }
 }
