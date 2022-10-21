@@ -1,15 +1,16 @@
 import {Injectable, InternalServerErrorException} from '@nestjs/common';
-import {GoogleUser} from "../interfaces/google-user";
+import {User} from "../interfaces/user";
 import {sign, verify} from 'jsonwebtoken';
 
 export enum Provider {
-  GOOGLE = 'google'
+  GOOGLE = 'google',
+  FACEBOOK = 'facebook',
 }
 
 @Injectable()
 export class AuthService {
 
-  async validateOAuthLogin(user: GoogleUser, provider: Provider): Promise<string> {
+  async validateOAuthLogin(user: User, provider: Provider): Promise<string> {
     try {
       //TODO register user here
       return sign(

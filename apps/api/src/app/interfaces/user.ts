@@ -1,9 +1,8 @@
-export interface GoogleUser {
+export interface User {
   email: string;
   firstName: string;
   lastName: string;
-  picture: string
+  picture?: string
   accessToken?: string;
-  jwt?: string;
   profileId: string
 }

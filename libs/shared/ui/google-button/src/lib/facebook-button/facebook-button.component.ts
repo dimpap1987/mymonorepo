@@ -10,6 +10,6 @@ export class FacebookButtonComponent {
   }
 
   login() {
-
+    window.location.href = '/api/v1/auth/facebook/login';
   }
 }

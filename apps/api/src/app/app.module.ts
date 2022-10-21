@@ -7,6 +7,7 @@ import {GoogleStrategy} from "./strategies/google-strategy";
 import {AuthController} from "./controllers/auth.controller";
 import {JwtStrategy} from "./strategies/jwt-strategy";
 import {UserController} from "./controllers/user.controller";
+import {FacebookStrategy} from "./strategies/facebook-strategy";
 // import {ServeStaticModule} from '@nestjs/serve-static';
 // import {join} from 'path';
 // import {ConfigModule} from "@nestjs/config";
@@ -29,7 +30,8 @@ import {UserController} from "./controllers/user.controller";
     AppService,
     AuthService,
     GoogleStrategy,
-    JwtStrategy
+    JwtStrategy,
+    FacebookStrategy
   ],
 })
 export class AppModule {
