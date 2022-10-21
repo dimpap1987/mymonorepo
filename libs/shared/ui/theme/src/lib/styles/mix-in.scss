@@ -1,0 +1,40 @@
+@mixin keyframes-fade-in {
+  @-webkit-keyframes fadein {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @-moz-keyframes fadein {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes fadein {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+}
+
+@mixin animation-fade-in {
+  animation: fadein 2s ease-in;
+  -webkit-animation: fadein 2s ease-in;
+  -moz-animation: fadein 2s ease-in;
+}
+
+@mixin animation-fade-in-infinite {
+  animation: fadein 2s ease-in alternate infinite;
+  -webkit-animation: fadein 2s ease-in alternate infinite;
+  -moz-animation: fadein 2s ease-in alternate infinite;
+}
