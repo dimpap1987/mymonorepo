@@ -1,0 +1,36 @@
+@import "libs/shared/ui/theme/src/lib/styles/variables";
+@import "libs/shared/ui/theme/src/lib/styles/mix-in";
+@include keyframes-fade-in;
+
+.p-toolbar-group-left, .p-toolbar-group-right {
+  @include animation-fade-in;
+  color: $white-color;
+}
+
+.right-wrapper {
+  gap: 1.5rem;
+
+  .user-details {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    .welcome {
+      font-size: .8rem;
+    }
+
+    .user-image {
+      border-radius: 50%;
+      width: 2.5rem;
+      @include animation-fade-in-infinite;
+    }
+  }
+
+  .login-icon {
+    color: $sign-in-color;
+  }
+
+  .logout-icon {
+    color: $sign-out-color;
+  }
+}

@@ -1,0 +1,33 @@
+<p-toolbar>
+  <div class="p-toolbar-group-left">
+    <a routerLink="/">
+      <em title="Home" class="pi pi-home"></em>
+    </a>
+  </div>
+
+  <div class="p-toolbar-group-right right-wrapper">
+
+    <div *ngIf="(user$ | async)?.loggedIn" class="user-details">
+      <div *ngIf="(user$ | async)?.firstName">
+       <span class="welcome">Welcome , </span> <span class="user-email">{{(user$ | async)?.firstName}}</span>
+      </div>
+      <div *ngIf="(user$ | async)?.picture">
+        <img [title]="(user$ | async)?.firstName" class="user-image" [src]="(user$ | async)?.picture" alt="" referrerpolicy="no-referrer">
+      </div>
+    </div>
+
+    <div class="buttons-wrapper">
+      <div *ngIf="!(user$ | async)?.loggedIn">
+        <a routerLink="/login">
+          <em title="Sign in" class="pi pi-sign-in login-icon"></em>
+        </a>
+      </div>
+      <div *ngIf="(user$ | async)?.loggedIn" (click)="logOut()">
+        <a routerLink="/">
+          <em title="Sign out" class="pi pi-sign-out logout-icon"></em>
+        </a>
+      </div>
+    </div>
+  </div>
+
+</p-toolbar>

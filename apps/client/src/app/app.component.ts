@@ -1,15 +1,19 @@
-import {Component} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {Message} from '@mymonorepo/api-interfaces';
+import {Component, OnInit} from '@angular/core';
+import {Observable} from "rxjs";
+import {getUser, User, UserState} from "@mymonorepo/shared/utils";
+import {Store} from "@ngrx/store";
 
 @Component({
   selector: 'dp-app',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent {
-  hello$ = this.http.get<Message>('/api/v1/hello');
+export class AppComponent implements OnInit {
+  user$: Observable<UserState> = this.store.select(getUser);
 
-  constructor(private http: HttpClient) {
+  constructor(private store: Store<{ user: User }>) {
+  }
+
+  ngOnInit(): void {
   }
 }
