@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {ChangeDetectionStrategy, Component} from '@angular/core';
 import {Observable} from "rxjs";
 import {AuthService, getUser, User, UserState} from "@mymonorepo/shared/utils";
 import {Store} from "@ngrx/store";
@@ -7,6 +7,7 @@ import {Store} from "@ngrx/store";
   selector: 'dp-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NavbarComponent {
 

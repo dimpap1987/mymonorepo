@@ -1,21 +1,4 @@
-.facebook-button {
-  cursor: pointer;
+.fb-button {
   color: white;
-  background-color: #1877f2;
-  border: none;
-  border-radius: 3px;
-  padding: 6px 10px;
-  font-size: 14px;
-  width: 100%;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
-
-  .text-fb {
-    margin-left: 7px;
-  }
-}
-
-:host {
-  width: 100%;
+  background-color: #3F5793;
 }
