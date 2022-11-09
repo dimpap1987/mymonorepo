@@ -1,4 +1,4 @@
-import {Module} from '@nestjs/common';
+import {CacheModule, Module} from '@nestjs/common';
 
 import {AppController} from './controllers/app.controller';
 import {AppService} from './services/app.service';
@@ -8,6 +8,8 @@ import {AuthController} from "./controllers/auth.controller";
 import {JwtStrategy} from "./strategies/jwt-strategy";
 import {UserController} from "./controllers/user.controller";
 import {FacebookStrategy} from "./strategies/facebook-strategy";
+import {AppGateway} from "./websocket/app.gateway";
+import {UserSessionCache} from "./services/user-session-cache";
 // import {ServeStaticModule} from '@nestjs/serve-static';
 // import {join} from 'path';
 // import {ConfigModule} from "@nestjs/config";
@@ -20,6 +22,9 @@ import {FacebookStrategy} from "./strategies/facebook-strategy";
     //   rootPath: join(__dirname, '..', 'client'),
     //   exclude: [],
     // })
+    CacheModule.register({
+      isGlobal: true
+    })
   ],
   controllers: [
     AppController,
@@ -31,7 +36,9 @@ import {FacebookStrategy} from "./strategies/facebook-strategy";
     AuthService,
     GoogleStrategy,
     JwtStrategy,
-    FacebookStrategy
+    FacebookStrategy,
+    AppGateway,
+    UserSessionCache,
   ],
 })
 export class AppModule {

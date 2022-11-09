@@ -8,6 +8,7 @@ import {AppRoutingModule} from './app-routing.module';
 import {AppLoader, JwtInterceptor, SharedStateModule} from "@mymonorepo/shared/utils";
 import {SharedUiNavbarModule} from "@mymonorepo/shared/ui/navbar";
 import {RouterModule} from "@angular/router";
+import {SocketIoModule} from "ngx-socket-io";
 
 export function load(loader: AppLoader) {
   return () => loader.init();
@@ -21,7 +22,8 @@ export function load(loader: AppLoader) {
     AppRoutingModule,
     SharedStateModule,
     SharedUiNavbarModule,
-    RouterModule
+    RouterModule,
+    SocketIoModule
   ],
   providers: [
     AppLoader,

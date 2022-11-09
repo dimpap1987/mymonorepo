@@ -1,13 +1,15 @@
 import {Injectable} from '@angular/core';
 import {removeUser, User} from "../+state";
 import {Store} from "@ngrx/store";
+import {WebSocketService} from "./websocket.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor(private store: Store<{ user: User }>) {
+  constructor(private store: Store<{ user: User }>,
+              private websocketService: WebSocketService) {
   }
 
   public parseJwt(token: string) {
@@ -22,6 +24,7 @@ export class AuthService {
 
   logOut() {
     sessionStorage.removeItem('token');
+    this.websocketService.close();
     this.store.dispatch(removeUser())
   }
 }
