@@ -5,17 +5,17 @@ import {UserSession} from "../websocket/user-session";
 
 @Injectable()
 export class UserSessionCache {
-  sessions = null;
-  key = 'userKey';
-  DATE_TIME_FORMAT = 'YYYY-MM-DDTHH:mm:ss';
-  expired_time = 60 * 60 * 1000;
+  private sessions = null;
+  private key = 'users';
+  private DATE_TIME_FORMAT = 'YYYY-MM-DDTHH:mm:ss';
+  private expired_time = 60 * 60 * 1000;
 
   constructor(@Inject(CACHE_MANAGER) private cacheManager: Cache) {
     this.sessions = [];
   }
 
   async addOrUpdate(userName: string, clientId: string) {
-    const allUserSessions = (await this.cacheManager.get(this.key)) as UserSession[];
+    const allUserSessions: UserSession[] = await this.cacheManager.get(this.key);
     const existingSession = allUserSessions?.find((x) => x.userName === userName);
 
     if (existingSession) {
@@ -47,16 +47,37 @@ export class UserSessionCache {
     return results ? (results as UserSession[]).find((x) => x.userName === userName) : null;
   }
 
-  async getAllActive() {
-    const results = (await this.cacheManager.get(this.key,)) as UserSession[];
-    return results?.filter(x => x.IsConnected());
+  async getAllUsers() {
+    const results: UserSession[] = await this.cacheManager.get(this.key);
+    results?.forEach((userSession) => userSession.loggedIn = userSession.IsConnected());
+    return results;
   }
 
   async remove(clientId: string) {
     const results = await this.cacheManager.get(this.key);
     if (results) {
       const updatedSessions = (results as UserSession[]).filter((x) => x.clientId !== clientId);
-      await this.cacheManager.set(this.key, updatedSessions, this.expired_time);
+      await this.cacheManager.set(
+        this.key,
+        updatedSessions,
+        this.expired_time
+      );
+    }
+  }
+
+  async handleDisconnection(clientId: string) {
+    const results: UserSession[] = await this.cacheManager.get(this.key);
+    if (results) {
+      const updatedSessions = results?.forEach((userSession) => {
+        if (clientId === userSession.clientId) {
+          userSession.loggedIn = false;
+        }
+      });
+      await this.cacheManager.set(
+        this.key,
+        updatedSessions,
+        this.expired_time
+      );
     }
   }
 }

@@ -23,7 +23,7 @@ export class AuthService {
   }
 
   logOut() {
-    sessionStorage.removeItem('token');
+    localStorage.removeItem('token');
     this.websocketService.close();
     this.store.dispatch(removeUser())
   }

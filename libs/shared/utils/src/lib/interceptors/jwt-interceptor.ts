@@ -10,7 +10,7 @@ export class JwtInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     //TODO check the url
-    const token = sessionStorage.getItem("token")
+    const token = localStorage.getItem("token")
     if (token) {
       request = request.clone({
         setHeaders: {Authorization: `Bearer ${token}`}

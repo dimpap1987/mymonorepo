@@ -1,0 +1,27 @@
+<p-card>
+  <section>
+    <ng-container *ngIf="users$ | async as users">
+      <p-dropdown [options]="users"
+                  tooltipPosition="left">
+
+        <ng-template pTemplate="selectedItem">
+          <div>Users : {{users.length}}</div>
+        </ng-template>
+
+        <ng-template let-user pTemplate="item">
+          <div class="user-container">
+            <div class="">
+              <div>{{user.email}}</div>
+            </div>
+            <div class="user-online-status">
+              <em
+                [style.color]="user.loggedId? 'green' : 'red'" class="pi pi-circle-fill"
+                style="font-size: 1rem!important;margin-left: 10px">
+              </em>
+            </div>
+          </div>
+        </ng-template>
+      </p-dropdown>
+    </ng-container>
+  </section>
+</p-card>

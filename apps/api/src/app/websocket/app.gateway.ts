@@ -7,11 +7,16 @@ import {
   WebSocketServer
 } from '@nestjs/websockets';
 import {Server, Socket} from 'socket.io';
-import {Logger} from "@nestjs/common";
+import {Logger, UseGuards} from "@nestjs/common";
 import {UserSessionCache} from "../services/user-session-cache";
+import {WsGuard} from "./ws-guard";
+import * as json from 'jsonwebtoken';
 
+@UseGuards(WsGuard)
 @WebSocketGateway({cors: true})
 export class AppGateway implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect {
+
+  public static readonly ONLINE_ROOM = 'online-room';
 
   constructor(private userSessionCache: UserSessionCache) {
   }
@@ -22,7 +27,6 @@ export class AppGateway implements OnGatewayInit, OnGatewayConnection, OnGateway
 
   @SubscribeMessage('user-join')
   async joinRoom(client: Socket, payload: any) {
-    this.logger.log("user-join", payload);
     await this.join(client, payload);
   }
 
@@ -30,26 +34,38 @@ export class AppGateway implements OnGatewayInit, OnGatewayConnection, OnGateway
     this.logger.log('Init');
   }
 
-  handleConnection(client: Socket, ...args: any[]) {
+  async handleConnection(client: Socket) {
     this.logger.log(`Client connected: ${client.id}`);
+    const token = client.handshake.headers?.authorization;
+    if (token) {
+      const user = json.verify(token, process.env.JWT_SECRET_KEY);
+      if (user) {
+        await this.userSessionCache.addOrUpdate(user.email, client.id);
+      }
+    }
   }
 
   async handleDisconnect(client: Socket) {
     this.logger.log(`Client disconnected: ${client.id}`);
-    await this.userSessionCache.remove(client.id);
+    await this.userSessionCache.handleDisconnection(client.id);
     await this.publishOnlineUsers();
   }
 
 
-  async join(client: Socket, payload: any) {
-    client.join('online-room');
+  async join(client: Socket, payload: any, room = AppGateway.ONLINE_ROOM) {
+    client.join(room);
     await this.userSessionCache.addOrUpdate(payload, client.id);
     await this.publishOnlineUsers();
   }
 
   private async publishOnlineUsers() {
-    this.logger.log(`Publish online users`);
-    const activeUsers = await this.userSessionCache.getAllActive();
-    this.server.emit('online-users', activeUsers.map(x => x.userName));
+    const activeUsers = await this.userSessionCache.getAllUsers();
+    this.server.emit('online-users', activeUsers?.map(x => ({
+          email: x.userName,
+          lastConnectedTime: x.lastConnectedTime,
+          loggedId: x.loggedIn
+        })
+      )
+    );
   }
 }

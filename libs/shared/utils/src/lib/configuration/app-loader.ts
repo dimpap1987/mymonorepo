@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 import {Store} from "@ngrx/store";
 import {getUser, loadUser, User} from "../+state";
-import {filter, Observable, take} from "rxjs";
+import {Observable, take} from "rxjs";
 import {WebSocketService} from "../services";
 
 @Injectable()
@@ -18,11 +18,12 @@ export class AppLoader {
     return new Promise((resolve, reject) => {
       this.store.dispatch(loadUser());
       this.user$.pipe(
-        filter(user => !!user),
         take(1))
         .subscribe(user => {
-          this.webSocketService.connect()
-          resolve(user);
+          if (user?.loggedIn) {
+            this.webSocketService.connect()
+          }
+          resolve(true)
         });
     })
   }

@@ -15,10 +15,10 @@ export class UserEffects {
 
   loadUser$ = createEffect(() =>
     this.actions$.pipe(
-      filter(() => !!sessionStorage.getItem("token")),
+      filter(() => !!localStorage.getItem("token")),
       ofType(UserActions.loadUser),
       map(() => {
-          const user = this.authService.parseJwt(sessionStorage.getItem('token') as string);
+          const user = this.authService.parseJwt(localStorage.getItem('token') as string);
           return UserActions.saveUser({user: {...user, loggedIn: true}})
         }
       )

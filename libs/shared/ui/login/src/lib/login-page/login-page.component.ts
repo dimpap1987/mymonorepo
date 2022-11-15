@@ -22,7 +22,7 @@ export class LoginPageComponent implements OnInit {
       map(param => param['token']),
       filter(token => !!token)
     ).subscribe((token) => {
-      sessionStorage.setItem('token', token);
+      localStorage.setItem('token', token);
       const user = this.authService.parseJwt(token);
       this.store.dispatch(saveUser({user: user}));
       this.webSocketService.connect();

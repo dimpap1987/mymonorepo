@@ -1,0 +1,40 @@
+@import "libs/shared/ui/theme/src/lib/styles/variables";
+
+section {
+  //width: 200px;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+
+:host ::ng-deep .p-card {
+  border-radius: 5px;
+
+  .p-card-body {
+    padding: 0;
+
+    .p-card-content {
+      padding: 0;
+    }
+  }
+
+  .p-button {
+    width: 100%;
+  }
+
+  .p-dropdown {
+    .p-dropdown-trigger {
+      display: none;
+    }
+  }
+}
+
+.users-label {
+  width: 100%;
+}
+
+.user-container {
+  display: flex;
+  justify-content: space-between;
+
+}

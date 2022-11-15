@@ -5,8 +5,9 @@ export class UserSession {
   userName: string;
   lastConnectedTime: string;
   clientId: string;
+  loggedIn = false;
 
-  constructor(userName: string, clientId:string) {
+  constructor(userName: string, clientId: string) {
     this.userName = userName;
     this.clientId = clientId;
     this.lastConnectedTime = moment(new Date()).format(this.DATE_TIME_FORMAT);
@@ -14,6 +15,6 @@ export class UserSession {
 
   IsConnected() {
     const duration = moment.duration(moment(new Date()).diff(moment(this.lastConnectedTime, this.DATE_TIME_FORMAT)));
-    return duration.asSeconds() < 60;
+    return duration.asSeconds() < 6;
   }
 }

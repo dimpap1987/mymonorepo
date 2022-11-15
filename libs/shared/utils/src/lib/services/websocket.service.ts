@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {interval, mergeMap, take} from "rxjs";
+import {interval, mergeMap, take, timer} from "rxjs";
 import {Socket} from "ngx-socket-io";
 
 @Injectable({
@@ -37,8 +37,8 @@ export class WebSocketService {
     return interval(1000).subscribe(() => this.userPing(email));
   }
 
-  fetchOnlineUsers(seconds: number) {
-    return interval(seconds)
+  fetchUsers(seconds: number) {
+    return timer(0, seconds)
       .pipe(
         mergeMap(() => this.listenTo(WebSocketService.ONLINE_USERS)
           .pipe(take(1))
@@ -55,7 +55,15 @@ export class WebSocketService {
   connect() {
     this.websocket = new Socket({
       url: 'http://localhost:3333',
-      options: {}
+      options: {
+        transportOptions: {
+          polling: {
+            extraHeaders: {
+              Authorization: localStorage.getItem('token')
+            }
+          }
+        }
+      }
     });
     this.websocket.connect();
   }

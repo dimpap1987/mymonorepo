@@ -1,0 +1,10 @@
+section {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  .online-users-container {
+    margin-top: auto;
+    margin-left: auto;
+  }
+}

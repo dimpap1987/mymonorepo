@@ -1,3 +1,11 @@
-<dp-navbar></dp-navbar>
+<section>
+  <dp-navbar></dp-navbar>
 
-<router-outlet></router-outlet>
+  <router-outlet></router-outlet>
+
+  <div class="online-users-container">
+    <ng-container *ngIf="user$ | async as user">
+      <dp-online-users *ngIf="user.loggedIn"></dp-online-users>
+    </ng-container>
+  </div>
+</section>
