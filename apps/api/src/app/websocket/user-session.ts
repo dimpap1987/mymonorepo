@@ -15,6 +15,6 @@ export class UserSession {
 
   IsConnected() {
     const duration = moment.duration(moment(new Date()).diff(moment(this.lastConnectedTime, this.DATE_TIME_FORMAT)));
-    return duration.asSeconds() < 6;
+    return duration.asSeconds() < 2;
   }
 }

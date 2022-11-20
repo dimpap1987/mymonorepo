@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {filter, map} from "rxjs";
-import {AuthService, saveUser, User, WebSocketService} from "@mymonorepo/shared/utils";
+import {AuthService, saveUser, User} from "@mymonorepo/shared/utils";
 import {ActivatedRoute} from "@angular/router";
 import {Store} from "@ngrx/store";
 
@@ -13,8 +13,7 @@ import {Store} from "@ngrx/store";
 export class LoginPageComponent implements OnInit {
   constructor(private activatedRoute: ActivatedRoute,
               private store: Store<{ user: User }>,
-              private authService: AuthService,
-              private webSocketService: WebSocketService) {
+              private authService: AuthService) {
   }
 
   ngOnInit(): void {
@@ -25,7 +24,6 @@ export class LoginPageComponent implements OnInit {
       localStorage.setItem('token', token);
       const user = this.authService.parseJwt(token);
       this.store.dispatch(saveUser({user: user}));
-      this.webSocketService.connect();
     })
   }
 }

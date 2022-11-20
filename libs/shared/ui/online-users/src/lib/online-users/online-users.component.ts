@@ -12,13 +12,13 @@ import {filter, Observable, tap} from "rxjs";
 export class OnlineUsersComponent implements OnInit {
 
   user$: Observable<UserState> = this.store.select(getUser);
-  users$: Observable<any>;
+  users$: Observable<User[]>;
 
   constructor(private store: Store<{ user: User }>,
               private websocketService: WebSocketService) {
 
-    this.users$ = this.websocketService.fetchUsers(5000).pipe(
-      tap(user => console.log(user))
+    this.users$ = this.websocketService.fetchUsers(1000).pipe(
+      // tap(user => console.log(user))
     );
   }
 

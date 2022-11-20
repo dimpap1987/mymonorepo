@@ -63,7 +63,7 @@ export class AppGateway implements OnGatewayInit, OnGatewayConnection, OnGateway
     this.server.emit('online-users', activeUsers?.map(x => ({
           email: x.userName,
           lastConnectedTime: x.lastConnectedTime,
-          loggedId: x.loggedIn
+          loggedIn: x.loggedIn
         })
       )
     );

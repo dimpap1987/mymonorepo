@@ -23,7 +23,7 @@ export class AuthService {
     }
   }
 
-  decodeJwt(token) {
+  verify(token) {
     return verify(token, process.env.JWT_SECRET_KEY);
   }
 }

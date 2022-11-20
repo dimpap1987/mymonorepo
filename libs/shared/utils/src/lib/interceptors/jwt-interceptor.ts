@@ -5,8 +5,6 @@ import {Observable} from 'rxjs';
 
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
-  constructor() {
-  }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     //TODO check the url

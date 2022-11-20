@@ -1,8 +1,8 @@
 import {Injectable} from "@angular/core";
 import {Actions, createEffect, ofType} from "@ngrx/effects";
 import * as UserActions from './user.actions';
-import {map} from "rxjs/operators";
-import {AuthService} from "../../services";
+import {map, mergeMap} from "rxjs/operators";
+import {UserApiService} from "../../services";
 import {filter} from "rxjs";
 
 
@@ -10,18 +10,15 @@ import {filter} from "rxjs";
 export class UserEffects {
 
   constructor(private actions$: Actions,
-              private authService: AuthService) {
+              private userApiService: UserApiService) {
   }
 
   loadUser$ = createEffect(() =>
     this.actions$.pipe(
-      filter(() => !!localStorage.getItem("token")),
       ofType(UserActions.loadUser),
-      map(() => {
-          const user = this.authService.parseJwt(localStorage.getItem('token') as string);
-          return UserActions.saveUser({user: {...user, loggedIn: true}})
-        }
-      )
+      filter(() => !!localStorage.getItem("token")),
+      mergeMap(() => this.userApiService.getUser()),
+      map((user) => UserActions.saveUser({user: {...user, loggedIn: true}}))
     )
   );
 }

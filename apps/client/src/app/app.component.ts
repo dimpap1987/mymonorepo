@@ -1,6 +1,6 @@
-import {Component} from '@angular/core';
-import {Observable} from "rxjs";
-import {getUser, User, UserState} from "@mymonorepo/shared/utils";
+import {Component, OnInit} from '@angular/core';
+import {filter, Observable, take} from "rxjs";
+import {getUser, User, UserState, WebSocketService} from "@mymonorepo/shared/utils";
 import {Store} from "@ngrx/store";
 
 @Component({
@@ -8,10 +8,19 @@ import {Store} from "@ngrx/store";
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   user$: Observable<UserState> = this.store.select(getUser);
 
-  constructor(private store: Store<{ user: User }>) {
+  constructor(private store: Store<{ user: User }>,
+              private webSocketService: WebSocketService) {
   }
 
+  ngOnInit(): void {
+    this.user$.pipe(
+      filter(user => user.loggedIn),
+      take(1))
+      .subscribe(user => {
+        if (user?.loggedIn) this.webSocketService.connect()
+      });
+  }
 }

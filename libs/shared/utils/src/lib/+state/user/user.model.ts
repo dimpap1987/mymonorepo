@@ -6,6 +6,7 @@ export interface User {
   profileId?: string
   roles?: Roles[];
   loggedIn: boolean;
+  lastConnectedTime?:string;
 }
 
 export enum Roles {

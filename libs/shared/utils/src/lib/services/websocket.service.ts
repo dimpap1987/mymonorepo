@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
-import {interval, mergeMap, take, timer} from "rxjs";
+import {first, interval, mergeMap, Observable, timer} from "rxjs";
 import {Socket} from "ngx-socket-io";
+import {User} from "../+state";
 
 @Injectable({
   providedIn: 'root'
@@ -37,11 +38,11 @@ export class WebSocketService {
     return interval(1000).subscribe(() => this.userPing(email));
   }
 
-  fetchUsers(seconds: number) {
+  fetchUsers(seconds: number): Observable<User[]> {
     return timer(0, seconds)
       .pipe(
-        mergeMap(() => this.listenTo(WebSocketService.ONLINE_USERS)
-          .pipe(take(1))
+        mergeMap(() => <Observable<User[]>>this.listenTo(WebSocketService.ONLINE_USERS)
+          .pipe(first())
         )
       )
   }
