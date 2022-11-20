@@ -17,7 +17,7 @@ export class AuthService {
         {
           ...user,
           provider,
-        }, process.env.JWT_SECRET_KEY, {expiresIn: 3600});
+        }, process.env.JWT_SECRET_KEY, {expiresIn: 86400}); //1 day
     } catch (err) {
       throw new InternalServerErrorException('validateOAuthLogin', err.message);
     }

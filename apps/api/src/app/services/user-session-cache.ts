@@ -19,6 +19,7 @@ export class UserSessionCache {
     const existingSession = allUserSessions?.find((x) => x.userName === userName);
 
     if (existingSession) {
+      existingSession.loggedIn = true;
       existingSession.lastConnectedTime = moment(new Date()).format(
         this.DATE_TIME_FORMAT,
       );
@@ -66,18 +67,15 @@ export class UserSessionCache {
   }
 
   async handleDisconnection(clientId: string) {
-    const results: UserSession[] = await this.cacheManager.get(this.key);
-    if (results) {
-      const updatedSessions = results?.forEach((userSession) => {
-        if (clientId === userSession.clientId) {
-          userSession.loggedIn = false;
-        }
-      });
-      await this.cacheManager.set(
-        this.key,
-        updatedSessions,
-        this.expired_time
-      );
-    }
+    const userSessions: UserSession[] = await this.cacheManager.get(this.key);
+
+    const existingSession = userSessions?.find((x) => x.clientId === clientId);
+    existingSession.loggedIn = false
+
+    await this.cacheManager.set(
+      this.key,
+      userSessions,
+      this.expired_time
+    );
   }
 }

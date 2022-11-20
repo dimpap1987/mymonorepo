@@ -10,11 +10,15 @@ export class UserSession {
   constructor(userName: string, clientId: string) {
     this.userName = userName;
     this.clientId = clientId;
+    this.loggedIn = true;
     this.lastConnectedTime = moment(new Date()).format(this.DATE_TIME_FORMAT);
   }
 
   IsConnected() {
     const duration = moment.duration(moment(new Date()).diff(moment(this.lastConnectedTime, this.DATE_TIME_FORMAT)));
-    return duration.asSeconds() < 2;
+    if (!this.loggedIn) {
+      return false;
+    }
+    return duration.asSeconds() < 3;
   }
 }
