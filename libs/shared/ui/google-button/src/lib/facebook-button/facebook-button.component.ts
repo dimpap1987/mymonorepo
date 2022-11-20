@@ -1,4 +1,5 @@
 import {ChangeDetectionStrategy, Component} from '@angular/core';
+import {ConstantsClient} from "@mymonorepo/shared/utils";
 
 @Component({
   selector: 'dp-facebook-button',
@@ -9,6 +10,6 @@ import {ChangeDetectionStrategy, Component} from '@angular/core';
 export class FacebookButtonComponent {
 
   login() {
-    window.location.href = '/api/v1/auth/facebook/login';
+    window.location.href = ConstantsClient.auth().facebookRedirectUrl;
   }
 }

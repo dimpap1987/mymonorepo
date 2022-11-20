@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {first, interval, mergeMap, Observable, timer} from "rxjs";
 import {Socket} from "ngx-socket-io";
 import {User} from "../+state";
+import {ConstantsClient} from "../contants/constants-client";
 
 @Injectable({
   providedIn: 'root'
@@ -55,12 +56,12 @@ export class WebSocketService {
 
   connect() {
     this.websocket = new Socket({
-      url: 'http://localhost:3333',
+      url: ConstantsClient.endpoints().api.apiBaseUrl,
       options: {
         transportOptions: {
           polling: {
             extraHeaders: {
-              Authorization: localStorage.getItem('token')
+              Authorization: localStorage.getItem(ConstantsClient.auth().token)
             }
           }
         }

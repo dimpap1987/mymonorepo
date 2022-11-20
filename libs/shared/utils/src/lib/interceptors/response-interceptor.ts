@@ -3,6 +3,7 @@ import {HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest}
 import {catchError, Observable, throwError} from 'rxjs';
 import {Router} from "@angular/router";
 import {map} from "rxjs/operators";
+import {ConstantsClient} from "../contants/constants-client";
 
 @Injectable()
 export class ResponseInterceptor implements HttpInterceptor {
@@ -18,8 +19,8 @@ export class ResponseInterceptor implements HttpInterceptor {
 
   private handleError(error: HttpErrorResponse) {
     if (error && error.status == 401) {
-      localStorage.removeItem("token");
-      this.router.navigate(["login"])
+      localStorage.removeItem(ConstantsClient.auth().token);
+      this.router.navigate([ConstantsClient.endpoints().ui.login])
     }
     return throwError(() => error);
   }

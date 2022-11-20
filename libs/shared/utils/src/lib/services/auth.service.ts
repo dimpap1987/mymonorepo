@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {removeUser, User} from "../+state";
 import {Store} from "@ngrx/store";
 import {WebSocketService} from "./websocket.service";
+import {ConstantsClient} from "../contants/constants-client";
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +24,7 @@ export class AuthService {
   }
 
   logOut() {
-    localStorage.removeItem('token');
+    localStorage.removeItem(ConstantsClient.auth().token);
     this.websocketService.close();
     this.store.dispatch(removeUser())
   }

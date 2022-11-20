@@ -1,11 +1,11 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {RouterModule, Routes} from "@angular/router";
-import {LoginGuard} from "@mymonorepo/shared/utils";
+import {ConstantsClient, LoginGuard} from "@mymonorepo/shared/utils";
 
 const routes: Routes = [
   {
-    path: 'login',
+    path: ConstantsClient.endpoints().ui.login,
     canActivate: [LoginGuard],
     loadChildren: () => import('@mymonorepo/shared/ui/login').then(m => m.SharedUiLoginModule)
   },

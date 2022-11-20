@@ -1,10 +1,10 @@
 @import "libs/shared/ui/theme/src/lib/styles/variables";
 
 section {
-  //width: 200px;
   display: flex;
   justify-content: center;
   align-content: center;
+  position: relative;
 }
 
 :host ::ng-deep .p-card {
@@ -24,12 +24,17 @@ section {
 
   .p-dropdown {
     .p-inputtext {
-      padding: 8px 16px;
+      padding: 5px 25px;
       display: flex;
       align-items: center;
+
       .pi-users {
         margin-right: 5px;
       }
+    }
+
+    .p-dropdown-item {
+      padding: 0.5rem;
     }
 
     .p-dropdown-trigger {
@@ -45,5 +50,4 @@ section {
 .user-container {
   display: flex;
   justify-content: space-between;
-
 }

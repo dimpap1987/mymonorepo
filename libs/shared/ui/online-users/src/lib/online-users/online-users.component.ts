@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {Store} from "@ngrx/store";
 import {getUser, User, UserState, WebSocketService} from "@mymonorepo/shared/utils";
-import {filter, Observable, tap} from "rxjs";
+import {filter, Observable} from "rxjs";
 
 @Component({
   selector: 'dp-online-users',
