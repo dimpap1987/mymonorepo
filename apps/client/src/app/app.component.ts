@@ -20,7 +20,9 @@ export class AppComponent implements OnInit {
       filter(user => user.loggedIn),
       take(1))
       .subscribe(user => {
-        if (user?.loggedIn) this.webSocketService.connect()
+        if (user?.loggedIn) {
+          this.webSocketService.connect()
+        }
       });
   }
 }

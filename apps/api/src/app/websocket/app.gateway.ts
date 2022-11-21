@@ -37,18 +37,15 @@ export class AppGateway implements OnGatewayInit, OnGatewayConnection, OnGateway
   async handleConnection(client: Socket) {
     this.logger.log(`Client connected: ${client.id}`);
     const token = client.handshake.headers?.authorization;
-    if (token) {
-      const user = json.verify(token, process.env.JWT_SECRET_KEY);
-      if (user) {
-        await this.userSessionCache.addOrUpdate(user.email, client.id);
-      }
+    const user = json.verify(token, process.env.JWT_SECRET_KEY);
+    if (user) {
+      await this.userSessionCache.addOrUpdate(user.email, client.id);
     }
   }
 
   async handleDisconnect(client: Socket) {
     this.logger.log(`Client disconnected: ${client.id}`);
     await this.userSessionCache.handleDisconnection(client.id);
-    await this.publishOnlineUsers();
   }
 
 

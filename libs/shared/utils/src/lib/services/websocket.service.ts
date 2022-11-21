@@ -39,7 +39,7 @@ export class WebSocketService {
     return interval(1000).subscribe(() => this.userPing(email));
   }
 
-  fetchUsers(seconds: number): Observable<User[]> {
+  fetchUsers(seconds = 1000): Observable<User[]> {
     return timer(0, seconds)
       .pipe(
         mergeMap(() => <Observable<User[]>>this.listenTo(WebSocketService.ONLINE_USERS)
