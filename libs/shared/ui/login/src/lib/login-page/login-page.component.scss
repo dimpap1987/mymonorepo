@@ -1,7 +1,7 @@
 @import "libs/shared/ui/theme/src/lib/styles/variables";
 
 :host {
-  height: 60%;
+  height: 70%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -10,9 +10,10 @@
 .login-container {
   display: flex;
   min-width: 200px;
-  border: 1px solid #8A2BE2;
+  border: 1px solid $purple;
   border-radius: 40px;
-  height: 30vh;
+  width: 40vmin;
+  height: 50%;
   background-color: $grey-theme-color;
 
   .login-wrapper {
@@ -20,7 +21,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 40vmin;
+    width: 100%;
 
     .login-title {
       text-align: center;

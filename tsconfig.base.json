@@ -15,7 +15,6 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@mymonorepo/api-interfaces": ["libs/api-interfaces/src/index.ts"],
       "@mymonorepo/shared/ui/google-button": [
         "libs/shared/ui/google-button/src/index.ts"
       ],
