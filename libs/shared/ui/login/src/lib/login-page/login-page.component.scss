@@ -11,15 +11,17 @@
   display: flex;
   min-width: 200px;
   border: 1px solid $purple;
+  box-shadow: hsl(271deg 35% 37%) 0px 6px 12px -2px, hsl(271deg 76% 53%) 0px 3px 7px -3px;
   border-radius: 40px;
   width: 40vmin;
   height: 50%;
   background-color: $grey-theme-color;
+  transition:  all 0.3s ease-out;
 
   .login-wrapper {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-evenly;
     align-items: center;
     width: 100%;
 
@@ -35,5 +37,15 @@
       gap: 10px;
       margin-top: 20px;
     }
+  }
+}
+@media (max-width: 550px) {
+  .login-container {
+    width: 50vmin;
+  }
+}
+@media (max-width: 250px) {
+  .login-container {
+    width: 90vmin;
   }
 }
