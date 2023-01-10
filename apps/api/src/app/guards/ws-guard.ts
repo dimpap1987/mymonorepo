@@ -14,7 +14,7 @@ export class WsGuard implements CanActivate {
         decoded ? resolve(true) : reject(false);
       });
     } catch (ex) {
-      console.log(ex);
+      // console.log(ex);
       return false;
     }
   }

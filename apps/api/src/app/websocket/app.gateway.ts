@@ -9,7 +9,7 @@ import {
 import {Server, Socket} from 'socket.io';
 import {Logger, UseGuards} from "@nestjs/common";
 import {UserSessionCache} from "../services/user-session-cache";
-import {WsGuard} from "./ws-guard";
+import {WsGuard} from "../guards/ws-guard";
 import * as json from 'jsonwebtoken';
 
 @UseGuards(WsGuard)

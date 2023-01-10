@@ -5,11 +5,18 @@ import {AppComponent} from './app.component';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {GoogleButtonModule} from "@mymonorepo/shared/ui/google-button";
 import {AppRoutingModule} from './app-routing.module';
-import {AppLoader, JwtInterceptor, ResponseInterceptor, SharedStateModule} from "@mymonorepo/shared/utils";
+import {
+  APP_ENVIRONMENT,
+  AppLoader,
+  JwtInterceptor,
+  ResponseInterceptor,
+  SharedStateModule
+} from "@mymonorepo/shared/utils";
 import {SharedUiNavbarModule} from "@mymonorepo/shared/ui/navbar";
 import {RouterModule} from "@angular/router";
 import {SocketIoModule} from "ngx-socket-io";
 import {SharedUiOnlineUsersModule} from "@mymonorepo/shared/ui/online-users";
+import {environment} from "../environments/environment";
 
 export function load(loader: AppLoader) {
   return () => loader.init();
@@ -32,6 +39,10 @@ export function load(loader: AppLoader) {
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: ResponseInterceptor, multi: true},
     {provide: APP_INITIALIZER, useFactory: load, deps: [AppLoader], multi: true},
+    {
+      provide: APP_ENVIRONMENT,
+      useValue: environment
+    }
   ],
   bootstrap: [AppComponent],
 })

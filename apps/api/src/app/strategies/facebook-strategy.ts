@@ -1,12 +1,11 @@
 import {Injectable} from "@nestjs/common";
 import {PassportStrategy} from "@nestjs/passport";
 import {Profile, Strategy} from "passport-facebook";
-import {AuthService, Provider} from "../services/auth.service";
 import {User} from "../interfaces/user";
 
 @Injectable()
 export class FacebookStrategy extends PassportStrategy(Strategy, "facebook") {
-  constructor(private readonly authService: AuthService) {
+  constructor() {
 
     super({
       clientID: process.env.FACEBOOK_CLIENT_ID,
@@ -31,8 +30,6 @@ export class FacebookStrategy extends PassportStrategy(Strategy, "facebook") {
       lastName: name.familyName,
       profileId: profile.id
     };
-    const jwt: string = await this.authService.validateOAuthLogin(user, Provider.FACEBOOK);
-
-    done(null, {jwt});
+    done(null, user);
   }
 }

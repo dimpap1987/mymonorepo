@@ -10,7 +10,7 @@ import {UserController} from "./controllers/user.controller";
 import {FacebookStrategy} from "./strategies/facebook-strategy";
 import {AppGateway} from "./websocket/app.gateway";
 import {UserSessionCache} from "./services/user-session-cache";
-import {WsGuard} from "./websocket/ws-guard";
+import {WsGuard} from "./guards/ws-guard";
 // import {ServeStaticModule} from '@nestjs/serve-static';
 // import {join} from 'path';
 // import {ConfigModule} from "@nestjs/config";

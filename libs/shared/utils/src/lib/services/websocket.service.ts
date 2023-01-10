@@ -61,7 +61,7 @@ export class WebSocketService {
         transportOptions: {
           polling: {
             extraHeaders: {
-              Authorization: localStorage.getItem(ConstantsClient.auth().token)
+              Authorization: localStorage.getItem(ConstantsClient.auth().accessToken)
             }
           }
         }

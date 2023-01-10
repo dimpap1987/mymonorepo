@@ -1,8 +1,16 @@
+import {Inject, InjectionToken} from "@angular/core";
+
+export const APP_ENVIRONMENT = new InjectionToken("APP_ENVIRONMENT_TOKEN");
+
 export class ConstantsClient {
+
+  constructor(@Inject(APP_ENVIRONMENT) private env: any) {
+  }
 
   static auth(): Readonly<Authentication> {
     return {
-      token: 'token',
+      accessToken: 'accessToken',
+      refreshToken: 'refreshToken',
       facebookRedirectUrl: '/api/v1/auth/facebook/login',
       googleRedirectUrl: '/api/v1/auth/google/login'
     }
@@ -11,8 +19,9 @@ export class ConstantsClient {
   static endpoints(): Readonly<Endpoints> {
     return {
       api: {
-        apiBaseUrl: 'http://localhost:3333',
+        apiBaseUrl: 'http://localhost:3333', //TODO environment variable
         me: `/api/v1/users/me`,
+        refreshTokenUrl: '/api/v1/auth/refresh-token'
       },
       ui: {
         login: 'login'
@@ -23,7 +32,8 @@ export class ConstantsClient {
 
 
 export interface Authentication {
-  token: string;
+  accessToken: string;
+  refreshToken: string;
   googleRedirectUrl: string;
   facebookRedirectUrl: string;
 }
@@ -36,6 +46,7 @@ export interface Endpoints {
 export interface ApiEndpoints {
   apiBaseUrl: string;
   me: string;
+  refreshTokenUrl: string;
 }
 
 export interface UiEndpoints {

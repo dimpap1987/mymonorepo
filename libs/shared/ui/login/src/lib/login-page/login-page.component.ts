@@ -18,12 +18,21 @@ export class LoginPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.activatedRoute.queryParams.pipe(
-      map(param => param[ConstantsClient.auth().token]),
-      filter(token => !!token)
-    ).subscribe((token) => {
-      localStorage.setItem(ConstantsClient.auth().token, token);
-      const user = this.authService.parseJwt(token);
-      this.store.dispatch(saveUser({user: user}));
+      map(param => {
+        return {
+          accessToken: param[ConstantsClient.auth().accessToken],
+          refreshToken: param[ConstantsClient.auth().refreshToken]
+        }
+      }),
+      filter(tokens => !!tokens)
+    ).subscribe((tokens) => {
+      if (tokens.refreshToken && tokens.accessToken) {
+        localStorage.setItem(ConstantsClient.auth().accessToken, tokens.accessToken);
+        localStorage.setItem(ConstantsClient.auth().refreshToken, tokens.refreshToken);
+        const user = this.authService.parseJwt(tokens.accessToken);
+        if (!user) return;
+        this.store.dispatch(saveUser({user: user}));
+      }
     })
   }
 }
