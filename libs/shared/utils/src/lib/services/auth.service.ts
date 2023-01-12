@@ -3,8 +3,7 @@ import {removeUser, saveUser, User} from "../+state";
 import {Store} from "@ngrx/store";
 import {ConstantsClient} from "../contants/constants-client";
 import {HttpClient, HttpParams, HttpRequest} from "@angular/common/http";
-import {Observable, tap} from "rxjs";
-import {map} from "rxjs/operators";
+import {catchError, Observable, tap, throwError} from "rxjs";
 import {LocalStorageService} from "./local-storage.service";
 import {JwtTokensInterface, UserJwtInterface} from "@mymonorepo/shared/interfaces";
 
@@ -41,17 +40,17 @@ export class AuthService {
     this.store.dispatch(removeUser())
   }
 
-  me(): Observable<any> {
-    return this.httpClient.get(ConstantsClient.endpoints().api.me);
+  me(): Observable<UserJwtInterface> {
+    return this.httpClient.get(ConstantsClient.endpoints().api.me) as Observable<UserJwtInterface>;
   }
 
   fetchRefreshToken() {
     const params = new HttpParams().set('refreshToken', this.localStorageService.refreshToken.get() as string);
     return this.httpClient.get<JwtTokensInterface>(ConstantsClient.endpoints().api.refreshTokenUrl, {params: params})
       .pipe(
-        map(tokens => {
-          if (!tokens || !tokens.refreshToken) throw Error("Invalid Refresh Token")
-          return tokens;
+        catchError((error) => {
+          this.localStorageService.refreshToken.remove()
+          return throwError(error)
         }),
         tap((tokens: JwtTokensInterface) => {
           this.handleTokensResponse(tokens);

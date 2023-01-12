@@ -7,7 +7,7 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
 
   handleRequest(err, user, info: Error) {
     if (info instanceof TokenExpiredError) {
-      throw new HttpException({code: "TOKEN_EXPIRED"}, HttpStatus.FORBIDDEN)
+      throw new HttpException({code: "TOKEN_EXPIRED"}, HttpStatus.UNAUTHORIZED)
     }
     return user;
   }
