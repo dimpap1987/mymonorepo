@@ -3,6 +3,7 @@ import {first, interval, mergeMap, Observable, timer} from "rxjs";
 import {Socket} from "ngx-socket-io";
 import {User} from "../+state";
 import {ConstantsClient} from "../contants/constants-client";
+import {LocalStorageService} from "./local-storage.service";
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +14,9 @@ export class WebSocketService {
   static readonly ONLINE_USERS = 'online-users';
 
   websocket!: Socket;
+
+  constructor(private localStorageService:LocalStorageService) {
+  }
 
   sendTo(room: string, payload: any) {
     this.checkConnection();
@@ -61,7 +65,7 @@ export class WebSocketService {
         transportOptions: {
           polling: {
             extraHeaders: {
-              Authorization: localStorage.getItem(ConstantsClient.auth().accessToken)
+              Authorization: this.localStorageService.accessToken.get()
             }
           }
         }

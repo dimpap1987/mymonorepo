@@ -11,6 +11,7 @@ import {Logger, UseGuards} from "@nestjs/common";
 import {UserSessionCache} from "../services/user-session-cache";
 import {WsGuard} from "../guards/ws-guard";
 import * as json from 'jsonwebtoken';
+import {UserJwtInterface} from "@mymonorepo/shared/interfaces";
 
 @UseGuards(WsGuard)
 @WebSocketGateway({cors: true})
@@ -37,7 +38,7 @@ export class AppGateway implements OnGatewayInit, OnGatewayConnection, OnGateway
   async handleConnection(client: Socket) {
     this.logger.log(`Client connected: ${client.id}`);
     const token = client.handshake.headers?.authorization;
-    const user = json.verify(token, process.env.JWT_SECRET_KEY);
+    const user = json.verify(token, process.env.JWT_SECRET_KEY) as UserJwtInterface;
     if (user) {
       await this.userSessionCache.addOrUpdate(user.email, client.id);
     }

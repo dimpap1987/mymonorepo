@@ -7,6 +7,7 @@ export interface User {
   roles?: Roles[];
   loggedIn: boolean;
   lastConnectedTime?:string;
+  provider?: string;
 }
 
 export enum Roles {

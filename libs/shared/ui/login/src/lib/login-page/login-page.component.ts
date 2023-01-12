@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {filter, map} from "rxjs";
-import {AuthService, ConstantsClient, saveUser, User} from "@mymonorepo/shared/utils";
+import {AuthService, ConstantsClient, User} from "@mymonorepo/shared/utils";
 import {ActivatedRoute} from "@angular/router";
 import {Store} from "@ngrx/store";
 
@@ -26,13 +26,7 @@ export class LoginPageComponent implements OnInit {
       }),
       filter(tokens => !!tokens)
     ).subscribe((tokens) => {
-      if (tokens.refreshToken && tokens.accessToken) {
-        localStorage.setItem(ConstantsClient.auth().accessToken, tokens.accessToken);
-        localStorage.setItem(ConstantsClient.auth().refreshToken, tokens.refreshToken);
-        const user = this.authService.parseJwt(tokens.accessToken);
-        if (!user) return;
-        this.store.dispatch(saveUser({user: user}));
-      }
+      this.authService.handleTokensResponse(tokens);
     })
   }
 }

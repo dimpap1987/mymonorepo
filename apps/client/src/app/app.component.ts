@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {filter, Observable, take} from "rxjs";
-import {AuthService, getUser, User, UserApiService, UserState, WebSocketService} from "@mymonorepo/shared/utils";
+import {Observable} from "rxjs";
+import {AuthService, getUser, User, UserState, WebSocketService} from "@mymonorepo/shared/utils";
 import {Store} from "@ngrx/store";
 
 @Component({

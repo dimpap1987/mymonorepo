@@ -1,6 +1,7 @@
 import {Controller, Get, HttpException, HttpStatus, Query, Req, Res, UseGuards} from '@nestjs/common';
 import {AuthGuard} from '@nestjs/passport';
-import {AuthService, Provider} from "../services/auth.service";
+import {AuthService} from "../services/auth.service";
+import {ProvidersEnum} from "@mymonorepo/shared/interfaces";
 
 @Controller('auth')
 export class AuthController {
@@ -17,7 +18,7 @@ export class AuthController {
   @Get('google/redirect')
   @UseGuards(AuthGuard('google'))
   async googleAuthRedirect(@Req() req, @Res() res) {
-    const tokens = await this.authService.createJwtToken(req.user, Provider.GOOGLE);
+    const tokens = this.authService.createJwtToken(req.user, ProvidersEnum.GOOGLE);
     const loginUrl = AuthController.handleRedirectUrl(tokens);
     res.redirect(loginUrl);
   }
@@ -31,7 +32,7 @@ export class AuthController {
   @Get("/facebook/redirect")
   @UseGuards(AuthGuard("facebook"))
   async facebookLoginRedirect(@Req() req, @Res() res) {
-    const tokens = await this.authService.createJwtToken(req.user, Provider.FACEBOOK);
+    const tokens = this.authService.createJwtToken(req.user, ProvidersEnum.FACEBOOK);
     const loginUrl = AuthController.handleRedirectUrl(tokens);
     res.redirect(loginUrl);
   }
@@ -39,7 +40,7 @@ export class AuthController {
   @Get("/refresh-token")
   async refreshToken(@Query() query: { refreshToken: string }, @Res() res) {
     const user = this.authService.verify(query.refreshToken)
-    const tokens = await this.authService.createJwtToken(user, user?.provider);
+    const tokens = this.authService.createJwtToken(user, ProvidersEnum[user?.provider]);
     res.send({...tokens})
   }
 

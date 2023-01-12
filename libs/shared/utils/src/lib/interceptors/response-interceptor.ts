@@ -11,24 +11,29 @@ import {catchError, Observable, throwError} from 'rxjs';
 import {Router} from "@angular/router";
 import {map, switchMap} from "rxjs/operators";
 import {ConstantsClient} from "../contants/constants-client";
-import {AuthService} from "../services";
+import {AuthService, LocalStorageService} from "../services";
+import {JwtTokensInterface} from "@mymonorepo/shared/interfaces";
 
 @Injectable()
 export class ResponseInterceptor implements HttpInterceptor {
 
   constructor(private router: Router,
-              private authService: AuthService) {
+              private authService: AuthService,
+              private localStorageService: LocalStorageService) {
   }
 
-  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<any> {
+  intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<any> {
     return next.handle(request).pipe(
-      map((event: HttpEvent<any>) => event),
+      map((event: HttpEvent<unknown>) => event),
       catchError((error: HttpErrorResponse) => this.handleError(request, error, next)
       ));
   }
 
-  private handleError(request: HttpRequest<any>, error: HttpErrorResponse, next: HttpHandler) {
-    if (error?.status == HttpStatusCode.Unauthorized || error?.status == HttpStatusCode.Forbidden) {
+  private handleError(request: HttpRequest<unknown>, error: HttpErrorResponse, next: HttpHandler) {
+    if (error.status == HttpStatusCode.Unauthorized || error.status == HttpStatusCode.Forbidden) {
+      if (error.status == HttpStatusCode.Unauthorized) {
+        this.authService.removeUser();
+      }
       return this.handleUnauthorizedResponse(request, next);
     }
     return throwError(() => error);
@@ -38,20 +43,16 @@ export class ResponseInterceptor implements HttpInterceptor {
     this.router.navigate([ConstantsClient.endpoints().ui.login])
   }
 
-  private handleUnauthorizedResponse(request: HttpRequest<any>, next: HttpHandler): any {
-    this.authService.removeUser();
-
-    if (localStorage.getItem(ConstantsClient.auth().refreshToken)) {
-
-      return this.authService.refreshToken()
+  private handleUnauthorizedResponse(request: HttpRequest<unknown>, next: HttpHandler): any {
+    if (this.localStorageService.refreshToken.get()) {
+      return this.authService.fetchRefreshToken()
         .pipe(
-          switchMap((tokens: any) => {
-            request = this.authService.cloneRequest(request, tokens.accessToken)
+          switchMap((tokens: JwtTokensInterface) => {
+            request = this.authService.cloneRequestWithBearToken(request, tokens.accessToken)
             return next.handle(request);
           }),
           catchError(() => this.navigateToLoginPage())
         )
-
     } else {
       this.navigateToLoginPage()
     }

@@ -1,22 +1,21 @@
-import {Inject, Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {APP_ENVIRONMENT, ConstantsClient} from "../contants/constants-client";
-import {AuthService} from "../services";
+import {AuthService, LocalStorageService} from "../services";
 
 
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
 
-  constructor(@Inject(APP_ENVIRONMENT) private env: any,
-              private authService: AuthService) {
+  constructor(private authService: AuthService,
+              private localStorageService: LocalStorageService) {
   }
 
-  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+  intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<any>> {
     // const isApiUrl = request.url.startsWith(this.env.apiBaseUrl);
-    const token = localStorage.getItem(ConstantsClient.auth().accessToken)
+    const token = this.localStorageService.accessToken.get()
     if (token) {
-      request = this.authService.cloneRequest(request, token)
+      request = this.authService.cloneRequestWithBearToken(request, token)
     }
     return next.handle(request);
   }

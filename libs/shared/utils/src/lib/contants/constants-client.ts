@@ -1,10 +1,10 @@
-import {Inject, InjectionToken} from "@angular/core";
+import {InjectionToken} from "@angular/core";
 
 export const APP_ENVIRONMENT = new InjectionToken("APP_ENVIRONMENT_TOKEN");
 
 export class ConstantsClient {
 
-  constructor(@Inject(APP_ENVIRONMENT) private env: any) {
+  constructor() {
   }
 
   static auth(): Readonly<Authentication> {

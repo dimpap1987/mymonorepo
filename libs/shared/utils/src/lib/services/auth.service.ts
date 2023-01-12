@@ -1,11 +1,12 @@
 import {Injectable} from '@angular/core';
 import {removeUser, saveUser, User} from "../+state";
 import {Store} from "@ngrx/store";
-import {WebSocketService} from "./websocket.service";
 import {ConstantsClient} from "../contants/constants-client";
 import {HttpClient, HttpParams, HttpRequest} from "@angular/common/http";
 import {Observable, tap} from "rxjs";
 import {map} from "rxjs/operators";
+import {LocalStorageService} from "./local-storage.service";
+import {JwtTokensInterface, UserJwtInterface} from "@mymonorepo/shared/interfaces";
 
 @Injectable({
   providedIn: 'root'
@@ -13,11 +14,12 @@ import {map} from "rxjs/operators";
 export class AuthService {
 
   constructor(private store: Store<{ user: User }>,
-              private websocketService: WebSocketService,
-              private httpClient: HttpClient) {
+              // private websocketService: WebSocketService,
+              private httpClient: HttpClient,
+              private localStorageService: LocalStorageService) {
   }
 
-  public parseJwt(token: string) {
+  public parseJwt(token: string): UserJwtInterface | undefined {
     if (!token) return;
     const base64Url = token.split('.')[1];
     const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
@@ -29,14 +31,13 @@ export class AuthService {
   }
 
   logOut() {
-    localStorage.removeItem(ConstantsClient.auth().accessToken);
-    localStorage.removeItem(ConstantsClient.auth().refreshToken);
+    this.localStorageService.refreshToken.remove();
+    this.removeUser();
     // this.websocketService.close();
-    this.store.dispatch(removeUser())
   }
 
   removeUser() {
-    localStorage.removeItem(ConstantsClient.auth().accessToken);
+    this.localStorageService.accessToken.remove();
     this.store.dispatch(removeUser())
   }
 
@@ -44,30 +45,30 @@ export class AuthService {
     return this.httpClient.get(ConstantsClient.endpoints().api.me);
   }
 
-  refreshToken() {
-    const params = new HttpParams()
-      .set('refreshToken', localStorage.getItem(ConstantsClient.auth().refreshToken.toString()) as string);
-
-    return this.httpClient.get<any>(ConstantsClient.endpoints().api.refreshTokenUrl, {params: params})
+  fetchRefreshToken() {
+    const params = new HttpParams().set('refreshToken', this.localStorageService.refreshToken.get() as string);
+    return this.httpClient.get<JwtTokensInterface>(ConstantsClient.endpoints().api.refreshTokenUrl, {params: params})
       .pipe(
         map(tokens => {
-          if (!tokens || !tokens.refreshToken) {
-            throw Error("Invalid Refresh Token")
-          }
+          if (!tokens || !tokens.refreshToken) throw Error("Invalid Refresh Token")
           return tokens;
         }),
-        tap((tokens) => {
-          localStorage.setItem(ConstantsClient.auth().accessToken, tokens.accessToken)
-          localStorage.setItem(ConstantsClient.auth().refreshToken, tokens.refreshToken)
-          const user = this.parseJwt(tokens.accessToken);
-          if (!user) return;
-          this.store.dispatch(saveUser({user: user}));
+        tap((tokens: JwtTokensInterface) => {
+          this.handleTokensResponse(tokens);
         }));
   }
 
-  cloneRequest(request: HttpRequest<any>, token: string) {
+  cloneRequestWithBearToken(request: HttpRequest<unknown>, token: string) {
     return request.clone({
       setHeaders: {Authorization: `Bearer ${token}`}
     });
+  }
+
+  handleTokensResponse(tokens: JwtTokensInterface) {
+    this.localStorageService.accessToken.set(tokens.accessToken)
+    this.localStorageService.refreshToken.set(tokens.refreshToken)
+    const user = this.parseJwt(tokens.accessToken);
+    if (!user) return;
+    this.store.dispatch(saveUser({user: user}));
   }
 }
