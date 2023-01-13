@@ -8,20 +8,20 @@ import {JwtTokensInterface, ProvidersEnum, RolesEnum, UserJwtInterface} from "@m
 export class AuthService {
 
   createJwtToken(user: User, provider: ProvidersEnum): JwtTokensInterface {
-    const accessToken = this.createAccessToken(user, provider);
-    const refreshToken = this.createRefreshToken(user, provider);
+    const accessToken = AuthService.createAccessToken(user, provider);
+    const refreshToken = AuthService.createRefreshToken(user, provider);
     return {
       accessToken,
       refreshToken
     }
   }
 
-  createAccessToken(user, provider: ProvidersEnum) {
-    return AuthService.signToken(user, provider, 300)
+  private static createAccessToken(user, provider: ProvidersEnum) {
+    return AuthService.signToken(user, provider, 300) // 5 minutes
   }
 
-  createRefreshToken(user, provider: ProvidersEnum) {
-    return AuthService.signToken(user, provider, 86400)
+  private static createRefreshToken(user, provider: ProvidersEnum) {
+    return AuthService.signToken(user, provider, 86400) // 1 day
   }
 
   verify(token): UserJwtInterface {

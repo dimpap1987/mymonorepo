@@ -20,7 +20,7 @@ export class ConstantsClient {
     return {
       api: {
         apiBaseUrl: 'http://localhost:3333', //TODO environment variable
-        me: `/api/v1/users/me`,
+        me: `/api/v1/auth/me`,
         refreshTokenUrl: '/api/v1/auth/refresh-token'
       },
       ui: {

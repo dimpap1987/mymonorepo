@@ -1,4 +1,4 @@
-import {Roles} from "@mymonorepo/shared/utils";
+import {RolesEnum} from "@mymonorepo/shared/interfaces";
 
 export interface User {
   email: string;
@@ -7,6 +7,6 @@ export interface User {
   picture?: string
   accessToken?: string;
   profileId?: string
-  roles?: Roles[];
+  roles?: RolesEnum[];
   lastConnectedTime?: string;
 }

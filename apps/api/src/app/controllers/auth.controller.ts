@@ -1,7 +1,9 @@
-import {Controller, Get, HttpException, HttpStatus, Query, Req, Res, UseGuards} from '@nestjs/common';
+import {Controller, Get, Headers, HttpException, HttpStatus, Req, Res, UseGuards} from '@nestjs/common';
 import {AuthGuard} from '@nestjs/passport';
 import {AuthService} from "../services/auth.service";
-import {ProvidersEnum} from "@mymonorepo/shared/interfaces";
+import {ProvidersEnum, UserJwtInterface} from "@mymonorepo/shared/interfaces";
+import {extractRefreshTokenFromHeaders, extractTokenFromHeaders} from "../utils/rest-utils";
+import {JwtAuthGuard} from "../guards/jwt-auth-guard";
 
 @Controller('auth')
 export class AuthController {
@@ -38,10 +40,27 @@ export class AuthController {
   }
 
   @Get("/refresh-token")
-  async refreshToken(@Query() query: { refreshToken: string }, @Res() res) {
-    const user = this.authService.verify(query.refreshToken)
+  async refreshToken(@Headers() headers: Record<string, string>, @Res() res) {
+    const bearerToken = extractRefreshTokenFromHeaders(headers);
+    const user = this.authService.verify(bearerToken)
     const tokens = this.authService.createJwtToken(user, ProvidersEnum[user?.provider]);
     res.send({...tokens})
+  }
+
+  @Get('me')
+  @UseGuards(JwtAuthGuard)
+  getUserMetadata(@Headers() headers: Record<string, string>): UserJwtInterface {
+    const bearerToken = extractTokenFromHeaders(headers);
+    const {email, firstName, lastName, picture, profileId, provider, roles} = this.authService.verify(bearerToken);
+    return {
+      email,
+      firstName,
+      lastName,
+      picture,
+      profileId,
+      provider,
+      roles
+    }
   }
 
   private static handleRedirectUrl(tokens): string {

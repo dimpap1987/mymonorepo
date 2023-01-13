@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {removeUser, saveUser, User} from "../+state";
 import {Store} from "@ngrx/store";
 import {ConstantsClient} from "../contants/constants-client";
-import {HttpClient, HttpParams, HttpRequest} from "@angular/common/http";
+import {HttpClient, HttpRequest} from "@angular/common/http";
 import {catchError, Observable, tap, throwError} from "rxjs";
 import {LocalStorageService} from "./local-storage.service";
 import {JwtTokensInterface, UserJwtInterface} from "@mymonorepo/shared/interfaces";
@@ -45,12 +45,17 @@ export class AuthService {
   }
 
   fetchRefreshToken() {
-    const params = new HttpParams().set('refreshToken', this.localStorageService.refreshToken.get() as string);
-    return this.httpClient.get<JwtTokensInterface>(ConstantsClient.endpoints().api.refreshTokenUrl, {params: params})
+    return this.httpClient.get<JwtTokensInterface>(
+      ConstantsClient.endpoints().api.refreshTokenUrl,
+      {
+        headers: {
+          'refresh-token': this.localStorageService.refreshToken.get() as string
+        }
+      })
       .pipe(
         catchError((error) => {
-          this.localStorageService.refreshToken.remove()
-          return throwError(error)
+          this.logOut()
+          return throwError(() => error)
         }),
         tap((tokens: JwtTokensInterface) => {
           this.handleTokensResponse(tokens);
@@ -64,10 +69,10 @@ export class AuthService {
   }
 
   handleTokensResponse(tokens: JwtTokensInterface) {
-    this.localStorageService.accessToken.set(tokens.accessToken)
-    this.localStorageService.refreshToken.set(tokens.refreshToken)
     const user = this.parseJwt(tokens.accessToken);
     if (!user) return;
+    this.localStorageService.accessToken.set(tokens.accessToken)
+    this.localStorageService.refreshToken.set(tokens.refreshToken)
     this.store.dispatch(saveUser({user: user}));
   }
 }

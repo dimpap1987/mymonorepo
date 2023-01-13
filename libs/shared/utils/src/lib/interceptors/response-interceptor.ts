@@ -29,7 +29,6 @@ export class ResponseInterceptor implements HttpInterceptor {
   }
 
   private handleUnauthorizedResponse(request: HttpRequest<unknown>, next: HttpHandler, error: HttpErrorResponse): any {
-    this.authService.removeUser();
     if (this.localStorageService.refreshToken.get()) {
       return this.authService.fetchRefreshToken()
         .pipe(
@@ -43,6 +42,7 @@ export class ResponseInterceptor implements HttpInterceptor {
           })
         )
     } else {
+      this.authService.logOut();
       this.navigateToLoginPage()
       return throwError(() => error);
     }
