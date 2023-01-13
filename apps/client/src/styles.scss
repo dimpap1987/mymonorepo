@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap');
 @import "libs/shared/ui/theme/src/lib/styles/pimeng";
+@import "libs/shared/ui/theme/src/lib/styles/variables";
 
 * {
   font-family: 'Playfair Display', serif;
@@ -10,4 +11,8 @@ html, body {
   margin: 0;
   height: 100vh;
   overflow: hidden;
+  min-width: 225px;
+  min-height: 440px;
+  background-color: $grey-theme-color;
+  background-image: $back-ground-image--diagonal-lines;
 }

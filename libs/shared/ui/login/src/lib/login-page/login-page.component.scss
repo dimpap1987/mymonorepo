@@ -1,7 +1,7 @@
 @import "libs/shared/ui/theme/src/lib/styles/variables";
 
 :host {
-  height: 70%;
+  height: 60%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -10,11 +10,12 @@
 .login-container {
   display: flex;
   min-width: 200px;
+  min-height: 200px;
   border: 1px solid $purple;
   box-shadow: hsl(271deg 35% 37%) 0px 6px 12px -2px, hsl(271deg 76% 53%) 0px 3px 7px -3px;
   border-radius: 40px;
-  width: 40vmin;
-  height: 50%;
+  width: 250px;
+  height: 250px;
   background-color: $grey-theme-color;
   transition:  all 0.3s ease-out;
 
@@ -37,15 +38,5 @@
       gap: 10px;
       margin-top: 20px;
     }
-  }
-}
-@media (max-width: 550px) {
-  .login-container {
-    width: 50vmin;
-  }
-}
-@media (max-width: 250px) {
-  .login-container {
-    width: 90vmin;
   }
 }
