@@ -11,9 +11,14 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: '',
+    loadChildren: () => import('@mymonorepo/shared/ui/home').then(m => m.HomeModule),
     pathMatch: 'full'
   },
+  {
+    path: '**',
+    redirectTo: '',
+    pathMatch: 'full'
+  }
 ]
 
 @NgModule({
