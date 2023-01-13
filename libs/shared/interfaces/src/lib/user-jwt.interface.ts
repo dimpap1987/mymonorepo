@@ -1,3 +1,5 @@
+import {RolesEnum} from "./roles.enum";
+
 export interface UserJwtInterface {
   email: string;
   firstName?: string;
@@ -5,5 +7,5 @@ export interface UserJwtInterface {
   picture?: string;
   profileId?: string;
   provider?: string;
-  roles?: [];
+  roles?: RolesEnum[];
 }

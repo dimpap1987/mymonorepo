@@ -5,12 +5,12 @@ import {AppService} from './services/app.service';
 import {AuthService} from "./services/auth.service";
 import {GoogleStrategy} from "./strategies/google-strategy";
 import {AuthController} from "./controllers/auth.controller";
-import {JwtStrategy} from "./strategies/jwt-strategy";
 import {UserController} from "./controllers/user.controller";
 import {FacebookStrategy} from "./strategies/facebook-strategy";
 import {AppGateway} from "./websocket/app.gateway";
 import {UserSessionCache} from "./services/user-session-cache";
 import {WsGuard} from "./guards/ws-guard";
+import {RolesGuard} from "./guards/roles-guard";
 // import {ServeStaticModule} from '@nestjs/serve-static';
 // import {join} from 'path';
 // import {ConfigModule} from "@nestjs/config";
@@ -36,11 +36,12 @@ import {WsGuard} from "./guards/ws-guard";
     AppService,
     AuthService,
     GoogleStrategy,
-    JwtStrategy,
+    // JwtStrategy,
     FacebookStrategy,
     AppGateway,
     UserSessionCache,
-    WsGuard
+    WsGuard,
+    RolesGuard
   ],
 })
 export class AppModule {

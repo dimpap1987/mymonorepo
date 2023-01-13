@@ -1,16 +1,13 @@
+import {RolesEnum} from "@mymonorepo/shared/interfaces";
+
 export interface User {
   email?: string;
   firstName?: string;
   lastName?: string;
   picture?: string
   profileId?: string
-  roles?: Roles[];
+  roles?: RolesEnum[];
   loggedIn: boolean;
-  lastConnectedTime?:string;
+  lastConnectedTime?: string;
   provider?: string;
-}
-
-export enum Roles {
-  ADMIN,
-  USER
 }

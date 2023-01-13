@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {Observable} from "rxjs";
-import {AuthService, getUser, User, UserState, WebSocketService} from "@mymonorepo/shared/utils";
+import {getUser, User, UserState, WebSocketService} from "@mymonorepo/shared/utils";
 import {Store} from "@ngrx/store";
+import {HttpClient} from "@angular/common/http";
 
 @Component({
   selector: 'dp-app',
@@ -13,7 +14,7 @@ export class AppComponent implements OnInit {
 
   constructor(private store: Store<{ user: User }>,
               private webSocketService: WebSocketService,
-              private userApiService: AuthService) {
+              private http: HttpClient) {
   }
 
   ngOnInit(): void {
@@ -28,6 +29,6 @@ export class AppComponent implements OnInit {
   }
 
   clickMe() {
-    this.userApiService.me().subscribe(res => console.log(res));
+    this.http.get("/api/v1/users/secure").subscribe(res => console.log(res));
   }
 }

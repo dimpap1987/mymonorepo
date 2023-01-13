@@ -1,7 +1,7 @@
 import {HttpException, HttpStatus, Injectable, InternalServerErrorException} from '@nestjs/common';
 import {User} from "../interfaces/user";
 import {sign, verify} from 'jsonwebtoken';
-import {JwtTokensInterface, ProvidersEnum, UserJwtInterface} from "@mymonorepo/shared/interfaces";
+import {JwtTokensInterface, ProvidersEnum, RolesEnum, UserJwtInterface} from "@mymonorepo/shared/interfaces";
 
 
 @Injectable()
@@ -42,6 +42,7 @@ export class AuthService {
           picture: picture,
           profileId: profileId,
           provider,
+          roles: [RolesEnum.USER]
         },
         process.env.JWT_SECRET_KEY,
         {expiresIn: expiry}

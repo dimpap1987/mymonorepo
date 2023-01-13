@@ -1,14 +1,20 @@
-import {HttpException, HttpStatus, Injectable} from "@nestjs/common";
+import {ExecutionContext, Injectable} from "@nestjs/common";
 import {AuthGuard} from "@nestjs/passport";
-import {TokenExpiredError} from "jsonwebtoken";
+import {AuthService} from "../services/auth.service";
+import {extractTokenFromHeaders} from "../utils/rest-utils";
 
 @Injectable()
 export class JwtAuthGuard extends AuthGuard('jwt') {
 
-  handleRequest(err, user, info: Error) {
-    if (info instanceof TokenExpiredError) {
-      throw new HttpException({code: "TOKEN_EXPIRED"}, HttpStatus.UNAUTHORIZED)
-    }
-    return user;
+  constructor(private authService: AuthService) {
+    super();
+  }
+
+  canActivate(context: ExecutionContext): Promise<boolean> {
+    const bearerToken = extractTokenFromHeaders(context.switchToHttp().getRequest().headers);
+    const userJwtInterface = this.authService.verify(bearerToken);
+    return new Promise((resolve, reject) => {
+      userJwtInterface ? resolve(true) : reject(false);
+    });
   }
 }

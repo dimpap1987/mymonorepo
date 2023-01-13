@@ -27,7 +27,7 @@ const userReducer = createReducer(
     })),
   on(
     UserActions.saveUser, (state, {user}) => ({
-      ...user, loggedIn: true
+      ...user, loggedIn: true, roles: []
     })),
 );
 
