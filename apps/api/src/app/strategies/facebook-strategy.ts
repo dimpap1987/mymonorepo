@@ -1,7 +1,7 @@
+import { UserInterface } from "@mymonorepo/shared/interfaces";
 import {Injectable} from "@nestjs/common";
 import {PassportStrategy} from "@nestjs/passport";
 import {Profile, Strategy} from "passport-facebook";
-import {User} from "../interfaces/user";
 
 @Injectable()
 export class FacebookStrategy extends PassportStrategy(Strategy, "facebook") {
@@ -24,7 +24,7 @@ export class FacebookStrategy extends PassportStrategy(Strategy, "facebook") {
   ): Promise<any> {
 
     const {name, emails} = profile;
-    const user: User = {
+    const user: UserInterface = {
       email: emails[0].value,
       firstName: name.givenName,
       lastName: name.familyName,

@@ -18,8 +18,8 @@ export class RolesGuard implements CanActivate {
     if (!requiredRoles) return true;
 
     const bearerToken = extractTokenFromHeaders(context.switchToHttp().getRequest().headers);
-    const user = this.authService.verify(bearerToken);
+    const payload = this.authService.verify(bearerToken);
 
-    return requiredRoles.some((role) => user?.roles?.includes(role));
+    return requiredRoles.some((role) => payload.user?.roles?.includes(role));
   }
 }

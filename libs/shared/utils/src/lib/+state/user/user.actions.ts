@@ -1,7 +1,6 @@
 import {createAction, props} from '@ngrx/store';
 
 import {User} from './user.model';
-import {UserJwtInterface} from "@mymonorepo/shared/interfaces";
 
 export const loadUser = createAction(
   '[User Effect] Load User'
@@ -23,5 +22,5 @@ export const removeUser = createAction(
 
 export const saveUser = createAction(
   "[User Effect] Save User",
-  props<{ user: User | UserJwtInterface }>()
+  props<{ user: User }>()
 );

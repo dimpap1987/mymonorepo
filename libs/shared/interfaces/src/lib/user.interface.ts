@@ -1,6 +1,6 @@
 import { RolesEnum } from './roles.enum';
 
-export interface UserJwtInterface {
+export interface UserInterface {
   email: string;
   firstName?: string;
   lastName?: string;

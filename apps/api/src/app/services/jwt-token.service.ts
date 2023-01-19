@@ -1,14 +1,19 @@
+import { JwtPayloadInterface } from '@mymonorepo/shared/interfaces';
 import { Injectable } from '@nestjs/common';
-import { sign, verify, decode, SignOptions } from 'jsonwebtoken';
-import { User } from '../interfaces/user';
+import { decode, sign, SignOptions, verify } from 'jsonwebtoken';
 
 @Injectable()
 export class JwtTokenService {
-  extractUser(token: string): User {
-    const payload = decode(token) as User;
+
+  extractPayloadWithoutExpAndIat(token: string): JwtPayloadInterface {
+    const payload = decode(token) as JwtPayloadInterface;
     delete payload['exp'];
     delete payload['iat'];
     return payload;
+  }
+
+  extractPayload(token: string): JwtPayloadInterface {
+    return decode(token) as JwtPayloadInterface;
   }
 
   decodeComplete(token: string) {

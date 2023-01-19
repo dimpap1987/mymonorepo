@@ -15,7 +15,9 @@ export interface UserState extends User {
 const userReducer = createReducer(
   initialState,
   on(
-    UserActions.loadUserSuccess, (state, {user}) => user
+    UserActions.loadUserSuccess, (state, {user}) => ({
+      ...user, loggedIn: true
+    })
   ),
   on(
     UserActions.loadUserFailure, (state, {error}) => ({
@@ -27,7 +29,7 @@ const userReducer = createReducer(
     })),
   on(
     UserActions.saveUser, (state, {user}) => ({
-      ...user, loggedIn: true, roles: []
+      ...user, loggedIn: true
     })),
 );
 

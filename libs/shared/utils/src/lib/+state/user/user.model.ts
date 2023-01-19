@@ -7,7 +7,7 @@ export interface User {
   picture?: string
   profileId?: string
   roles?: RolesEnum[];
-  loggedIn: boolean;
+  loggedIn?: boolean;
   lastConnectedTime?: string;
   provider?: string;
 }

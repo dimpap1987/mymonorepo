@@ -1,7 +1,7 @@
-import { UserJwtInterface } from './user-jwt.interface';
+import { UserInterface } from './user.interface';
 
 export interface SessionInterface {
   accessToken: string;
   expires: string;
-  user: UserJwtInterface;
+  user: UserInterface;
 }

@@ -9,7 +9,7 @@ import {CanActivate, Router} from "@angular/router";
 })
 export class LoginGuard implements CanActivate {
 
-  isLoggedIn: Observable<boolean> = this.store.select(isLogin)
+  isLoggedIn: Observable<boolean | undefined> = this.store.select(isLogin)
 
   constructor(private store: Store, private route: Router) {
   }

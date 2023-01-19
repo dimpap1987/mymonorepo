@@ -1,77 +1,81 @@
 import {
+  JwtPayloadInterface,
+  JwtTokensInterface,
+  ProvidersEnum,
+  SessionInterface,
+} from '@mymonorepo/shared/interfaces';
+import {
   HttpException,
   HttpStatus,
   Injectable,
   InternalServerErrorException,
 } from '@nestjs/common';
-import { User } from '../interfaces/user';
-import {
-  JwtTokensInterface,
-  RolesEnum,
-  SessionInterface,
-  UserJwtInterface,
-} from '@mymonorepo/shared/interfaces';
 import { JwtTokenService } from './jwt-token.service';
 
 @Injectable()
 export class AuthService {
   constructor(private jwtService: JwtTokenService) {}
 
-  createJwtToken(user: User): JwtTokensInterface {
-    const accessToken = this.createAccessToken(user);
-    const refreshToken = this.createRefreshToken(user);
+  createJwtToken(payload: JwtPayloadInterface): JwtTokensInterface {
+    const accessToken = this.createAccessToken(payload);
+    const refreshToken = this.createRefreshToken(payload);
     return {
       accessToken,
       refreshToken,
     };
   }
 
-  createAccessToken(user: UserJwtInterface) {
-    return this.signToken(user, 300); // 5 minutes
+  createAccessToken(payload: JwtPayloadInterface) {
+    return this.signToken(payload, 300); // 5 minutes
   }
 
-  createRefreshToken(user: UserJwtInterface) {
-    return this.signToken(user, 86400); // 1 day
+  createRefreshToken(payload: JwtPayloadInterface) {
+    return this.signToken(payload, 86400); // 1 day
   }
 
-  verify(token): UserJwtInterface {
+  verify(token): JwtPayloadInterface {
     try {
       return this.jwtService.verify(
         token,
         process.env.JWT_SECRET_KEY
-      ) as UserJwtInterface;
+      ) as JwtPayloadInterface;
     } catch (e) {
       throw new HttpException('UNAUTHORIZED', HttpStatus.UNAUTHORIZED);
     }
   }
 
-  private signToken(user: UserJwtInterface, expiry) {
+  private signToken(payload: JwtPayloadInterface, expiry) {
     try {
-      return this.jwtService.sign(
-        {
-          ...user,
-          roles: [RolesEnum.USER],
-        },
-        process.env.JWT_SECRET_KEY,
-        { expiresIn: expiry }
-      );
+      return this.jwtService.sign(payload, process.env.JWT_SECRET_KEY, {
+        expiresIn: expiry,
+      });
     } catch (err) {
       throw new InternalServerErrorException('createJwtToken', err.message);
     }
   }
 
   handleSessionRequest(bearerToken): SessionInterface {
-    const user = this.jwtService.extractUser(bearerToken) as User;
-    const accessToken = this.createAccessToken(user);
+    const payload = this.jwtService.extractPayloadWithoutExpAndIat(bearerToken);
+    const accessToken = this.createAccessToken(payload);
     return {
       accessToken: accessToken,
       expires: this.jwtService.extractExpiration(accessToken),
-      user,
+      user: payload.user,
     };
   }
 
   handleRefreshTokenRequest(bearerToken): JwtTokensInterface {
-    const user = this.jwtService.extractUser(bearerToken);
-    return this.createJwtToken(user);
+    const payload = this.jwtService.extractPayloadWithoutExpAndIat(bearerToken);
+    return this.createJwtToken(payload);
+  }
+
+  handleLogin(userFromProvider, provider: ProvidersEnum): JwtTokensInterface {
+    // TODO fetch user from db
+    const user = {
+      ...userFromProvider,
+      roles: ['USER'],
+      provider: provider,
+    };
+    return this.createJwtToken({ user: user });
   }
 }

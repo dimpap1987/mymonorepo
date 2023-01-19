@@ -12,9 +12,9 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
 
   canActivate(context: ExecutionContext): Promise<boolean> {
     const bearerToken = extractTokenFromHeaders(context.switchToHttp().getRequest().headers);
-    const userJwtInterface = this.authService.verify(bearerToken);
+    const payload = this.authService.verify(bearerToken);
     return new Promise((resolve, reject) => {
-      userJwtInterface ? resolve(true) : reject(false);
+      payload ? resolve(true) : reject(false);
     });
   }
 }

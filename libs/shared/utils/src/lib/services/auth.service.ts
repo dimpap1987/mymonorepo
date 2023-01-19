@@ -1,11 +1,11 @@
-import {Injectable} from '@angular/core';
-import {removeUser, saveUser, User} from "../+state";
-import {Store} from "@ngrx/store";
-import {ConstantsClient} from "../contants/constants-client";
-import {HttpClient, HttpRequest} from "@angular/common/http";
-import {catchError, Observable, tap, throwError} from "rxjs";
-import {LocalStorageService} from "./local-storage.service";
-import {JwtTokensInterface, SessionResponseInterface, UserJwtInterface} from "@mymonorepo/shared/interfaces";
+import { HttpClient, HttpRequest } from "@angular/common/http";
+import { Injectable } from '@angular/core';
+import { JwtPayloadInterface, JwtTokensInterface, SessionInterface } from "@mymonorepo/shared/interfaces";
+import { Store } from "@ngrx/store";
+import { catchError, Observable, tap, throwError } from "rxjs";
+import { removeUser, saveUser, User } from "../+state";
+import { ConstantsClient } from "../contants/constants-client";
+import { LocalStorageService } from "./local-storage.service";
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +18,7 @@ export class AuthService {
               private localStorageService: LocalStorageService) {
   }
 
-  public parseJwt(token: string): UserJwtInterface | undefined {
+  public parseJwt(token: string): JwtPayloadInterface | undefined {
     if (!token) return;
     const base64Url = token.split('.')[1];
     const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
@@ -40,8 +40,8 @@ export class AuthService {
     this.store.dispatch(removeUser())
   }
 
-  session(): Observable<SessionResponseInterface> {
-    return this.httpClient.get(ConstantsClient.endpoints().api.session) as Observable<SessionResponseInterface>;
+  session(): Observable<SessionInterface> {
+    return this.httpClient.get(ConstantsClient.endpoints().api.session) as Observable<SessionInterface>;
   }
 
   fetchRefreshToken() {
@@ -69,10 +69,10 @@ export class AuthService {
   }
 
   handleTokensResponse(tokens: JwtTokensInterface) {
-    const user = this.parseJwt(tokens.accessToken);
-    if (!user) return;
+    const payload = this.parseJwt(tokens.accessToken);
+    if (!payload || !payload.user) return;
     this.localStorageService.accessToken.set(tokens.accessToken)
     this.localStorageService.refreshToken.set(tokens.refreshToken)
-    this.store.dispatch(saveUser({user: user}));
+    this.store.dispatch(saveUser({user: payload.user}));
   }
 }
