@@ -5,7 +5,6 @@ export interface User {
   firstName?: string;
   lastName?: string;
   picture?: string
-  accessToken?: string;
   profileId?: string
   roles?: RolesEnum[];
   lastConnectedTime?: string;

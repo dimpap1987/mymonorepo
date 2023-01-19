@@ -5,7 +5,7 @@ import {ConstantsClient} from "../contants/constants-client";
 import {HttpClient, HttpRequest} from "@angular/common/http";
 import {catchError, Observable, tap, throwError} from "rxjs";
 import {LocalStorageService} from "./local-storage.service";
-import {JwtTokensInterface, UserJwtInterface} from "@mymonorepo/shared/interfaces";
+import {JwtTokensInterface, SessionResponseInterface, UserJwtInterface} from "@mymonorepo/shared/interfaces";
 
 @Injectable({
   providedIn: 'root'
@@ -40,8 +40,8 @@ export class AuthService {
     this.store.dispatch(removeUser())
   }
 
-  me(): Observable<UserJwtInterface> {
-    return this.httpClient.get(ConstantsClient.endpoints().api.me) as Observable<UserJwtInterface>;
+  session(): Observable<SessionResponseInterface> {
+    return this.httpClient.get(ConstantsClient.endpoints().api.session) as Observable<SessionResponseInterface>;
   }
 
   fetchRefreshToken() {

@@ -18,8 +18,8 @@ export class UserEffects {
     this.actions$.pipe(
       ofType(UserActions.loadUser),
       filter(() => !!this.localStorageService.accessToken.get()),
-      mergeMap(() => this.authService.me()),
-      map((user) => UserActions.saveUser({user: {...user, loggedIn: true}}))
+      mergeMap(() => this.authService.session()),
+      map((payload) => UserActions.saveUser({user: {...payload.user, loggedIn: true}}))
     )
   );
 }

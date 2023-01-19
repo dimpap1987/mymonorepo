@@ -11,6 +11,7 @@ import {AppGateway} from "./websocket/app.gateway";
 import {UserSessionCache} from "./services/user-session-cache";
 import {WsGuard} from "./guards/ws-guard";
 import {RolesGuard} from "./guards/roles-guard";
+import { JwtTokenService } from './services/jwt-token.service';
 // import {ServeStaticModule} from '@nestjs/serve-static';
 // import {join} from 'path';
 // import {ConfigModule} from "@nestjs/config";
@@ -41,7 +42,8 @@ import {RolesGuard} from "./guards/roles-guard";
     AppGateway,
     UserSessionCache,
     WsGuard,
-    RolesGuard
+    RolesGuard,
+    JwtTokenService
   ],
 })
 export class AppModule {
