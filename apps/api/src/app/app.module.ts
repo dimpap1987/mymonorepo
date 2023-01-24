@@ -1,17 +1,17 @@
-import {CacheModule, Module} from '@nestjs/common';
+import { CacheModule, Module } from '@nestjs/common';
 
-import {AppController} from './controllers/app.controller';
-import {AppService} from './services/app.service';
-import {AuthService} from "./services/auth.service";
-import {GoogleStrategy} from "./strategies/google-strategy";
-import {AuthController} from "./controllers/auth.controller";
-import {UserController} from "./controllers/user.controller";
-import {FacebookStrategy} from "./strategies/facebook-strategy";
-import {AppGateway} from "./websocket/app.gateway";
-import {UserSessionCache} from "./services/user-session-cache";
-import {WsGuard} from "./guards/ws-guard";
-import {RolesGuard} from "./guards/roles-guard";
+import { AppController } from './controllers/app.controller';
+import { AuthController } from "./controllers/auth.controller";
+import { UserController } from "./controllers/user.controller";
+import { RolesGuard } from "./guards/roles-guard";
+import { WsGuard } from "./guards/ws-guard";
+import { AppService } from './services/app.service';
+import { AuthService } from "./services/auth.service";
 import { JwtTokenService } from './services/jwt-token.service';
+import { UserSessionCache } from "./services/user-session-cache";
+import { FacebookStrategy } from "./strategies/facebook-strategy";
+import { GoogleStrategy } from "./strategies/google-strategy";
+import { AppGateway } from "./websocket/app.gateway";
 // import {ServeStaticModule} from '@nestjs/serve-static';
 // import {join} from 'path';
 // import {ConfigModule} from "@nestjs/config";
@@ -37,7 +37,6 @@ import { JwtTokenService } from './services/jwt-token.service';
     AppService,
     AuthService,
     GoogleStrategy,
-    // JwtStrategy,
     FacebookStrategy,
     AppGateway,
     UserSessionCache,

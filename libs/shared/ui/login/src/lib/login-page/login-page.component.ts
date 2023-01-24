@@ -1,8 +1,8 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
-import {filter, map} from "rxjs";
-import {AuthService, ConstantsClient, User} from "@mymonorepo/shared/utils";
-import {ActivatedRoute} from "@angular/router";
-import {Store} from "@ngrx/store";
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from "@angular/router";
+import { AuthService, saveUser, User } from "@mymonorepo/shared/utils";
+import { Store } from "@ngrx/store";
+import { filter, map, mergeMap } from "rxjs";
 
 @Component({
   selector: 'dp-login-page',
@@ -18,15 +18,11 @@ export class LoginPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.activatedRoute.queryParams.pipe(
-      map(param => {
-        return {
-          accessToken: param[ConstantsClient.auth().accessToken],
-          refreshToken: param[ConstantsClient.auth().refreshToken]
-        }
-      }),
-      filter(tokens => !!tokens)
-    ).subscribe((tokens) => {
-      this.authService.handleTokensResponse(tokens);
+      map(param => param['success']),
+      filter(success => success),
+      mergeMap(()=> this.authService.session())
+    ).subscribe((response) => {
+      this.store.dispatch(saveUser({user: response.user}));
     })
   }
 }

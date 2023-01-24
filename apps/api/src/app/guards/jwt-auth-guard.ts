@@ -1,7 +1,6 @@
-import {ExecutionContext, Injectable} from "@nestjs/common";
-import {AuthGuard} from "@nestjs/passport";
-import {AuthService} from "../services/auth.service";
-import {extractTokenFromHeaders} from "../utils/rest-utils";
+import { ExecutionContext, Injectable } from "@nestjs/common";
+import { AuthGuard } from "@nestjs/passport";
+import { AuthService } from "../services/auth.service";
 
 @Injectable()
 export class JwtAuthGuard extends AuthGuard('jwt') {
@@ -11,8 +10,8 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
   }
 
   canActivate(context: ExecutionContext): Promise<boolean> {
-    const bearerToken = extractTokenFromHeaders(context.switchToHttp().getRequest().headers);
-    const payload = this.authService.verify(bearerToken);
+    const accessToken = context.switchToHttp().getRequest().cookies['accessToken']    
+    const payload = this.authService.verify(accessToken);
     return new Promise((resolve, reject) => {
       payload ? resolve(true) : reject(false);
     });

@@ -26,7 +26,7 @@ export class AuthService {
   }
 
   createAccessToken(payload: JwtPayloadInterface) {
-    return this.signToken(payload, 300); // 5 minutes
+    return this.signToken(payload, 300*5); // 5 minutes
   }
 
   createRefreshToken(payload: JwtPayloadInterface) {
@@ -56,15 +56,13 @@ export class AuthService {
 
   handleSessionRequest(bearerToken): SessionInterface {
     const payload = this.jwtService.extractPayloadWithoutExpAndIat(bearerToken);
-    const accessToken = this.createAccessToken(payload);
     return {
-      accessToken: accessToken,
-      expires: this.jwtService.extractExpiration(accessToken),
       user: payload.user,
     };
   }
 
   handleRefreshTokenRequest(bearerToken): JwtTokensInterface {
+    this.verify(bearerToken);
     const payload = this.jwtService.extractPayloadWithoutExpAndIat(bearerToken);
     return this.createJwtToken(payload);
   }

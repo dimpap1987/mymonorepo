@@ -15,7 +15,7 @@ export class JwtInterceptor implements HttpInterceptor {
     // const isApiUrl = request.url.startsWith(this.env.apiBaseUrl);
     const token = this.localStorageService.accessToken.get()
     if (token) {
-      request = this.authService.cloneRequestWithBearToken(request, token)
+      request = this.authService.cloneRequestWithBearToken(request)
     }
     return next.handle(request);
   }

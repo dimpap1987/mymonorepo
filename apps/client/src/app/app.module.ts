@@ -1,22 +1,25 @@
-import {APP_INITIALIZER, NgModule} from '@angular/core';
-import {BrowserModule} from '@angular/platform-browser';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
 
-import {AppComponent} from './app.component';
-import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
-import {GoogleButtonModule} from "@mymonorepo/shared/ui/google-button";
-import {AppRoutingModule} from './app-routing.module';
 import {
-  APP_ENVIRONMENT,
+  HttpClientModule,
+  HttpClientXsrfModule,
+  HTTP_INTERCEPTORS
+} from '@angular/common/http';
+import { RouterModule } from '@angular/router';
+import { GoogleButtonModule } from '@mymonorepo/shared/ui/google-button';
+import { SharedUiNavbarModule } from '@mymonorepo/shared/ui/navbar';
+import { SharedUiOnlineUsersModule } from '@mymonorepo/shared/ui/online-users';
+import {
   AppLoader,
-  JwtInterceptor,
+  APP_ENVIRONMENT,
   ResponseInterceptor,
   SharedStateModule
-} from "@mymonorepo/shared/utils";
-import {SharedUiNavbarModule} from "@mymonorepo/shared/ui/navbar";
-import {RouterModule} from "@angular/router";
-import {SocketIoModule} from "ngx-socket-io";
-import {SharedUiOnlineUsersModule} from "@mymonorepo/shared/ui/online-users";
-import {environment} from "../environments/environment";
+} from '@mymonorepo/shared/utils';
+import { SocketIoModule } from 'ngx-socket-io';
+import { environment } from '../environments/environment';
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
 
 export function load(loader: AppLoader) {
   return () => loader.init();
@@ -24,7 +27,8 @@ export function load(loader: AppLoader) {
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule,
+  imports: [
+    BrowserModule,
     HttpClientModule,
     GoogleButtonModule,
     AppRoutingModule,
@@ -32,19 +36,26 @@ export function load(loader: AppLoader) {
     SharedUiNavbarModule,
     RouterModule,
     SocketIoModule,
-    SharedUiOnlineUsersModule
+    SharedUiOnlineUsersModule,
+    HttpClientXsrfModule.withOptions({
+      cookieName: 'XSRF-TOKEN',
+      headerName: 'X-XSRF-TOKEN',
+    }),
   ],
   providers: [
     AppLoader,
-    {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
-    {provide: HTTP_INTERCEPTORS, useClass: ResponseInterceptor, multi: true},
-    {provide: APP_INITIALIZER, useFactory: load, deps: [AppLoader], multi: true},
+    { provide: HTTP_INTERCEPTORS, useClass: ResponseInterceptor, multi: true },
+    {
+      provide: APP_INITIALIZER,
+      useFactory: load,
+      deps: [AppLoader],
+      multi: true,
+    },
     {
       provide: APP_ENVIRONMENT,
-      useValue: environment
-    }
+      useValue: environment,
+    },
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {
-}
+export class AppModule {}

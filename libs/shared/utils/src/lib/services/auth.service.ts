@@ -2,10 +2,9 @@ import { HttpClient, HttpRequest } from "@angular/common/http";
 import { Injectable } from '@angular/core';
 import { JwtPayloadInterface, JwtTokensInterface, SessionInterface } from "@mymonorepo/shared/interfaces";
 import { Store } from "@ngrx/store";
-import { catchError, Observable, tap, throwError } from "rxjs";
+import { Observable, tap } from "rxjs";
 import { removeUser, saveUser, User } from "../+state";
 import { ConstantsClient } from "../contants/constants-client";
-import { LocalStorageService } from "./local-storage.service";
 
 @Injectable({
   providedIn: 'root'
@@ -13,9 +12,7 @@ import { LocalStorageService } from "./local-storage.service";
 export class AuthService {
 
   constructor(private store: Store<{ user: User }>,
-              // private websocketService: WebSocketService,
-              private httpClient: HttpClient,
-              private localStorageService: LocalStorageService) {
+              private httpClient: HttpClient) {
   }
 
   public parseJwt(token: string): JwtPayloadInterface | undefined {
@@ -30,14 +27,8 @@ export class AuthService {
   }
 
   logOut() {
-    this.localStorageService.refreshToken.remove();
-    this.removeUser();
-    // this.websocketService.close();
-  }
-
-  removeUser() {
-    this.localStorageService.accessToken.remove();
     this.store.dispatch(removeUser())
+    this.httpClient.get(ConstantsClient.endpoints().api.logOut).subscribe();
   }
 
   session(): Observable<SessionInterface> {
@@ -45,34 +36,22 @@ export class AuthService {
   }
 
   fetchRefreshToken() {
-    return this.httpClient.get<JwtTokensInterface>(
-      ConstantsClient.endpoints().api.refreshTokenUrl,
-      {
-        headers: {
-          'refresh-token': this.localStorageService.refreshToken.get() as string
-        }
-      })
+    return this.httpClient.get<JwtTokensInterface>(ConstantsClient.endpoints().api.refreshTokenUrl)
       .pipe(
-        catchError((error) => {
-          this.logOut()
-          return throwError(() => error)
-        }),
         tap((tokens: JwtTokensInterface) => {
           this.handleTokensResponse(tokens);
         }));
   }
 
-  cloneRequestWithBearToken(request: HttpRequest<unknown>, token: string) {
+  cloneRequestWithBearToken(request: HttpRequest<unknown>) {
     return request.clone({
-      setHeaders: {Authorization: `Bearer ${token}`}
+      withCredentials: true
     });
   }
 
   handleTokensResponse(tokens: JwtTokensInterface) {
     const payload = this.parseJwt(tokens.accessToken);
     if (!payload || !payload.user) return;
-    this.localStorageService.accessToken.set(tokens.accessToken)
-    this.localStorageService.refreshToken.set(tokens.refreshToken)
     this.store.dispatch(saveUser({user: payload.user}));
   }
 }

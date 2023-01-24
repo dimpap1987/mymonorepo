@@ -1,8 +1,7 @@
-import {CanActivate, ExecutionContext, Injectable} from '@nestjs/common';
-import {Reflector} from '@nestjs/core';
-import {RolesEnum} from "@mymonorepo/shared/interfaces";
-import {AuthService} from "../services/auth.service";
-import {extractTokenFromHeaders} from "../utils/rest-utils";
+import { RolesEnum } from "@mymonorepo/shared/interfaces";
+import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
+import { Reflector } from '@nestjs/core';
+import { AuthService } from "../services/auth.service";
 
 @Injectable()
 export class RolesGuard implements CanActivate {
@@ -17,8 +16,8 @@ export class RolesGuard implements CanActivate {
     ]);
     if (!requiredRoles) return true;
 
-    const bearerToken = extractTokenFromHeaders(context.switchToHttp().getRequest().headers);
-    const payload = this.authService.verify(bearerToken);
+    const accessToken = context.switchToHttp().getRequest().cookies['accessToken'] 
+    const payload = this.authService.verify(accessToken);
 
     return requiredRoles.some((role) => payload.user?.roles?.includes(role));
   }
