@@ -1,6 +1,5 @@
 import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import {
   HttpClientModule,
   HttpClientXsrfModule,
@@ -13,6 +12,7 @@ import { SharedUiOnlineUsersModule } from '@mymonorepo/shared/ui/online-users';
 import {
   AppLoader,
   APP_ENVIRONMENT,
+  RequestInterceptor,
   ResponseInterceptor,
   SharedStateModule
 } from '@mymonorepo/shared/utils';
@@ -44,6 +44,7 @@ export function load(loader: AppLoader) {
   ],
   providers: [
     AppLoader,
+    { provide: HTTP_INTERCEPTORS, useClass: RequestInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ResponseInterceptor, multi: true },
     {
       provide: APP_INITIALIZER,

@@ -1,8 +1,10 @@
-import { CacheModule, Module } from '@nestjs/common';
+import { CacheModule, MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 
 import { AppController } from './controllers/app.controller';
 import { AuthController } from "./controllers/auth.controller";
 import { UserController } from "./controllers/user.controller";
+import { CorsMiddleware } from './middlewares/cors.middleware';
+import { CsrfMiddleware } from './middlewares/csrf.middleware';
 import { RolesGuard } from "./guards/roles-guard";
 import { WsGuard } from "./guards/ws-guard";
 import { AppService } from './services/app.service';
@@ -45,5 +47,10 @@ import { AppGateway } from "./websocket/app.gateway";
     JwtTokenService
   ],
 })
-export class AppModule {
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+    .apply(CorsMiddleware).forRoutes("/")
+    .apply(CsrfMiddleware).forRoutes("/")
+  }
 }

@@ -1,5 +1,6 @@
 import { RolesEnum } from "@mymonorepo/shared/interfaces";
-import { Controller, Post, UseGuards } from "@nestjs/common";
+import { Controller, Get, Post, UseGuards } from "@nestjs/common";
+import { get } from "http";
 import { HasRoles } from "../guards/has-roles.decorator";
 import { JwtAuthGuard } from "../guards/jwt-auth-guard";
 import { RolesGuard } from "../guards/roles-guard";
@@ -14,7 +15,22 @@ export class UserController {
   @UseGuards(JwtAuthGuard, RolesGuard)
   secure() {
     return {
-      message: "testing"
+      message: "Successfully Updated"
     }
+  }
+
+  @Get('')
+  getUsers() {
+    return [
+      {
+        username:"user1",
+      },
+      {
+        username:"user2",
+      },
+      {
+        username:"user3",
+      },
+    ]
   }
 }

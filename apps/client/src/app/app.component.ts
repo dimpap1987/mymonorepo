@@ -27,7 +27,10 @@ export class AppComponent implements OnInit {
     //   });
   }
 
-  clickMe() {
+  clickMePOST() {
     this.http.post("/api/v1/users/secure",{}).subscribe(res => console.log(res));
+  }
+  clickMeGET() {
+    this.http.get("/api/v1/users",).subscribe(res => console.log(res));
   }
 }

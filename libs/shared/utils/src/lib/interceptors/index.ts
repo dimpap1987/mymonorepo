@@ -1,2 +1,2 @@
-export * from './jwt-interceptor'
+export * from './request-interceptor'
 export * from './response-interceptor'
