@@ -28,9 +28,9 @@ export class AppComponent implements OnInit {
   }
 
   clickMePOST() {
-    this.http.post("/api/v1/users/secure",{}).subscribe(res => console.log(res));
+    this.http.post("//localhost:3333/api/v1/users/secure",{}).subscribe(res => console.log(res));
   }
   clickMeGET() {
-    this.http.get("/api/v1/users",).subscribe(res => console.log(res));
+    this.http.get("//localhost:3333/api/v1/users",).subscribe(res => console.log(res));
   }
 }
