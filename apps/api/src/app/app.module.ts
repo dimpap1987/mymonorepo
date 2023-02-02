@@ -4,7 +4,6 @@ import { AppController } from './controllers/app.controller';
 import { AuthController } from "./controllers/auth.controller";
 import { UserController } from "./controllers/user.controller";
 import { CorsMiddleware } from './middlewares/cors.middleware';
-import { CsrfMiddleware } from './middlewares/csrf.middleware';
 import { RolesGuard } from "./guards/roles-guard";
 import { WsGuard } from "./guards/ws-guard";
 import { AppService } from './services/app.service';
@@ -14,6 +13,8 @@ import { UserSessionCache } from "./services/user-session-cache";
 import { FacebookStrategy } from "./strategies/facebook-strategy";
 import { GoogleStrategy } from "./strategies/google-strategy";
 import { AppGateway } from "./websocket/app.gateway";
+import { CsrfValidatorMiddleware } from './middlewares/csrf-validator.middleware';
+import { CsrfGeneratorMiddleware } from './middlewares/csrf-generator.middleware';
 // import {ServeStaticModule} from '@nestjs/serve-static';
 // import {join} from 'path';
 // import {ConfigModule} from "@nestjs/config";
@@ -51,6 +52,7 @@ export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
     .apply(CorsMiddleware).forRoutes("/")
-    .apply(CsrfMiddleware).forRoutes("/")
+    .apply(CsrfValidatorMiddleware).forRoutes("/")
+    .apply(CsrfGeneratorMiddleware).forRoutes("/")
   }
 }

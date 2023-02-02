@@ -27,7 +27,6 @@ export class AuthController {
     const tokens = this.authService.handleLogin(req.user, ProvidersEnum.GOOGLE);
     res.cookie('accessToken', tokens.accessToken, { httpOnly: true });
     res.cookie('refreshToken', tokens.refreshToken, { httpOnly: true });
-    res.cookie('XSRF-TOKEN', req.csrfToken());
     res.redirect(AuthController.handleRedirectUrl());
   }
 
@@ -46,7 +45,6 @@ export class AuthController {
     );
     res.cookie('accessToken', tokens.accessToken, { httpOnly: true });
     res.cookie('refreshToken', tokens.refreshToken, { httpOnly: true });
-    res.cookie('XSRF-TOKEN', req.csrfToken());
     res.redirect(AuthController.handleRedirectUrl());
   }
 
@@ -57,7 +55,6 @@ export class AuthController {
       req.cookies?.refreshToken
     );
     res.cookie('accessToken', tokens.accessToken, { httpOnly: true });
-    res.cookie('XSRF-TOKEN', req.csrfToken());
     // check in order to refresh refresh token
     res.send({});
   }
