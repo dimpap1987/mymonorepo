@@ -1,14 +1,16 @@
-import { APP_INITIALIZER, NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
 import {
   HttpClientModule,
   HttpClientXsrfModule,
   HTTP_INTERCEPTORS
 } from '@angular/common/http';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { GoogleButtonModule } from '@mymonorepo/shared/ui/google-button';
 import { SharedUiNavbarModule } from '@mymonorepo/shared/ui/navbar';
 import { SharedUiOnlineUsersModule } from '@mymonorepo/shared/ui/online-users';
+import { SharedUiLoaderModule } from '@mymonorepo/shared/ui/loader';
 import {
   AppLoader,
   APP_ENVIRONMENT,
@@ -41,6 +43,8 @@ export function load(loader: AppLoader) {
       cookieName: 'XSRF-TOKEN',
       headerName: 'X-XSRF-TOKEN',
     }),
+    BrowserAnimationsModule,
+    SharedUiLoaderModule
   ],
   providers: [
     AppLoader,

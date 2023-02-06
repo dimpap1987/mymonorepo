@@ -20,6 +20,7 @@
         "libs/shared/ui/google-button/src/index.ts"
       ],
       "@mymonorepo/shared/ui/home": ["libs/shared/ui/home/src/index.ts"],
+      "@mymonorepo/shared/ui/loader": ["libs/shared/ui/loader/src/index.ts"],
       "@mymonorepo/shared/ui/login": ["libs/shared/ui/login/src/index.ts"],
       "@mymonorepo/shared/ui/navbar": ["libs/shared/ui/navbar/src/index.ts"],
       "@mymonorepo/shared/ui/online-users": [

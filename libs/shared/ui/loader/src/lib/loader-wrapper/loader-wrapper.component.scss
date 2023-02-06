@@ -1,0 +1,35 @@
+:host{
+  height: 100%;
+}
+
+.overlay {
+  position: absolute;
+  z-index: 10;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.spinner-wrapper {
+  display: flex;
+  justify-content: center;
+  justify-items: center;
+}
+
+.blurred {
+  filter: blur(0.1rem);
+}
+
+.disable-events {
+  pointer-events: none;
+}
+
+.wrapper {
+  transition: 0.6s filter linear;
+  transition: 0.6s -webkit-filter linear;
+  height: 100%;
+}
+
+.loaded-content {
+  height: 100%;
+}
