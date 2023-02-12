@@ -1,5 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Component, OnInit } from '@angular/core';
+import { LoaderService } from "@mymonorepo/shared/ui/loader";
 import { getUser, User, UserState } from "@mymonorepo/shared/utils";
 import { Store } from "@ngrx/store";
 import { Observable } from "rxjs";
@@ -13,7 +14,8 @@ export class AppComponent implements OnInit {
   user$: Observable<UserState> = this.store.select(getUser);
 
   constructor(private store: Store<{ user: User }>,
-              private http: HttpClient) {
+              private http: HttpClient,
+              private loader:LoaderService) {
   }
 
   ngOnInit(): void {
@@ -25,6 +27,13 @@ export class AppComponent implements OnInit {
     //       this.webSocketService.connect()
     //     }
     //   });
+    // setInterval(()=>{
+    //   this.loader.show();
+    // },2000)
+
+    // setInterval(()=>{
+    //   this.loader.hide();
+    // },4000)
   }
 
   clickMePOST() {
