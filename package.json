@@ -5,11 +5,9 @@
   "scripts": {
     "ng": "nx",
     "postinstall": "node ./decorate-angular-cli.js",
-    "start": "nx serve client && ng serve api",
-    "build": "nx build",
-    "test": "nx test",
-    "build-ci": "ng build --prod && ng build api",
-    "start-app": "node dist/apps/api/main.js"
+    "build:api": "nx run api:build:production",
+    "build:client": "nx run client:build:production",
+    "test": "nx test"
   },
   "private": true,
   "dependencies": {
