@@ -1,18 +1,16 @@
-import {Injectable} from '@angular/core';
-import {Observable} from "rxjs";
-import {isLogin} from "../../+state";
-import {Store} from "@ngrx/store";
-import {CanActivate, Router} from "@angular/router";
+import { Injectable } from '@angular/core'
+import { Observable } from 'rxjs'
+import { isLogin } from '../../+state'
+import { Store } from '@ngrx/store'
+import { CanActivate, Router } from '@angular/router'
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class LoginGuard implements CanActivate {
-
   isLoggedIn: Observable<boolean | undefined> = this.store.select(isLogin)
 
-  constructor(private store: Store, private route: Router) {
-  }
+  constructor(private store: Store, private route: Router) {}
 
   canActivate(): boolean | Promise<boolean> {
     return new Promise((resolve, reject) => {
@@ -20,7 +18,7 @@ export class LoginGuard implements CanActivate {
         if (loggedIn) {
           this.route.navigate(['/'])
         }
-        resolve(!loggedIn);
+        resolve(!loggedIn)
       })
     })
   }

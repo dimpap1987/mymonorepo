@@ -3,14 +3,14 @@ import {
   HttpHandler,
   HttpInterceptor,
   HttpRequest,
-  HttpStatusCode
-} from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
-import { catchError, Observable, throwError } from 'rxjs';
-import { mergeMap } from 'rxjs/operators';
-import { ConstantsClient } from '../contants/constants-client';
-import { AuthService } from '../services';
+  HttpStatusCode,
+} from '@angular/common/http'
+import { Injectable } from '@angular/core'
+import { Router } from '@angular/router'
+import { catchError, Observable, throwError } from 'rxjs'
+import { mergeMap } from 'rxjs/operators'
+import { ConstantsClient } from '../contants/constants-client'
+import { AuthService } from '../services'
 
 @Injectable()
 export class ResponseInterceptor implements HttpInterceptor {
@@ -20,10 +20,8 @@ export class ResponseInterceptor implements HttpInterceptor {
     return next
       .handle(request)
       .pipe(
-        catchError((error: HttpErrorResponse) =>
-          this.handleError(request, error, next)
-        )
-      );
+        catchError((error: HttpErrorResponse) => this.handleError(request, error, next))
+      )
   }
 
   private handleError(
@@ -35,9 +33,9 @@ export class ResponseInterceptor implements HttpInterceptor {
       error.status == HttpStatusCode.Unauthorized &&
       !request.url.includes(ConstantsClient.endpoints().api.refreshTokenUrl)
     ) {
-      return this.handleUnauthorizedResponse(request, next, error);
+      return this.handleUnauthorizedResponse(request, next, error)
     }
-    return throwError(() => error);
+    return throwError(() => error)
   }
 
   private handleUnauthorizedResponse(
@@ -47,18 +45,18 @@ export class ResponseInterceptor implements HttpInterceptor {
   ): any {
     return this.authService.fetchRefreshToken().pipe(
       mergeMap(() => {
-        request = this.authService.cloneRequestWithBearToken(request);
-        return next.handle(request);
+        request = this.authService.cloneRequestWithBearToken(request)
+        return next.handle(request)
       }),
       catchError(() => {
-        this.authService.logOut();
-        this.navigateToLoginPage();
-        return throwError(() => error);
+        this.authService.logOut()
+        this.navigateToLoginPage()
+        return throwError(() => error)
       })
-    );
+    )
   }
 
   private navigateToLoginPage(): void {
-    this.router.navigate([ConstantsClient.endpoints().ui.login]);
+    this.router.navigate([ConstantsClient.endpoints().ui.login])
   }
 }

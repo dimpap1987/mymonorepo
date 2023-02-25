@@ -1,1 +1,1 @@
-export * from './lib/shared-ui-navbar.module';
+export * from './lib/shared-ui-navbar.module'

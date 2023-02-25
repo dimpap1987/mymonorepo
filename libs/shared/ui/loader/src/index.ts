@@ -1,2 +1,2 @@
-export * from './lib/shared-ui-loader.module';
-export * from './lib/loader.service';
+export * from './lib/shared-ui-loader.module'
+export * from './lib/loader.service'

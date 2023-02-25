@@ -1,9 +1,9 @@
-import { Injectable } from '@angular/core';
-import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { CookieService } from 'ngx-cookie-service';
-import { filter, map, mergeMap } from 'rxjs/operators';
-import { AuthService } from '../../services';
-import * as UserActions from './user.actions';
+import { Injectable } from '@angular/core'
+import { Actions, createEffect, ofType } from '@ngrx/effects'
+import { CookieService } from 'ngx-cookie-service'
+import { filter, map, mergeMap } from 'rxjs/operators'
+import { AuthService } from '../../services'
+import * as UserActions from './user.actions'
 
 @Injectable()
 export class UserEffects {
@@ -15,14 +15,14 @@ export class UserEffects {
 
   loadUser$ = createEffect(() =>
     this.actions$.pipe(
-      filter(()=> Boolean(this.cookieService.get('XSRF-TOKEN'))),
+      filter(() => Boolean(this.cookieService.get('XSRF-TOKEN'))),
       ofType(UserActions.loadUser),
       mergeMap(() => this.authService.session()),
-      map((payload) => {
+      map(payload => {
         return UserActions.saveUser({
           user: { ...payload.user, loggedIn: true },
-        });
+        })
       })
     )
-  );
+  )
 }

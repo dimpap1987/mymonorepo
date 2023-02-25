@@ -4,6 +4,8 @@
   "license": "MIT",
   "scripts": {
     "ng": "nx",
+    "start:client": "nx run client:serve",
+    "start:api": "nx run api:serve",
     "postinstall": "node ./decorate-angular-cli.js",
     "build:api": "nx run api:build:production",
     "build:client": "nx run client:build:production",

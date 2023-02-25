@@ -1,13 +1,12 @@
-import {NgModule} from "@angular/core";
-import {CommonModule} from "@angular/common";
-import {StoreModule} from "@ngrx/store";
-import {EffectsModule} from "@ngrx/effects";
-import {combinedReducers} from "./reducers";
-import {UserEffects} from "./user/user.effects";
-import {StoreDevtoolsModule} from "@ngrx/store-devtools";
+import { NgModule } from '@angular/core'
+import { CommonModule } from '@angular/common'
+import { StoreModule } from '@ngrx/store'
+import { EffectsModule } from '@ngrx/effects'
+import { combinedReducers } from './reducers'
+import { UserEffects } from './user/user.effects'
+import { StoreDevtoolsModule } from '@ngrx/store-devtools'
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import {environment} from "../../../../../../apps/client/src/environments/environment";
-
+import { environment } from '../../../../../../apps/client/src/environments/environment'
 
 @NgModule({
   declarations: [],
@@ -20,11 +19,8 @@ import {environment} from "../../../../../../apps/client/src/environments/enviro
         strictStateImmutability: true,
       },
     }),
-    EffectsModule.forRoot([
-      UserEffects,
-    ]),
-    !environment.production ? StoreDevtoolsModule.instrument() : []
+    EffectsModule.forRoot([UserEffects]),
+    !environment.production ? StoreDevtoolsModule.instrument() : [],
   ],
 })
-export class SharedStateModule {
-}
+export class SharedStateModule {}

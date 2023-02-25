@@ -1,1 +1,1 @@
-export * from './lib/google-button.module';
+export * from './lib/google-button.module'

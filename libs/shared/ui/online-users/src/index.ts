@@ -1,1 +1,1 @@
-export * from './lib/shared-ui-online-users.module';
+export * from './lib/shared-ui-online-users.module'

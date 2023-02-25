@@ -1,11 +1,10 @@
-import {Injectable} from "@angular/core";
-import {ConstantsClient} from "../contants/constants-client";
+import { Injectable } from '@angular/core'
+import { ConstantsClient } from '../contants/constants-client'
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class LocalStorageService {
-
   accessToken = {
     set(accessToken: string) {
       if (accessToken) {
@@ -16,8 +15,8 @@ export class LocalStorageService {
       return localStorage.getItem(ConstantsClient.auth().accessToken)
     },
     remove() {
-      localStorage.removeItem(ConstantsClient.auth().accessToken);
-    }
+      localStorage.removeItem(ConstantsClient.auth().accessToken)
+    },
   }
 
   refreshToken = {
@@ -30,7 +29,7 @@ export class LocalStorageService {
       return localStorage.getItem(ConstantsClient.auth().refreshToken)
     },
     remove() {
-      localStorage.removeItem(ConstantsClient.auth().refreshToken);
-    }
+      localStorage.removeItem(ConstantsClient.auth().refreshToken)
+    },
   }
 }

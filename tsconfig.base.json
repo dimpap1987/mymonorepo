@@ -23,9 +23,7 @@
       "@mymonorepo/shared/ui/loader": ["libs/shared/ui/loader/src/index.ts"],
       "@mymonorepo/shared/ui/login": ["libs/shared/ui/login/src/index.ts"],
       "@mymonorepo/shared/ui/navbar": ["libs/shared/ui/navbar/src/index.ts"],
-      "@mymonorepo/shared/ui/online-users": [
-        "libs/shared/ui/online-users/src/index.ts"
-      ],
+      "@mymonorepo/shared/ui/online-users": ["libs/shared/ui/online-users/src/index.ts"],
       "@mymonorepo/shared/ui/theme": ["libs/shared/ui/theme/src/index.ts"],
       "@mymonorepo/shared/utils": ["libs/shared/utils/src/index.ts"]
     }

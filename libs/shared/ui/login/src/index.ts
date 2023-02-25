@@ -1,1 +1,1 @@
-export * from './lib/shared-ui-login.module';
+export * from './lib/shared-ui-login.module'

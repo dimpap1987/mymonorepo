@@ -3,34 +3,34 @@ import {
   JwtTokensInterface,
   ProvidersEnum,
   SessionInterface,
-} from '@mymonorepo/shared/interfaces';
+} from '@mymonorepo/shared/interfaces'
 import {
   HttpException,
   HttpStatus,
   Injectable,
   InternalServerErrorException,
-} from '@nestjs/common';
-import { JwtTokenService } from './jwt-token.service';
+} from '@nestjs/common'
+import { JwtTokenService } from './jwt-token.service'
 
 @Injectable()
 export class AuthService {
   constructor(private jwtService: JwtTokenService) {}
 
   createJwtToken(payload: JwtPayloadInterface): JwtTokensInterface {
-    const accessToken = this.createAccessToken(payload);
-    const refreshToken = this.createRefreshToken(payload);
+    const accessToken = this.createAccessToken(payload)
+    const refreshToken = this.createRefreshToken(payload)
     return {
       accessToken,
       refreshToken,
-    };
+    }
   }
 
   createAccessToken(payload: JwtPayloadInterface) {
-    return this.signToken(payload, 300*5); // 5 minutes
+    return this.signToken(payload, 300 * 5) // 5 minutes
   }
 
   createRefreshToken(payload: JwtPayloadInterface) {
-    return this.signToken(payload, 86400); // 1 day
+    return this.signToken(payload, 86400) // 1 day
   }
 
   verify(token): JwtPayloadInterface {
@@ -38,9 +38,9 @@ export class AuthService {
       return this.jwtService.verify(
         token,
         process.env.JWT_SECRET_KEY
-      ) as JwtPayloadInterface;
+      ) as JwtPayloadInterface
     } catch (e) {
-      throw new HttpException('UNAUTHORIZED', HttpStatus.UNAUTHORIZED);
+      throw new HttpException('UNAUTHORIZED', HttpStatus.UNAUTHORIZED)
     }
   }
 
@@ -48,23 +48,23 @@ export class AuthService {
     try {
       return this.jwtService.sign(payload, process.env.JWT_SECRET_KEY, {
         expiresIn: expiry,
-      });
+      })
     } catch (err) {
-      throw new InternalServerErrorException('createJwtToken', err.message);
+      throw new InternalServerErrorException('createJwtToken', err.message)
     }
   }
 
   handleSessionRequest(bearerToken): SessionInterface {
-    const payload = this.jwtService.extractPayloadWithoutExpAndIat(bearerToken);
+    const payload = this.jwtService.extractPayloadWithoutExpAndIat(bearerToken)
     return {
       user: payload.user,
-    };
+    }
   }
 
   handleRefreshTokenRequest(bearerToken): JwtTokensInterface {
-    this.verify(bearerToken);
-    const payload = this.jwtService.extractPayloadWithoutExpAndIat(bearerToken);
-    return this.createJwtToken(payload);
+    this.verify(bearerToken)
+    const payload = this.jwtService.extractPayloadWithoutExpAndIat(bearerToken)
+    return this.createJwtToken(payload)
   }
 
   handleLogin(userFromProvider, provider: ProvidersEnum): JwtTokensInterface {
@@ -73,7 +73,7 @@ export class AuthService {
       ...userFromProvider,
       roles: ['USER'],
       provider: provider,
-    };
-    return this.createJwtToken({ user: user });
+    }
+    return this.createJwtToken({ user: user })
   }
 }
