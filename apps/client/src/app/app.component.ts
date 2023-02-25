@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core'
 import { LoaderService } from '@mymonorepo/shared/ui/loader'
 import { getUser, User, UserState } from '@mymonorepo/shared/utils'
 import { Store } from '@ngrx/store'
-import { Observable } from 'rxjs'
+import { filter, Observable, take } from 'rxjs'
 
 @Component({
   selector: 'dp-app',
@@ -21,20 +21,20 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     // this.user$
-    // 	.pipe(
-    // 		filter(user => user.loggedIn),
-    // 		take(1)
-    // 	)
-    // 	.subscribe(user => {
-    // 		if (user?.loggedIn) {
-    // 			this.webSocketService.connect()
-    // 		}
-    // 	})
+    //   .pipe(
+    //     filter(user => true),
+    //     take(1)
+    //   )
+    //   .subscribe(user => {
+    //     if (user?.loggedIn) {
+    //       //  this.webSocketService.connect()
+    //     }
+    //   })
     // setInterval(() => {
-    // 	this.loader.show()
+    //   this.loader.show()
     // }, 2000)
     // setInterval(() => {
-    // 	this.loader.hide()
+    //   this.loader.hide()
     // }, 4000)
   }
 
