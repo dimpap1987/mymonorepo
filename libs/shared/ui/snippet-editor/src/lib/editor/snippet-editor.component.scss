@@ -2,3 +2,16 @@
   display: block;
   font-size: 1rem;
 }
+
+section {
+  position: relative;
+  img {
+    position: absolute;
+    right: 0;
+    z-index: 1;
+    &:hover {
+      cursor: pointer;
+      zoom: 1.2;
+    }
+  }
+}
