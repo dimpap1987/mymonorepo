@@ -1,6 +1,6 @@
 :host {
   display: block;
-  font-size: 1rem;
+  font-size: 0.85rem;
 }
 
 .copyButton-placeholder {
@@ -12,5 +12,15 @@
   background-color: #282c34;
   &:hover {
     cursor: pointer;
+  }
+}
+
+::ng-deep {
+  .cm-editor {
+    overflow: auto;
+    max-height: 400px;
+  }
+  .cm-content {
+    padding: 0 !important;
   }
 }

@@ -9,16 +9,34 @@ import { ProgrammingLanguage } from '@mymonorepo/shared/interfaces'
 export class LandingPageComponent implements OnInit {
   constructor() {}
 
-  pythonSnippet = `# Statically defined list
-  my_list = [2, 5, 6]
-  # Appending using slice assignment
-  my_list[len(my_list):] = [5]  # [2, 5, 6, 5]
-  # Appending using append()
-  my_list.append(9)  # [2, 5, 6, 5, 9]
-  # Appending using extend()
-  my_list.extend([-4])  # [2, 5, 6, 5, 9, -4]
-  # Appending using insert()
-  my_list.insert(len(my_list), 3)  # [2, 5, 6, 5, 9, -4, 3]`
+  pythonSnippet = `yusuke_power = {"Yusuke Urameshi": "Spirit Gun"}
+  hiei_power = {"Hiei": "Jagan Eye"}
+  powers = dict()
+  
+  # Brute force
+  for dictionary in (yusuke_power, hiei_power):
+      for key, value in dictionary.items():
+          powers[key] = value
+  
+  # Dictionary Comprehension
+  powers = {key: value for d in (yusuke_power, hiei_power) for key, value in d.items()}
+  
+  # Copy and update
+  powers = yusuke_power.copy()
+  powers.update(hiei_power)
+  
+  # Dictionary unpacking (Python 3.5+)
+  powers = {**yusuke_power, **hiei_power}
+  
+  # Backwards compatible function for any number of dicts
+  def merge_dicts(*dicts: dict):
+      merged_dict = dict()
+      for dictionary in dicts:
+          merge_dict.update(dictionary)
+      return merged_dict
+  
+  # Dictionary union operator (Python 3.9+ maybe?)
+  powers = yusuke_power | hiei_power`
 
   javascriptSnippet = `fetch('https://example.com/authenticate', {
     method: 'POST',
