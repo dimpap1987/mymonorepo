@@ -3,15 +3,14 @@
   font-size: 1rem;
 }
 
-section {
-  position: relative;
-  img {
-    position: absolute;
-    right: 0;
-    z-index: 1;
-    &:hover {
-      cursor: pointer;
-      zoom: 1.2;
-    }
+.copyButton-placeholder {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.7rem;
+  background-color: #282c34;
+  &:hover {
+    cursor: pointer;
   }
 }

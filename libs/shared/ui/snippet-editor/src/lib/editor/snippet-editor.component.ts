@@ -33,6 +33,9 @@ export class SnippetEditorComponent implements AfterViewInit {
   editorView: EditorView
   private editableExtension = EditorView.editable.of(false)
   private _isEditable = false
+  protected readonly copyPlaceHolder = 'Copy code'
+  protected readonly copiedPlaceHolder = 'Copied'
+  copyButtonPlaceholder = this.copyPlaceHolder
 
   constructor(private clipboard: Clipboard, private cdr: ChangeDetectorRef) {}
 
@@ -60,10 +63,15 @@ export class SnippetEditorComponent implements AfterViewInit {
 
   copySnippet() {
     this.clipboard.copy(this.getSnippetText())
+    this.copyButtonPlaceholder = this.copiedPlaceHolder
+    setTimeout(() => {
+      this.copyButtonPlaceholder = this.copyPlaceHolder
+      this.cdr.detectChanges()
+    }, 1500)
   }
 
   getSnippetText() {
-    return this.editorView.state.doc.toJSON().join('')
+    return this.editorView.state.doc.toJSON().join('\n')
   }
 
   protected isImageCopyIconsEnabled() {
