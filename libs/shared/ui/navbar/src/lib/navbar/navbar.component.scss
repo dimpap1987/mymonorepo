@@ -1,9 +1,16 @@
-@import "libs/shared/ui/theme/src/lib/styles/variables";
-@import "libs/shared/ui/theme/src/lib/styles/mix-in";
+@import 'libs/shared/ui/theme/src/lib/styles/variables';
+@import 'libs/shared/ui/theme/src/lib/styles/mix-in';
 
 @include keyframes-fade-in;
 
-.p-toolbar-group-left, .p-toolbar-group-right {
+:host {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 10;
+}
+.p-toolbar-group-left,
+.p-toolbar-group-right {
   @include animation-fade-in;
   color: $white-color;
 }
@@ -17,7 +24,7 @@
     gap: 1rem;
 
     .welcome {
-      font-size: .8rem;
+      font-size: 0.8rem;
     }
 
     .user-image {

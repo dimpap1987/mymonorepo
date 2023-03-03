@@ -25,6 +25,7 @@
       "@mymonorepo/shared/ui/online-users": ["libs/shared/ui/online-users/src/index.ts"],
       "@mymonorepo/shared/ui/snippet-editor": ["libs/shared/ui/snippet-editor/src/index.ts"],
       "@mymonorepo/shared/ui/theme": ["libs/shared/ui/theme/src/index.ts"],
+      "@mymonorepo/shared/ui/toolbar": ["libs/shared/ui/toolbar/src/index.ts"],
       "@mymonorepo/shared/utils": ["libs/shared/utils/src/index.ts"]
     }
   },

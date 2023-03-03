@@ -1,27 +1,34 @@
-<div style="padding: 15px">
-  <h2>Python</h2>
-  <dp-snippet-editor [lang]="getLang.PYTHON" [isEditable]="true" [text]="pythonSnippet"></dp-snippet-editor>
+<div class="side-bar">
+  <dp-menu></dp-menu>
 </div>
+<dp-loader-wrapper>
+  <div style="padding: 15px">
+    <h2>Python</h2>
+    <dp-snippet-editor [lang]="getLang.PYTHON" [isEditable]="true" [text]="pythonSnippet"></dp-snippet-editor>
+  </div>
 
-<div style="padding: 15px">
-  <h2>Javascript</h2>
-  <dp-snippet-editor
-    [lang]="getLang.JAVASCRIPT"
-    [isEditable]="true"
-    [text]="javascriptSnippet"></dp-snippet-editor>
-</div>
+  <div style="padding: 15px">
+    <h2>Javascript</h2>
+    <dp-snippet-editor
+      [lang]="getLang.JAVASCRIPT"
+      [isEditable]="true"
+      [text]="javascriptSnippet"></dp-snippet-editor>
+  </div>
 
-<div style="padding: 15px">
-  <h2>Java</h2>
-  <dp-snippet-editor [lang]="getLang.JAVA" [isEditable]="true" [text]="javaSnippet"></dp-snippet-editor>
-</div>
+  <div style="padding: 15px">
+    <h2>Java</h2>
+    <dp-snippet-editor [lang]="getLang.JAVA" [isEditable]="true" [text]="javaSnippet"></dp-snippet-editor>
+  </div>
 
-<div style="padding: 15px">
-  <h2>HTML</h2>
-  <dp-snippet-editor [lang]="getLang.HTML" [isEditable]="false" [text]="htmlSnippet"></dp-snippet-editor>
-</div>
+  <div style="padding: 15px">
+    <h2>HTML</h2>
+    <dp-snippet-editor [lang]="getLang.HTML" [isEditable]="false" [text]="htmlSnippet"></dp-snippet-editor>
+  </div>
 
-<div style="padding: 15px">
-  <h2>CSS</h2>
-  <dp-snippet-editor [lang]="getLang.CSS" [isEditable]="true" [text]="cssSnippet"></dp-snippet-editor>
-</div>
+  <div style="padding: 15px">
+    <h2>CSS</h2>
+    <dp-snippet-editor [lang]="getLang.CSS" [isEditable]="true" [text]="cssSnippet"></dp-snippet-editor>
+  </div>
+
+  <router-outlet></router-outlet>
+</dp-loader-wrapper>

@@ -16,10 +16,7 @@
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "options": {
-        "lintFilePatterns": [
-          "libs/shared/ui/login/**/*.ts",
-          "libs/shared/ui/login/**/*.html"
-        ]
+        "lintFilePatterns": ["libs/shared/ui/login/**/*.ts", "libs/shared/ui/login/**/*.html"]
       }
     }
   },

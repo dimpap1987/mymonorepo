@@ -1,16 +1,13 @@
-import {
-  HttpClientModule,
-  HttpClientXsrfModule,
-  HTTP_INTERCEPTORS,
-} from '@angular/common/http'
+import { HttpClientModule, HttpClientXsrfModule, HTTP_INTERCEPTORS } from '@angular/common/http'
 import { APP_INITIALIZER, NgModule } from '@angular/core'
 import { BrowserModule } from '@angular/platform-browser'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { RouterModule } from '@angular/router'
 import { GoogleButtonModule } from '@mymonorepo/shared/ui/google-button'
+import { SharedUiLoaderModule } from '@mymonorepo/shared/ui/loader'
 import { SharedUiNavbarModule } from '@mymonorepo/shared/ui/navbar'
 import { SharedUiOnlineUsersModule } from '@mymonorepo/shared/ui/online-users'
-import { SharedUiLoaderModule } from '@mymonorepo/shared/ui/loader'
+import { SharedUiToolbarModule } from '@mymonorepo/shared/ui/toolbar'
 import {
   AppLoader,
   APP_ENVIRONMENT,
@@ -45,6 +42,7 @@ export function load(loader: AppLoader) {
     }),
     BrowserAnimationsModule,
     SharedUiLoaderModule,
+    SharedUiToolbarModule,
   ],
   providers: [
     AppLoader,

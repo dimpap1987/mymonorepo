@@ -1,0 +1,40 @@
+::ng-deep {
+  .p-tieredmenu {
+    width: 100%;
+    padding: 0;
+    .p-submenu-list {
+      padding: 0;
+    }
+    .p-menuitem-link {
+      padding: 0.5rem 1rem;
+    }
+  }
+  .p-component {
+    font-size: 0.85rem;
+  }
+  .p-menuitem-icon {
+    font-size: 0.8rem !important;
+  }
+  .p-submenu-icon {
+    margin-left: 10px !important;
+  }
+  [root='root'] > ul > li > a > .p-menuitem-icon {
+    display: none;
+  }
+}
+
+@media (max-width: 450px) {
+  ::ng-deep {
+    [root='root'] > ul > li > a {
+      & > .p-menuitem-icon {
+        display: block;
+        margin-right: 0 !important;
+      }
+      & > .p-menuitem-text,
+      .p-submenu-icon {
+        display: none;
+        margin-left: 0 !important;
+      }
+    }
+  }
+}

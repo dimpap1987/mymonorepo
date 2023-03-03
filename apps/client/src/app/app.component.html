@@ -1,12 +1,5 @@
 <dp-navbar></dp-navbar>
-<dp-loader-wrapper>
-  <router-outlet></router-outlet>
-  <section style="display: flex; flex-direction: column;">
-    <button *ngIf="(user$ | async)?.loggedIn" (click)="clickMePOST()">
-      Post Request
-    </button>
-    <button *ngIf="(user$ | async)?.loggedIn" (click)="clickMeGET()">
-      Get Request
-    </button>
-  </section>
-</dp-loader-wrapper>
+<router-outlet></router-outlet>
+
+<!-- <button *ngIf="(user$ | async)?.loggedIn" (click)="clickMePOST()">Post Request</button>
+<button *ngIf="(user$ | async)?.loggedIn" (click)="clickMeGET()">Get Request</button> -->
