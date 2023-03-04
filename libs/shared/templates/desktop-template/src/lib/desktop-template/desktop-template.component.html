@@ -1,0 +1,11 @@
+<header class="navbar">
+  <ng-content select="[navbar]"></ng-content>
+</header>
+<section class="side-bar">
+  <ng-content select="[sidebar]"></ng-content>
+</section>
+<dp-loader-wrapper>
+  <div class="content">
+    <ng-content select="[content]"></ng-content>
+  </div>
+</dp-loader-wrapper>

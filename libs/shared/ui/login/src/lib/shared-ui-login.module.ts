@@ -1,8 +1,9 @@
-import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
-import { LoginPageComponent } from './login-page/login-page.component'
-import { GoogleButtonModule } from '@mymonorepo/shared/ui/google-button'
+import { NgModule } from '@angular/core'
 import { RouterModule, Routes } from '@angular/router'
+import { GoogleButtonModule } from '@mymonorepo/shared/ui/google-button'
+import { SharedUiNavbarModule } from '@mymonorepo/shared/ui/navbar'
+import { LoginPageComponent } from './login-page/login-page.component'
 
 const routes: Routes = [
   {
@@ -13,7 +14,7 @@ const routes: Routes = [
 ]
 
 @NgModule({
-  imports: [CommonModule, GoogleButtonModule, RouterModule.forChild(routes)],
+  imports: [CommonModule, GoogleButtonModule, RouterModule.forChild(routes), SharedUiNavbarModule],
   declarations: [LoginPageComponent],
   exports: [LoginPageComponent],
 })

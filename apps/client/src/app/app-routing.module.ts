@@ -1,5 +1,5 @@
-import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
+import { NgModule } from '@angular/core'
 import { RouterModule, Routes } from '@angular/router'
 import { ConstantsClient, LoginGuard } from '@mymonorepo/shared/utils'
 
@@ -7,8 +7,7 @@ const routes: Routes = [
   {
     path: ConstantsClient.endpoints().ui.login,
     canActivate: [LoginGuard],
-    loadChildren: () =>
-      import('@mymonorepo/shared/ui/login').then(m => m.SharedUiLoginModule),
+    loadChildren: () => import('@mymonorepo/shared/ui/login').then(m => m.SharedUiLoginModule),
   },
   {
     path: '',
@@ -24,9 +23,6 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [],
-  imports: [
-    CommonModule,
-    RouterModule.forRoot(routes, { initialNavigation: 'enabledNonBlocking' }),
-  ],
+  imports: [CommonModule, RouterModule.forRoot(routes, { initialNavigation: 'enabledNonBlocking' })],
 })
 export class AppRoutingModule {}

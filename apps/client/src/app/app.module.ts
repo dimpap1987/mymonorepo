@@ -3,11 +3,7 @@ import { APP_INITIALIZER, NgModule } from '@angular/core'
 import { BrowserModule } from '@angular/platform-browser'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { RouterModule } from '@angular/router'
-import { GoogleButtonModule } from '@mymonorepo/shared/ui/google-button'
-import { SharedUiLoaderModule } from '@mymonorepo/shared/ui/loader'
-import { SharedUiNavbarModule } from '@mymonorepo/shared/ui/navbar'
 import { SharedUiOnlineUsersModule } from '@mymonorepo/shared/ui/online-users'
-import { SharedUiToolbarModule } from '@mymonorepo/shared/ui/toolbar'
 import {
   AppLoader,
   APP_ENVIRONMENT,
@@ -15,7 +11,6 @@ import {
   ResponseInterceptor,
   SharedStateModule,
 } from '@mymonorepo/shared/utils'
-import { SocketIoModule } from 'ngx-socket-io'
 import { environment } from '../environments/environment'
 import { AppRoutingModule } from './app-routing.module'
 import { AppComponent } from './app.component'
@@ -29,20 +24,16 @@ export function load(loader: AppLoader) {
   imports: [
     BrowserModule,
     HttpClientModule,
-    GoogleButtonModule,
     AppRoutingModule,
     SharedStateModule,
-    SharedUiNavbarModule,
     RouterModule,
-    SocketIoModule,
+    // SocketIoModule,
     SharedUiOnlineUsersModule,
     HttpClientXsrfModule.withOptions({
       cookieName: 'XSRF-TOKEN',
       headerName: 'X-XSRF-TOKEN',
     }),
     BrowserAnimationsModule,
-    SharedUiLoaderModule,
-    SharedUiToolbarModule,
   ],
   providers: [
     AppLoader,
