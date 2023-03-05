@@ -10,7 +10,11 @@ const routes: Routes = [
     loadChildren: () => import('@mymonorepo/shared/ui/login').then(m => m.SharedUiLoginModule),
   },
   {
-    path: '',
+    path: 'browse',
+    redirectTo: 'snippets',
+  },
+  {
+    path: 'snippets',
     loadChildren: () => import('@mymonorepo/shared/ui/home').then(m => m.HomeModule),
   },
   {

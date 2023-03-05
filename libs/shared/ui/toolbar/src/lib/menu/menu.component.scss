@@ -1,3 +1,8 @@
+:host {
+  display: block;
+  padding-top: 0.2rem;
+}
+
 ::ng-deep {
   .p-tieredmenu {
     width: 100%;
@@ -9,15 +14,17 @@
     .p-menuitem-link {
       padding: 0.5rem 1rem;
     }
+    border: none;
   }
-  .p-component {
-    font-size: 0.85rem;
+  .p-submenu-list {
+    font-size: 0.85rem !important;
   }
   .p-menuitem-icon {
     font-size: 0.8rem !important;
   }
   .p-submenu-icon {
     margin-left: 10px !important;
+    font-size: 0.9rem !important;
   }
   [root='root'] > ul > li > a > .p-menuitem-icon {
     display: none;

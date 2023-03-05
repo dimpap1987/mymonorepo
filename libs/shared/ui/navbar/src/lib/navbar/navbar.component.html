@@ -1,19 +1,28 @@
 <p-toolbar>
   <div class="p-toolbar-group-left">
-    <a routerLink="/">
-<!--      <img src="./assets/shared/images//logo.png" class="navbar-logo" alt="">-->
-      <em title="Home" class="pi pi-home"></em>
-    </a>
+    <div class="navigation-logo">
+      <a routerLink="/">
+        <em title="Home" class="pi pi-home"></em>
+      </a>
+    </div>
+    <div class="navigation-list">
+      <a routerLink="/browse"> Browse </a>
+    </div>
   </div>
 
   <div class="p-toolbar-group-right right-wrapper">
-
     <div *ngIf="(user$ | async)?.loggedIn" class="user-details">
       <div class="welcome-message" *ngIf="(user$ | async)?.firstName">
-       <span class="welcome">Welcome , </span> <span class="user-email">{{(user$ | async)?.firstName}}</span>
+        <span class="welcome">Welcome , </span>
+        <span class="user-email">{{ (user$ | async)?.firstName }}</span>
       </div>
       <div *ngIf="(user$ | async)?.picture">
-        <img [title]="(user$ | async)?.firstName" class="user-image" [src]="(user$ | async)?.picture" alt="" referrerpolicy="no-referrer">
+        <img
+          [title]="(user$ | async)?.firstName"
+          class="user-image"
+          [src]="(user$ | async)?.picture"
+          alt=""
+          referrerpolicy="no-referrer" />
       </div>
     </div>
 
@@ -30,5 +39,4 @@
       </div>
     </div>
   </div>
-
 </p-toolbar>

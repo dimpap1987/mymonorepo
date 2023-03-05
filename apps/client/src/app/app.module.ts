@@ -2,6 +2,7 @@ import { HttpClientModule, HttpClientXsrfModule, HTTP_INTERCEPTORS } from '@angu
 import { APP_INITIALIZER, NgModule } from '@angular/core'
 import { BrowserModule } from '@angular/platform-browser'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
+import { SharedUiNavbarModule } from '@mymonorepo/shared/ui/navbar'
 import { SharedUiOnlineUsersModule } from '@mymonorepo/shared/ui/online-users'
 import {
   AppLoader,
@@ -32,6 +33,7 @@ export function load(loader: AppLoader) {
       headerName: 'X-XSRF-TOKEN',
     }),
     BrowserAnimationsModule,
+    SharedUiNavbarModule,
   ],
   providers: [
     AppLoader,

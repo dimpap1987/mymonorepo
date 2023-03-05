@@ -25,8 +25,8 @@ export class ConstantsClient {
       ui: {
         login: 'login',
         snippets: {
-          recent: 'snippets',
-          create: 'snippets/create',
+          recent: 'recent',
+          create: 'create',
         },
       },
     }

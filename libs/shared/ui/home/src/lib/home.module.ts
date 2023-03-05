@@ -5,7 +5,7 @@ import { SharedTemplatesDesktopTemplateModule } from '@mymonorepo/shared/templat
 import { SharedUiLoaderModule } from '@mymonorepo/shared/ui/loader'
 import { SharedUiNavbarModule } from '@mymonorepo/shared/ui/navbar'
 import { SharedUiToolbarModule } from '@mymonorepo/shared/ui/toolbar'
-import { ConstantsClient } from '@mymonorepo/shared/utils'
+import { ConstantsClient, LoggedInGuard } from '@mymonorepo/shared/utils'
 import { LandingPageComponent } from './landing-page/landing-page.component'
 
 const routes: Routes = [
@@ -24,6 +24,12 @@ const routes: Routes = [
           import('@mymonorepo/shared/ui/snippet-lib/create-snippet').then(
             m => m.SharedUiSnippetLibCreateSnippetModule
           ),
+        pathMatch: 'full',
+        canActivate: [LoggedInGuard],
+      },
+      {
+        path: '',
+        redirectTo: ConstantsClient.endpoints().ui.snippets.recent,
         pathMatch: 'full',
       },
     ],

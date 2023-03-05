@@ -8,5 +8,18 @@ body {
   min-width: 225px;
   background-color: $grey-theme-color;
   background-image: $back-ground-image--diagonal-lines;
-  font-family: 'Playfair Display', serif;
+}
+
+body,
+.p-component,
+.p-dropdown-label,
+.p-dropdown-item,
+.p-multiselect-label,
+.p-multiselect-token-label,
+.p-dialog-title,
+.p-overlaypanel-title,
+.p-listbox-label,
+.p-checkbox-label,
+.p-radiobutton-label {
+  font-family: $font-family--primary !important;
 }
