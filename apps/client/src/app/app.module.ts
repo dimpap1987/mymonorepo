@@ -2,7 +2,6 @@ import { HttpClientModule, HttpClientXsrfModule, HTTP_INTERCEPTORS } from '@angu
 import { APP_INITIALIZER, NgModule } from '@angular/core'
 import { BrowserModule } from '@angular/platform-browser'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { RouterModule } from '@angular/router'
 import { SharedUiOnlineUsersModule } from '@mymonorepo/shared/ui/online-users'
 import {
   AppLoader,
@@ -26,7 +25,6 @@ export function load(loader: AppLoader) {
     HttpClientModule,
     AppRoutingModule,
     SharedStateModule,
-    RouterModule,
     // SocketIoModule,
     SharedUiOnlineUsersModule,
     HttpClientXsrfModule.withOptions({

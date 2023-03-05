@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core'
+import { ConstantsClient } from '@mymonorepo/shared/utils'
 import { MenuItem } from 'primeng/api'
 
 @Component({
@@ -21,6 +22,12 @@ export class MenuComponent implements OnInit {
           {
             label: 'New',
             icon: 'pi pi-fw pi-plus',
+            routerLink: ConstantsClient.endpoints().ui.snippets.create,
+          },
+          {
+            label: 'Recently Added',
+            icon: 'pi pi-code',
+            routerLink: ConstantsClient.endpoints().ui.snippets.recent,
           },
         ],
       },

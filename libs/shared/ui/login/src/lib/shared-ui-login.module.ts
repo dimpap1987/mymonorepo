@@ -16,6 +16,6 @@ const routes: Routes = [
 @NgModule({
   imports: [CommonModule, GoogleButtonModule, RouterModule.forChild(routes), SharedUiNavbarModule],
   declarations: [LoginPageComponent],
-  exports: [LoginPageComponent],
+  exports: [LoginPageComponent, RouterModule],
 })
 export class SharedUiLoginModule {}

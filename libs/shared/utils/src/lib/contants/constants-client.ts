@@ -24,6 +24,10 @@ export class ConstantsClient {
       },
       ui: {
         login: 'login',
+        snippets: {
+          recent: 'snippets',
+          create: 'snippets/create',
+        },
       },
     }
   }
@@ -50,4 +54,5 @@ export interface ApiEndpoints {
 
 export interface UiEndpoints {
   login: string
+  snippets: any
 }

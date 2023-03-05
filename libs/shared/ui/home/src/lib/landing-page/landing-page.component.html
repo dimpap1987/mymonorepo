@@ -1,5 +1,7 @@
 <dp-desktop-template>
   <dp-navbar navbar></dp-navbar>
   <dp-menu sidebar></dp-menu>
-  <router-outlet content></router-outlet>
+  <ng-container content>
+    <router-outlet></router-outlet>
+  </ng-container>
 </dp-desktop-template>

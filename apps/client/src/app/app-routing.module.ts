@@ -12,7 +12,6 @@ const routes: Routes = [
   {
     path: '',
     loadChildren: () => import('@mymonorepo/shared/ui/home').then(m => m.HomeModule),
-    pathMatch: 'full',
   },
   {
     path: '**',
@@ -24,5 +23,6 @@ const routes: Routes = [
 @NgModule({
   declarations: [],
   imports: [CommonModule, RouterModule.forRoot(routes, { initialNavigation: 'enabledNonBlocking' })],
+  exports: [RouterModule],
 })
 export class AppRoutingModule {}

@@ -7,15 +7,14 @@ import { SnippetsListComponent } from './snippets-list/snippets-list.component'
 const routes: Routes = [
   {
     path: '',
-    pathMatch: 'full',
     component: SnippetsListComponent,
   },
   { path: '*', redirectTo: '', pathMatch: 'full' },
 ]
 
 @NgModule({
-  imports: [CommonModule, RouterModule, RouterModule.forChild(routes), SharedUiSnippetEditorModule],
+  imports: [CommonModule, RouterModule.forChild(routes), SharedUiSnippetEditorModule],
   declarations: [SnippetsListComponent],
-  exports: [SnippetsListComponent],
+  exports: [SnippetsListComponent, RouterModule],
 })
 export class SharedUiSnippetsModule {}
