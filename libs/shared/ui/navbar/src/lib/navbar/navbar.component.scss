@@ -10,6 +10,11 @@
   width: 100%;
   z-index: 10;
 }
+::ng-deep {
+  .p-toolbar {
+    height: 100px !important;
+  }
+}
 .p-toolbar-group-left,
 .p-toolbar-group-right {
   @include animation-fade-in;
@@ -17,7 +22,7 @@
 }
 
 .navigation-logo {
-  padding-right: 5rem;
+  padding: 0 4rem;
 }
 
 .navigation-list {
