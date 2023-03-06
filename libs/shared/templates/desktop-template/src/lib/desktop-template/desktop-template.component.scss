@@ -24,18 +24,18 @@
 }
 
 // landing page
-@media (max-width: 450px) {
+@media (max-width: 640px) {
   :host {
     left: 47px;
     width: calc(100% - 47px);
     width: -webkit-fill-available;
   }
   .content {
-    left: 47px;
+    left: 0;
     width: calc(100% - 47px);
     width: -webkit-fill-available;
   }
   .side-bar {
-    width: 2rem;
+    display: none !important;
   }
 }

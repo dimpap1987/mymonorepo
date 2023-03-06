@@ -3,41 +3,46 @@
   padding-top: 0.2rem;
 }
 
+@mixin menu-underline {
+  position: absolute;
+  width: 80%;
+  height: 2px;
+  border-radius: 4px;
+  background-color: white;
+  bottom: 2px;
+  left: 10%;
+  transform-origin: right;
+  transition: transform 0.3s ease-in-out;
+}
+
 ::ng-deep {
-  // .p-tieredmenu {
-  //   width: 100%;
-  //   padding: 0;
-  //   .p-submenu-list {
-  //     padding: 0;
-  //     width: 160px;
-  //   }
-  //   .p-menuitem-link {
-  //     padding: 0.5rem 1rem;
-  //     border-radius: 2rem !important;
-  //   }
-  //   border: none;
-  // }
+  .p-panelmenu-header {
+    & > a[aria-expanded='true'] {
+      background: none !important;
+      &::before {
+        content: '';
+        @include menu-underline;
+        transform: scaleX(1);
+      }
+    }
+    a::before {
+      content: '';
+      @include menu-underline;
+      transform: scaleX(0);
+    }
+    a:hover::before {
+      transform-origin: left;
+      transform: scaleX(1);
+    }
+  }
+
   .p-submenu-list {
     font-size: 0.85rem !important;
   }
   .p-menuitem-icon {
     font-size: 0.8rem !important;
   }
-  // .p-submenu-icon {
-  //   margin-left: 10px !important;
-  //   font-size: 0.9rem !important;
-  // }
-  // [root='root'] > ul > li > a {
-  //   display: block !important;
-  //   text-align: center !important;
-  //   padding: 1rem 0 !important;
-  //   border-radius: 2rem !important;
-  //   & > .p-menuitem-icon {
-  //     display: none;
-  //   }
-  // }
 
-  //panel menu
   .p-panelmenu {
     .p-panelmenu-panel {
       box-shadow: none !important;
@@ -56,31 +61,6 @@
       .p-menuitem-icon {
         display: none;
       }
-    }
-  }
-}
-
-@media (max-width: 450px) {
-  ::ng-deep {
-    // [root='root'] > ul > li > a {
-    //   & > .p-menuitem-icon {
-    //     display: block;
-    //     margin-right: 0 !important;
-    //   }
-    //   & > .p-menuitem-text,
-    //   .p-panelmenu-header .p-submenu-icon {
-    //     display: none;
-    //     margin-left: 0 !important;
-    //   }
-    // }
-
-    //panel-menu
-    .p-menuitem-text,
-    .p-panelmenu-icon {
-      display: none;
-    }
-    .p-panelmenu-header .p-menuitem-icon {
-      display: block;
     }
   }
 }
