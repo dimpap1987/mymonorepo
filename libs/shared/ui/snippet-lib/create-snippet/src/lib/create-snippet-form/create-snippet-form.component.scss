@@ -1,7 +1,24 @@
 :host {
   display: block;
+  display: flex;
+  justify-content: center;
 }
 
-dp-snippet-editor {
-  margin-inline: auto;
+.snippet-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  justify-content: center;
+  padding-top: 1rem;
+  width: clamp(20rem, 80%, 50rem);
+}
+
+.form-snippet-container {
+  display: flex;
+  justify-content: center;
+}
+
+.form-button {
+  display: flex;
+  justify-content: end;
 }

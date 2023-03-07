@@ -7,6 +7,7 @@ import { css } from '@codemirror/lang-css'
 import { html } from '@codemirror/lang-html'
 import { java } from '@codemirror/lang-java'
 import { javascript } from '@codemirror/lang-javascript'
+import { markdown } from '@codemirror/lang-markdown'
 import { python } from '@codemirror/lang-python'
 
 import { Extension } from '@codemirror/state'
@@ -19,6 +20,7 @@ langs.set(ProgrammingLanguage.PYTHON, [python()])
 langs.set(ProgrammingLanguage.JAVA, [java()])
 langs.set(ProgrammingLanguage.HTML, [html()])
 langs.set(ProgrammingLanguage.CSS, [css()])
+langs.set(ProgrammingLanguage.MARKDOWN, [markdown()])
 
 @NgModule({
   imports: [CommonModule],

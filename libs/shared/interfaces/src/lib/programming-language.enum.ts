@@ -5,4 +5,5 @@ export enum ProgrammingLanguage {
   JAVA = 'JAVA',
   HTML = 'HTML',
   CSS = 'CSS',
+  MARKDOWN = 'MARKDOWN',
 }

@@ -1,9 +1,11 @@
 import { CommonModule } from '@angular/common'
 import { NgModule } from '@angular/core'
-import { FormsModule } from '@angular/forms'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { RouterModule, Routes } from '@angular/router'
 import { SharedUiSnippetEditorModule } from '@mymonorepo/shared/ui/snippet-editor'
 import { AutoCompleteModule } from 'primeng/autocomplete'
+import { ButtonModule } from 'primeng/button'
+import { InputTextModule } from 'primeng/inputtext'
 import { CreateSnippetFormComponent } from './create-snippet-form/create-snippet-form.component'
 
 const routes: Routes = [
@@ -21,6 +23,9 @@ const routes: Routes = [
     SharedUiSnippetEditorModule,
     AutoCompleteModule,
     FormsModule,
+    InputTextModule,
+    ButtonModule,
+    ReactiveFormsModule,
   ],
   declarations: [CreateSnippetFormComponent],
   exports: [CreateSnippetFormComponent, RouterModule],

@@ -1,6 +1,6 @@
-import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core'
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core'
+import { FormBuilder, Validators } from '@angular/forms'
 import { ProgrammingLanguage } from '@mymonorepo/shared/interfaces'
-import { SnippetEditorComponent } from 'libs/shared/ui/snippet-editor/src/lib/editor/snippet-editor.component'
 
 @Component({
   selector: 'dp-create-snippet-form',
@@ -9,26 +9,35 @@ import { SnippetEditorComponent } from 'libs/shared/ui/snippet-editor/src/lib/ed
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CreateSnippetFormComponent implements OnInit {
-  @ViewChild(SnippetEditorComponent) snippetEditor: SnippetEditorComponent
-
   suggestions: string[]
-  selectedLang: string
   langs: string[]
+  createSnippetForm = this.fb.group({
+    title: ['', Validators.required],
+    language: ['', Validators.required],
+    code: ['', Validators.required],
+  })
 
   get lang(): ProgrammingLanguage {
-    const lang = this.selectedLang?.toUpperCase() as keyof typeof ProgrammingLanguage
-    const proLang = ProgrammingLanguage[lang]
-    return proLang
+    const selectedLang = this.createSnippetForm?.get('language')?.value
+    const lang = selectedLang?.toUpperCase() as keyof typeof ProgrammingLanguage
+    return ProgrammingLanguage[lang]
   }
 
-  constructor() {}
+  constructor(private fb: FormBuilder) {}
 
   ngOnInit(): void {
-    this.langs = ['JavaScript', 'Java', 'TypeScript', 'Html']
+    this.langs = ['MarkDown', 'JavaScript', 'Java', 'TypeScript', 'Html']
   }
 
   search(event: any) {
     const input = event.query?.toUpperCase().trim() as keyof typeof ProgrammingLanguage
     this.suggestions = this.langs.filter(lang => lang.toUpperCase().startsWith(input))
+  }
+
+  onSubmit() {
+    if (this.createSnippetForm.valid) {
+      console.log('valid form!')
+    }
+    console.log(this.createSnippetForm.value)
   }
 }

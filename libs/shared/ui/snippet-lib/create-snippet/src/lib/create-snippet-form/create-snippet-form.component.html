@@ -1,11 +1,32 @@
-<p-autoComplete
-  [(ngModel)]="selectedLang"
-  [suggestions]="suggestions"
-  (completeMethod)="search($event)"
-  [dropdown]="true"
-  [showEmptyMessage]="true">
-</p-autoComplete>
+<form class="snippet-form" [formGroup]="createSnippetForm">
+  <div class="p-float-label p-inputtext-sm">
+    <input
+      id="float-input"
+      type="text"
+      pInputText
+      autocomplete="off"
+      formControlName="title"
+      required="true" />
+    <label for="float-input">Snippet title</label>
+  </div>
 
-<form class="form">
-  <dp-snippet-editor [isEditable]="true" [lang]="lang"> </dp-snippet-editor>
+  <p-autoComplete
+    [suggestions]="suggestions"
+    (completeMethod)="search($event)"
+    [dropdown]="true"
+    placeholder="Choose a language"
+    [maxlength]="15"
+    [required]="true"
+    [autofocus]="true"
+    [forceSelection]="true"
+    formControlName="language"
+    [showEmptyMessage]="true">
+  </p-autoComplete>
+
+  <div class="form-snippet-container">
+    <dp-snippet-editor formControlName="code" [isEditable]="true" [lang]="lang"> </dp-snippet-editor>
+  </div>
+  <div class="form-button">
+    <p-button label="Save" (onClick)="onSubmit()" [disabled]="createSnippetForm.invalid"></p-button>
+  </div>
 </form>

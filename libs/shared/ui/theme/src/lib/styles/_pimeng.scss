@@ -1,4 +1,6 @@
-.pi {
+.pi-sign-out,
+.pi-sign-in,
+.pi-home {
   font-size: 1.4rem !important;
 }
 
@@ -6,4 +8,45 @@
   min-height: 4rem;
   padding: 0.6rem !important;
   border-radius: unset !important;
+}
+
+.p-autocomplete {
+  height: 2.1rem;
+  width: 100%;
+
+  button.p-autocomplete-dropdown {
+    width: 1rem;
+    border-radius: 0 0.8em 0.8em 0 !important;
+  }
+  .pi-chevron-down:before {
+    content: '\e902';
+    font-size: 1rem;
+    inset: 0;
+    position: absolute;
+    top: 30%;
+  }
+  .p-autocomplete-panel .p-autocomplete-items .p-autocomplete-item {
+    padding: 0.6rem 1rem;
+  }
+}
+
+.p-inputtext-sm {
+  .p-inputtext {
+    padding: 0.46rem 0.875rem !important;
+    width: 100%;
+  }
+}
+
+button.p-button {
+  letter-spacing: 0.05em !important;
+  border-radius: 0.48em !important;
+  padding: 0.54rem 0.8rem;
+  // &:hover {
+  //   background: linear-gradient(to right, var(--primary-color), #8b1f80) !important;
+  // }
+}
+
+button[icon='pi pi-google'],
+button[icon='pi pi-facebook'] {
+  border-radius: 50% !important;
 }
