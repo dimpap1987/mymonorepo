@@ -1,6 +1,7 @@
 :host {
   display: block;
   font-size: 0.85rem;
+  max-width: 640px;
 }
 
 .copyButton-placeholder {
@@ -19,6 +20,7 @@
   .cm-editor {
     overflow: auto;
     max-height: 400px;
+    min-height: 100px;
   }
   .cm-content {
     padding: 0 !important;

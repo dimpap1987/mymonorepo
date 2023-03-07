@@ -8,7 +8,7 @@ import {
   Input,
   ViewChild,
 } from '@angular/core'
-import { EditorState, Extension } from '@codemirror/state'
+import { EditorState, Extension, StateEffect } from '@codemirror/state'
 import { oneDark } from '@codemirror/theme-one-dark'
 import { highlightSpecialChars } from '@codemirror/view'
 import { ProgrammingLanguage } from '@mymonorepo/shared/interfaces'
@@ -16,14 +16,34 @@ import { basicSetup, EditorView } from 'codemirror'
 import { langs } from '../shared-ui-snippet-editor.module'
 
 @Component({
-  selector: 'dp-snippet-editor[lang]', // type is required
+  selector: 'dp-snippet-editor',
   templateUrl: './snippet-editor.component.html',
   styleUrls: ['./snippet-editor.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SnippetEditorComponent implements AfterViewInit {
-  @Input() text = ``
-  @Input() lang: ProgrammingLanguage
+  @Input() text = `<Your code here>`
+  _lang: ProgrammingLanguage
+  @Input()
+  set lang(value) {
+    this._lang = value
+    const languageSupport = langs.get(this.lang) as Extension[]
+    if (this.editorView && languageSupport) {
+      this.editorView.dispatch({
+        effects: StateEffect.reconfigure.of([
+          basicSetup,
+          oneDark,
+          highlightSpecialChars(),
+          this.editableExtension,
+          EditorView.lineWrapping,
+          [...languageSupport],
+        ]),
+      })
+    }
+  }
+  get lang() {
+    return this._lang
+  }
   @Input()
   set isEditable(value: boolean) {
     this.editableExtension = EditorView.editable.of(value)
@@ -40,21 +60,7 @@ export class SnippetEditorComponent implements AfterViewInit {
   constructor(private clipboard: Clipboard, private cdr: ChangeDetectorRef) {}
 
   ngAfterViewInit(): void {
-    const languageSupport = langs.get(this.lang) as Extension[]
-    this.editorView = new EditorView({
-      state: EditorState.create({
-        doc: this.text,
-        extensions: [
-          basicSetup,
-          oneDark,
-          highlightSpecialChars(),
-          this.editableExtension,
-          EditorView.lineWrapping,
-          [...languageSupport],
-        ],
-      }),
-      parent: this.editorContainer.nativeElement,
-    })
+    this.editorView = this.initEditor(this.lang)
     // event handler for triggering change detection because we use ChangeDetectionStrategy.OnPush
     this.editorView.contentDOM.addEventListener('keyup', () => {
       this.cdr.detectChanges()
@@ -77,5 +83,23 @@ export class SnippetEditorComponent implements AfterViewInit {
   protected isImageCopyIconsEnabled() {
     const array = this.editorView?.state?.doc?.toJSON()
     return array?.length > 1 || array?.[0] != ''
+  }
+
+  private initEditor(lang: ProgrammingLanguage) {
+    const languageSupport = langs.get(lang) as Extension[]
+    return new EditorView({
+      state: EditorState.create({
+        doc: this.text,
+        extensions: [
+          basicSetup,
+          oneDark,
+          highlightSpecialChars(),
+          this.editableExtension,
+          EditorView.lineWrapping,
+          languageSupport ? [...languageSupport] : [],
+        ],
+      }),
+      parent: this.editorContainer?.nativeElement,
+    })
   }
 }

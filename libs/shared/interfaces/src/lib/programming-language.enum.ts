@@ -1,8 +1,8 @@
 export enum ProgrammingLanguage {
-  JAVASCRIPT,
-  TYPESCRIPT,
-  PYTHON,
-  JAVA,
-  HTML,
-  CSS,
+  JAVASCRIPT = 'JAVASCRIPT',
+  TYPESCRIPT = 'TYPESCRIPT',
+  PYTHON = 'PYTHON',
+  JAVA = 'JAVA',
+  HTML = 'HTML',
+  CSS = 'CSS',
 }
