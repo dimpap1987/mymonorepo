@@ -6,6 +6,8 @@ import { SharedUiSnippetEditorModule } from '@mymonorepo/shared/ui/snippet-edito
 import { AutoCompleteModule } from 'primeng/autocomplete'
 import { ButtonModule } from 'primeng/button'
 import { InputTextModule } from 'primeng/inputtext'
+import { MultiSelectModule } from 'primeng/multiselect'
+import { CreateSnippetFormService } from './create-snippet-form.service'
 import { CreateSnippetFormComponent } from './create-snippet-form/create-snippet-form.component'
 
 const routes: Routes = [
@@ -26,8 +28,10 @@ const routes: Routes = [
     InputTextModule,
     ButtonModule,
     ReactiveFormsModule,
+    MultiSelectModule,
   ],
   declarations: [CreateSnippetFormComponent],
   exports: [CreateSnippetFormComponent, RouterModule],
+  providers: [CreateSnippetFormService],
 })
 export class SharedUiSnippetLibCreateSnippetModule {}

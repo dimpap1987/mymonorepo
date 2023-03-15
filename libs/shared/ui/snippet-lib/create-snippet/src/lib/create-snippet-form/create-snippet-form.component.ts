@@ -1,19 +1,25 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core'
 import { FormBuilder, Validators } from '@angular/forms'
 import { ProgrammingLanguage } from '@mymonorepo/shared/interfaces'
+import { Observable } from 'rxjs'
+import { CreateSnippetFormService } from '../create-snippet-form.service'
 
 @Component({
   selector: 'dp-create-snippet-form',
   templateUrl: './create-snippet-form.component.html',
   styleUrls: ['./create-snippet-form.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.Default,
 })
 export class CreateSnippetFormComponent implements OnInit {
   suggestions: string[]
   langs: string[]
+  allLabels: Observable<any>
+
   createSnippetForm = this.fb.group({
     title: ['', Validators.required],
     language: ['', Validators.required],
+    description: [''],
+    labels: [[]],
     code: ['', Validators.required],
   })
 
@@ -23,10 +29,11 @@ export class CreateSnippetFormComponent implements OnInit {
     return ProgrammingLanguage[lang]
   }
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private createSnippetService: CreateSnippetFormService) {}
 
   ngOnInit(): void {
-    this.langs = ['MarkDown', 'JavaScript', 'Java', 'TypeScript', 'Html']
+    this.createSnippetService.fetchLangs().subscribe(langs => (this.langs = langs))
+    this.allLabels = this.createSnippetService.fetchLabels()
   }
 
   search(event: any) {

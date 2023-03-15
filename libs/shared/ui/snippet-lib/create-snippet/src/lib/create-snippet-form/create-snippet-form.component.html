@@ -10,6 +10,11 @@
     <label for="float-input">Snippet title</label>
   </div>
 
+  <div class="p-float-label p-inputtext-sm">
+    <input id="float-input" type="text" pInputText autocomplete="off" formControlName="description" />
+    <label for="float-input">Description</label>
+  </div>
+
   <p-autoComplete
     [suggestions]="suggestions"
     (completeMethod)="search($event)"
@@ -17,15 +22,28 @@
     placeholder="Choose a language"
     [maxlength]="15"
     [required]="true"
-    [autofocus]="true"
     [forceSelection]="true"
     formControlName="language"
     [showEmptyMessage]="true">
   </p-autoComplete>
 
+  <p-multiSelect
+    defaultLabel="Choose labels"
+    [options]="allLabels | async"
+    formControlName="labels"
+    display="chip"
+    [showTransitionOptions]="'0ms'"
+    [hideTransitionOptions]="'100ms'">
+  </p-multiSelect>
+
   <div class="form-snippet-container">
-    <dp-snippet-editor formControlName="code" [isEditable]="true" [lang]="lang"> </dp-snippet-editor>
+    <dp-snippet-editor
+      formControlName="code"
+      [required]="true"
+      [isEditable]="true"
+      [lang]="lang"></dp-snippet-editor>
   </div>
+
   <div class="form-button">
     <p-button label="Save" (onClick)="onSubmit()" [disabled]="createSnippetForm.invalid"></p-button>
   </div>
