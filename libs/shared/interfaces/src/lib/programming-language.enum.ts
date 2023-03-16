@@ -6,4 +6,5 @@ export enum ProgrammingLanguage {
   HTML = 'HTML',
   CSS = 'CSS',
   MARKDOWN = 'MARKDOWN',
+  SQL = 'SQL',
 }

@@ -1,9 +1,21 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, EventEmitter, OnInit, Output } from '@angular/core'
 import { FormBuilder, Validators } from '@angular/forms'
 import { ProgrammingLanguage } from '@mymonorepo/shared/interfaces'
 import { AutoComplete } from 'primeng/autocomplete'
 import { Observable } from 'rxjs'
 import { CreateSnippetFormService } from '../create-snippet-form.service'
+
+export interface FormSubmitInterface {
+  valid?: boolean
+  data?: {
+    title: string | unknown
+    language: string | unknown
+    description?: string | unknown
+    labels?: [] | unknown
+    isPublic: boolean | unknown
+    code: string | unknown
+  } | null
+}
 
 @Component({
   selector: 'dp-create-snippet-form',
@@ -11,6 +23,7 @@ import { CreateSnippetFormService } from '../create-snippet-form.service'
   styleUrls: ['./create-snippet-form.component.scss'],
 })
 export class CreateSnippetFormComponent implements OnInit {
+  @Output() formSubmit: EventEmitter<FormSubmitInterface> = new EventEmitter<FormSubmitInterface>()
   suggestions: string[]
   langs: string[]
   allLabels: Observable<any>
@@ -40,10 +53,23 @@ export class CreateSnippetFormComponent implements OnInit {
   }
 
   onSubmit() {
-    if (this.createSnippetForm.valid) {
-      console.log('valid form!')
-    }
-    console.log(this.createSnippetForm.value)
+    const { title, language, description, labels, isPublic, code } = this.createSnippetForm.value
+    const valid = this.createSnippetForm.valid
+    const data = valid
+      ? {
+          title: title,
+          language: language,
+          description: description,
+          labels: labels,
+          isPublic: isPublic,
+          code: code,
+        }
+      : null
+
+    this.formSubmit.emit({
+      valid: valid,
+      data: data,
+    })
   }
 
   get lang(): ProgrammingLanguage {
