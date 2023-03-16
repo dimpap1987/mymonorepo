@@ -1,40 +1,38 @@
 <form class="snippet-form" [formGroup]="createSnippetForm">
   <div class="p-float-label p-inputtext-sm">
-    <input
-      id="float-input"
-      type="text"
-      pInputText
-      autocomplete="off"
-      formControlName="title"
-      required="true" />
-    <label for="float-input">Snippet title</label>
+    <input id="title" type="text" pInputText autocomplete="off" formControlName="title" required="true" />
+    <label for="title">Snippet title *</label>
   </div>
 
   <div class="p-float-label p-inputtext-sm">
-    <input id="float-input" type="text" pInputText autocomplete="off" formControlName="description" />
-    <label for="float-input">Description</label>
+    <input id="description" type="text" pInputText autocomplete="off" formControlName="description" />
+    <label for="description">Description</label>
   </div>
 
-  <p-autoComplete
-    [suggestions]="suggestions"
-    (completeMethod)="search($event)"
-    [dropdown]="true"
-    placeholder="Choose a language"
-    [maxlength]="15"
-    [required]="true"
-    [forceSelection]="true"
-    formControlName="language"
-    [showEmptyMessage]="true">
-  </p-autoComplete>
+  <span class="p-float-label">
+    <p-autoComplete
+      [suggestions]="suggestions"
+      (completeMethod)="search($event)"
+      [dropdown]="true"
+      [maxlength]="15"
+      [required]="true"
+      [forceSelection]="true"
+      formControlName="language"
+      [showEmptyMessage]="true">
+    </p-autoComplete>
+    <label for="language">Choose a language *</label>
+  </span>
 
-  <p-multiSelect
-    defaultLabel="Choose labels"
-    [options]="allLabels | async"
-    formControlName="labels"
-    display="chip"
-    [showTransitionOptions]="'0ms'"
-    [hideTransitionOptions]="'100ms'">
-  </p-multiSelect>
+  <span class="p-float-label">
+    <p-multiSelect
+      [options]="allLabels | async"
+      formControlName="labels"
+      display="chip"
+      [showTransitionOptions]="'0ms'"
+      [hideTransitionOptions]="'100ms'">
+    </p-multiSelect>
+    <label for="labels">Choose labels</label>
+  </span>
 
   <div class="form-snippet-container">
     <dp-snippet-editor
@@ -44,7 +42,12 @@
       [lang]="lang"></dp-snippet-editor>
   </div>
 
+  <div>
+    <p-checkbox inputId="isPublic" formControlName="isPublic" [binary]="true" [value]="isPublic"></p-checkbox>
+    <label class="checkbox-public" for="isPublic">Make this snippet public</label>
+  </div>
+
   <div class="form-button">
-    <p-button label="Save" (onClick)="onSubmit()" [disabled]="createSnippetForm.invalid"></p-button>
+    <p-button label="Create snippet" (onClick)="onSubmit()" [disabled]="createSnippetForm.invalid"></p-button>
   </div>
 </form>

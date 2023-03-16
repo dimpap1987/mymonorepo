@@ -8,21 +8,15 @@ export class CreateSnippetFormService {
 
   fetchLabels() {
     return of([
-      { label: 'New York1', value: 'NY' },
-      { label: 'Rome1', value: 'RM' },
-      { label: 'London1', value: 'LDN' },
-      { label: 'Istanbul1', value: 'IST' },
-      { label: 'Paris1', value: 'PRS' },
-      { label: 'New York', value: 'NY1' },
-      { label: 'Rome', value: 'RM1' },
-      { label: 'London', value: 'LDN1' },
-      { label: 'Istanbul', value: 'IST1' },
-      { label: 'Paris', value: 'PRS1' },
-      { label: 'New York2', value: 'NY1' },
-      { label: 'Rome2', value: 'RM1' },
-      { label: 'London2', value: 'LDN1' },
-      { label: 'Istanbul2', value: 'IST1' },
-      { label: 'Paris2', value: 'PRS1' },
+      { label: 'label 1', value: '1' },
+      { label: 'label 2', value: '2' },
+      { label: 'label 3', value: '3' },
+      { label: 'label 4', value: '4' },
+      { label: 'label 5', value: '5' },
+      { label: 'label 6', value: '6' },
+      { label: 'label 7', value: '7' },
+      { label: 'label 8', value: '8' },
+      { label: 'label 9', value: '9' },
     ])
   }
 

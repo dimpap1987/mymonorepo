@@ -20,5 +20,19 @@
 
 .form-button {
   display: flex;
-  justify-content: end;
+  justify-content: center;
+
+  p-button {
+    width: 100%;
+  }
+}
+
+.checkbox-public {
+  margin-left: 0.5rem;
+  font-size: 0.9rem;
+}
+::ng-deep {
+  .p-autocomplete-input {
+    font-weight: 900 !important;
+  }
 }

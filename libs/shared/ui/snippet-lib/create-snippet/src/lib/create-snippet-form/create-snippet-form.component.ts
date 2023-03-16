@@ -16,18 +16,13 @@ export class CreateSnippetFormComponent implements OnInit {
   allLabels: Observable<any>
 
   createSnippetForm = this.fb.group({
-    title: ['', Validators.required],
-    language: ['', Validators.required],
-    description: [''],
-    labels: [[]],
+    title: ['', { validators: [Validators.required] }],
+    language: ['', { validators: [Validators.required] }],
+    description: [],
+    labels: [],
+    isPublic: [true],
     code: ['', Validators.required],
   })
-
-  get lang(): ProgrammingLanguage {
-    const selectedLang = this.createSnippetForm?.get('language')?.value
-    const lang = selectedLang?.toUpperCase() as keyof typeof ProgrammingLanguage
-    return ProgrammingLanguage[lang]
-  }
 
   constructor(private fb: FormBuilder, private createSnippetService: CreateSnippetFormService) {}
 
@@ -46,5 +41,15 @@ export class CreateSnippetFormComponent implements OnInit {
       console.log('valid form!')
     }
     console.log(this.createSnippetForm.value)
+  }
+
+  get lang(): ProgrammingLanguage {
+    const selectedLang = this.createSnippetForm?.get('language')?.value as string
+    const lang = selectedLang?.toUpperCase() as keyof typeof ProgrammingLanguage
+    return ProgrammingLanguage[lang]
+  }
+
+  get isPublic() {
+    return this.createSnippetForm?.get('isPublic')?.value
   }
 }

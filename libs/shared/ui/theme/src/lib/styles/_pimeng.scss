@@ -99,3 +99,18 @@ button[icon='pi pi-facebook'] {
     padding-top: 9.6px;
   }
 }
+.p-checkbox-icon.pi-check:before {
+  top: 8px !important;
+  left: 3px !important;
+}
+
+p-button button {
+  width: 100%;
+}
+
+input.ng-dirty.ng-invalid.p-inputtext,
+input.ng-touched.ng-invalid.p-inputtext,
+p-autocomplete.ng-touched.ng-invalid .p-autocomplete-dd-input[required] {
+  border: 1px solid red !important;
+  box-shadow: 0 0 5px 1px rgba(255, 0, 0, 0.2) inset !important;
+}

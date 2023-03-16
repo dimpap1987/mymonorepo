@@ -56,11 +56,15 @@
         }
         .p-menuitem-text {
           margin-left: auto !important;
+          font-weight: 700;
         }
       }
       .p-menuitem-icon {
         display: none;
       }
+    }
+    .p-menuitem .p-menuitem-link .p-menuitem-text {
+      font-weight: 600;
     }
   }
 }

@@ -5,6 +5,7 @@ import { RouterModule, Routes } from '@angular/router'
 import { SharedUiSnippetEditorModule } from '@mymonorepo/shared/ui/snippet-editor'
 import { AutoCompleteModule } from 'primeng/autocomplete'
 import { ButtonModule } from 'primeng/button'
+import { CheckboxModule } from 'primeng/checkbox'
 import { InputTextModule } from 'primeng/inputtext'
 import { MultiSelectModule } from 'primeng/multiselect'
 import { CreateSnippetFormService } from './create-snippet-form.service'
@@ -29,6 +30,7 @@ const routes: Routes = [
     ButtonModule,
     ReactiveFormsModule,
     MultiSelectModule,
+    CheckboxModule,
   ],
   declarations: [CreateSnippetFormComponent],
   exports: [CreateSnippetFormComponent, RouterModule],
