@@ -1,6 +1,7 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core'
+import { Component, OnInit } from '@angular/core'
 import { FormBuilder, Validators } from '@angular/forms'
 import { ProgrammingLanguage } from '@mymonorepo/shared/interfaces'
+import { AutoComplete } from 'primeng/autocomplete'
 import { Observable } from 'rxjs'
 import { CreateSnippetFormService } from '../create-snippet-form.service'
 
@@ -8,7 +9,6 @@ import { CreateSnippetFormService } from '../create-snippet-form.service'
   selector: 'dp-create-snippet-form',
   templateUrl: './create-snippet-form.component.html',
   styleUrls: ['./create-snippet-form.component.scss'],
-  changeDetection: ChangeDetectionStrategy.Default,
 })
 export class CreateSnippetFormComponent implements OnInit {
   suggestions: string[]
@@ -27,7 +27,10 @@ export class CreateSnippetFormComponent implements OnInit {
   constructor(private fb: FormBuilder, private createSnippetService: CreateSnippetFormService) {}
 
   ngOnInit(): void {
-    this.createSnippetService.fetchLangs().subscribe(langs => (this.langs = langs))
+    this.createSnippetService.fetchLangs().subscribe(langs => {
+      this.langs = langs
+      this.suggestions = langs
+    })
     this.allLabels = this.createSnippetService.fetchLabels()
   }
 
@@ -51,5 +54,11 @@ export class CreateSnippetFormComponent implements OnInit {
 
   get isPublic() {
     return this.createSnippetForm?.get('isPublic')?.value
+  }
+
+  onClickAutoComplete(ref: AutoComplete, e: Event) {
+    if (ref.value) return
+    ref.show()
+    e.stopPropagation()
   }
 }

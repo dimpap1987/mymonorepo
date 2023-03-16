@@ -1,7 +1,7 @@
 <form class="snippet-form" [formGroup]="createSnippetForm">
   <div class="p-float-label p-inputtext-sm">
     <input id="title" type="text" pInputText autocomplete="off" formControlName="title" required="true" />
-    <label for="title">Snippet title *</label>
+    <label for="title">Title *</label>
   </div>
 
   <div class="p-float-label p-inputtext-sm">
@@ -11,6 +11,7 @@
 
   <span class="p-float-label">
     <p-autoComplete
+      #ref
       [suggestions]="suggestions"
       (completeMethod)="search($event)"
       [dropdown]="true"
@@ -18,7 +19,8 @@
       [required]="true"
       [forceSelection]="true"
       formControlName="language"
-      [showEmptyMessage]="true">
+      [showEmptyMessage]="true"
+      (click)="onClickAutoComplete(ref, $event)">
     </p-autoComplete>
     <label for="language">Choose a language *</label>
   </span>
