@@ -20,6 +20,7 @@
       "@mymonorepo/shared/templates/desktop-template": [
         "libs/shared/templates/desktop-template/src/index.ts"
       ],
+      "@mymonorepo/shared/ui/dashboard": ["libs/shared/ui/dashboard/src/index.ts"],
       "@mymonorepo/shared/ui/google-button": ["libs/shared/ui/google-button/src/index.ts"],
       "@mymonorepo/shared/ui/home": ["libs/shared/ui/home/src/index.ts"],
       "@mymonorepo/shared/ui/loader": ["libs/shared/ui/loader/src/index.ts"],
@@ -30,6 +31,7 @@
       "@mymonorepo/shared/ui/snippet-lib/create-snippet": [
         "libs/shared/ui/snippet-lib/create-snippet/src/index.ts"
       ],
+      "@mymonorepo/shared/ui/snippet-manager": ["libs/shared/ui/snippet-manager/src/index.ts"],
       "@mymonorepo/shared/ui/snippets": ["libs/shared/ui/snippets/src/index.ts"],
       "@mymonorepo/shared/ui/theme": ["libs/shared/ui/theme/src/index.ts"],
       "@mymonorepo/shared/ui/toolbar": ["libs/shared/ui/toolbar/src/index.ts"],

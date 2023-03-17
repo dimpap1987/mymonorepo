@@ -19,6 +19,8 @@
 .p-toolbar-group-right {
   @include animation-fade-in;
   color: $white-color;
+  display: flex;
+  gap: 1rem;
 }
 
 .navigation-logo {

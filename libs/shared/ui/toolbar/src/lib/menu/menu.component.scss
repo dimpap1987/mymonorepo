@@ -55,7 +55,8 @@
           font-size: 0.8rem !important;
         }
         .p-menuitem-text {
-          margin-left: auto !important;
+          // margin-left: auto !important;
+          margin-inline: auto !important;
           font-weight: 700;
         }
       }
