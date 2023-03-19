@@ -13,6 +13,11 @@ export const sharedUiDashboardRoutes: Route[] = [
           import('@mymonorepo/shared/ui/snippet-manager').then(m => m.SharedUiSnippetManagerModule),
         canActivate: [LoggedInGuard],
       },
+      {
+        path: '**',
+        redirectTo: 'manage',
+        pathMatch: 'full',
+      },
     ],
   },
   {

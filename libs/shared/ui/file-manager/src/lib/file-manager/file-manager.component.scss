@@ -1,0 +1,74 @@
+::ng-deep {
+  .p-tree {
+    height: 100%;
+    padding: 0;
+    .p-treenode-children {
+      padding: 0 0 0 0.6rem;
+    }
+  }
+  .p-treenode {
+    :hover > .action-buttons {
+      display: flex;
+    }
+  }
+
+  .node-input:hover + .action-buttons {
+    display: none;
+  }
+
+  .p-tree-toggler {
+    width: 1rem !important;
+    height: 1rem !important;
+    margin-right: 0.2rem !important;
+  }
+  .pi,
+  .p-treenode-label {
+    font-size: 0.96rem !important;
+    white-space: nowrap;
+    padding: 0.15rem 0;
+    width: 100%;
+  }
+  .p-treenode-content {
+    padding: 0 !important;
+  }
+  .p-tree-container {
+    padding: 0.4rem !important;
+    height: 100%;
+  }
+  .p-tree-wrapper {
+    height: 100%;
+  }
+  .p-treenode-icon.pi {
+    width: 1rem !important;
+  }
+  .p-treenode,
+  .p-treenode-content {
+    padding: 0 !important;
+  }
+  .p-tree-toggler-icon {
+    font-size: 0.7rem !important;
+  }
+}
+
+.node-file-manager {
+  display: flex;
+  justify-content: space-between;
+}
+
+.action-buttons {
+  display: none;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+  button {
+    color: hsl(0 0% 62%);
+    background-color: transparent;
+    border: none;
+    :hover {
+      color: whitesmoke;
+    }
+  }
+}
+
+.node-input {
+  width: 100%;
+}

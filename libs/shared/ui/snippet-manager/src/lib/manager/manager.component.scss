@@ -1,3 +1,15 @@
 :host {
-  // display: block;
+  height: 100%;
+  display: flex;
+  gap: 2.5rem;
+}
+
+dp-file-manager {
+  min-width: 17rem;
+  max-width: 17rem;
+  height: auto;
+}
+
+dp-create-snippet-form {
+  width: 100%;
 }

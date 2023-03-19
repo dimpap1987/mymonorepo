@@ -5,7 +5,7 @@ import { FormSubmitInterface } from 'libs/shared/ui/snippet-lib/create-snippet/s
   selector: 'dp-manager',
   templateUrl: './manager.component.html',
   styleUrls: ['./manager.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.Default,
 })
 export class ManagerComponent implements OnInit {
   constructor() {}
