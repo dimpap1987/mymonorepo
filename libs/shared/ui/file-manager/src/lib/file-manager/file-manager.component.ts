@@ -22,10 +22,15 @@ export class FileManagerComponent implements OnInit, AfterViewInit {
 
   files: TreeNode[]
   selectedNode: TreeNode | undefined
+  workspaceInit: TreeNode = {
+    key: 'create-workspace',
+    expandedIcon: 'pi pi pi-code',
+    collapsedIcon: 'pi pi-code',
+    styleClass: 'workspace-node',
+  }
 
   constructor(private cdr: ChangeDetectorRef, private renderer: Renderer2) {
     this.renderer.listen('window', 'click', () => {
-      console.log('11')
       this.handleFolderSave(this.selectedNode)
     })
   }
@@ -43,17 +48,7 @@ export class FileManagerComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     //TODO fetch files from db . if null insert the above file
-    this.files = [
-      {
-        label: 'snippets',
-        key: 'base',
-        data: {
-          path: 'base',
-        },
-        expandedIcon: 'pi pi-folder-open',
-        collapsedIcon: 'pi pi-folder',
-      },
-    ]
+    this.files = []
   }
 
   nodeSelect(event: any) {
@@ -62,9 +57,6 @@ export class FileManagerComponent implements OnInit, AfterViewInit {
   }
 
   addFolder(event: Event) {
-    // event.stopPropagation()
-    console.log('addFolder', event)
-
     const obj = {
       key: 'folder-create',
       expandedIcon: 'pi pi-folder-open',
@@ -75,7 +67,6 @@ export class FileManagerComponent implements OnInit, AfterViewInit {
   }
 
   addFile(event: Event) {
-    // event.stopPropagation()
     const file = {
       key: 'folder-create',
       expandedIcon: 'pi pi-folder-open',
@@ -101,20 +92,15 @@ export class FileManagerComponent implements OnInit, AfterViewInit {
   }
 
   handleFolderSave(node: TreeNode | undefined) {
-    console.log(node)
     if (!node) {
       console.warn('Node is null')
       this.selectedNode = this.files[0]
-      // return
     }
-
     if (node?.key === 'folder-create' || node?.key === 'file-create') {
       if (node.label && node.label?.trim()?.length !== 0) {
         node.key = undefined
       } else {
-        //delete file
         this.handleDeleteFolderOrFile(node)
-        this.selectedNode = undefined
       }
       this.cdr.detectChanges()
     } else if (node?.key === 'file-rename') {
@@ -122,6 +108,13 @@ export class FileManagerComponent implements OnInit, AfterViewInit {
         node.label = node.data?.previousLabel
       }
       node.key = undefined
+      this.cdr.detectChanges()
+    } else if (node?.key === 'create-workspace') {
+      if (node.label && node.label?.trim()?.length !== 0) {
+        node.key = 'workspace'
+      } else {
+        this.handleDeleteFolderOrFile(node)
+      }
       this.cdr.detectChanges()
     }
   }
@@ -144,15 +137,17 @@ export class FileManagerComponent implements OnInit, AfterViewInit {
   }
 
   handleDeleteFolderOrFile(node: TreeNode | undefined) {
-    console.log('delete')
-
     if (!node) return
     node.key = 'folder-delete'
-    const nodes = node.parent?.children
-    if (!nodes) return
-    nodes.forEach((node: TreeNode, index: number) => {
-      if (node.key === 'folder-delete') nodes.splice(index, 1)
+    const nodes = node.parent?.children || this.files
+    nodes?.forEach((node: TreeNode, index: number) => {
+      if (node.key === 'folder-delete') nodes?.splice(index, 1)
     })
+    this.selectedNode = undefined
     this.cdr.detectChanges()
+  }
+
+  createWorkSpace() {
+    this.files.push({ ...this.workspaceInit })
   }
 }
