@@ -1,19 +1,9 @@
 ::ng-deep {
   .p-tree {
-    height: 100%;
     padding: 0;
     .p-treenode-children {
       padding: 0 0 0 0.6rem;
     }
-  }
-  .p-treenode {
-    :hover > .action-buttons {
-      display: flex;
-    }
-  }
-
-  .node-input:hover + .action-buttons {
-    display: none;
   }
 
   .p-tree-toggler {
@@ -21,7 +11,6 @@
     height: 1rem !important;
     margin-right: 0.2rem !important;
   }
-  .pi,
   .p-treenode-label {
     font-size: 0.96rem !important;
     white-space: nowrap;
@@ -32,7 +21,8 @@
     padding: 0 !important;
   }
   .p-tree-container {
-    padding: 0.4rem !important;
+    padding: 0 0.2rem !important;
+    overflow: scroll;
     height: 100%;
   }
   .p-tree-wrapper {
@@ -48,18 +38,24 @@
   .p-tree-toggler-icon {
     font-size: 0.7rem !important;
   }
+
+  .p-treenode-content.p-highlight {
+    min-width: fit-content;
+  }
 }
 
-.node-file-manager {
+.tree-header-container {
   display: flex;
-  justify-content: space-between;
+  justify-content: end;
+  padding: 0.5rem 0.5rem 0 0.5rem;
 }
 
 .action-buttons {
-  display: none;
+  display: flex;
+  justify-content: end;
   gap: 0.5rem;
-  font-size: 0.8rem;
-  button {
+  div button {
+    padding: 5px;
     color: hsl(0 0% 62%);
     background-color: transparent;
     border: none;
@@ -70,5 +66,5 @@
 }
 
 .node-input {
-  width: 100%;
+  width: 85%;
 }

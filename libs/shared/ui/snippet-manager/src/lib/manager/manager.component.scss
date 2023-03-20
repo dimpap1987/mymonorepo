@@ -5,9 +5,13 @@
 }
 
 dp-file-manager {
-  min-width: 17rem;
-  max-width: 17rem;
-  height: auto;
+  min-width: 18rem;
+  max-width: 18rem;
+  ::ng-deep {
+    .p-tree-wrapper {
+      height: 376px;
+    }
+  }
 }
 
 dp-create-snippet-form {
