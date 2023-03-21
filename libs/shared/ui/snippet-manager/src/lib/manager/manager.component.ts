@@ -15,4 +15,23 @@ export class ManagerComponent implements OnInit {
   handleSubmit(data: FormSubmitInterface) {
     console.log(data)
   }
+
+  workspaceCreated(event: any) {
+    console.log(event)
+  }
+  entityCreated(event: any) {
+    console.log(event)
+  }
+  entityRenamed(event: any) {
+    console.log(event)
+  }
+  entityDeleted(event: any) {
+    console.log(event)
+  }
+  dragDropEvent(event: any) {
+    console.log(event)
+  }
+  nodeSelectEvent(event: any) {
+    console.log(event)
+  }
 }

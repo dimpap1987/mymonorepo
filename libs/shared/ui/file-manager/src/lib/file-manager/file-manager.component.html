@@ -6,7 +6,8 @@
   droppableScope="self"
   selectionMode="single"
   [selection]="selectedNode"
-  (onNodeSelect)="nodeSelect($event)">
+  (onNodeSelect)="nodeSelect($event)"
+  (onNodeDrop)="dropNode($event)">
   <ng-template pTemplate="empty"></ng-template>
 
   <ng-template let-node pTemplate="header">
@@ -87,6 +88,7 @@
 
       <input
         #nodeInput
+        (keyup)="inputKeyUp($event)"
         *ngIf="
           node.key === 'folder-create' ||
           node.key === 'file-create' ||

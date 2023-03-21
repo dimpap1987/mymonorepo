@@ -10,7 +10,7 @@ export interface FormSubmitInterface {
   data?: {
     title: string | unknown
     language: string | unknown
-    description?: string | unknown
+    // description?: string | unknown
     labels?: [] | unknown
     isPublic: boolean | unknown
     code: string | unknown
@@ -29,13 +29,17 @@ export class CreateSnippetFormComponent implements OnInit {
   allLabels: Observable<any>
 
   createSnippetForm = this.fb.group({
-    title: ['', { validators: [Validators.required] }],
+    title: [''],
     language: ['', { validators: [Validators.required] }],
-    description: [],
+    // description: [],
     labels: [],
-    isPublic: [true],
+    isPublic: [false],
     code: ['', Validators.required],
   })
+
+  readonly titlePlaceholderNoRequired = 'Title'
+  readonly titleRequiredPlaceholder = 'Title *'
+  titlePlaceholder = this.titlePlaceholderNoRequired
 
   constructor(private fb: FormBuilder, private createSnippetService: CreateSnippetFormService) {}
 
@@ -53,13 +57,13 @@ export class CreateSnippetFormComponent implements OnInit {
   }
 
   onSubmit() {
-    const { title, language, description, labels, isPublic, code } = this.createSnippetForm.value
+    const { title, language, labels, isPublic, code } = this.createSnippetForm.value
     const valid = this.createSnippetForm.valid
     const data = valid
       ? {
           title: title,
           language: language,
-          description: description,
+          // description: description,
           labels: labels,
           isPublic: isPublic,
           code: code,
@@ -86,5 +90,18 @@ export class CreateSnippetFormComponent implements OnInit {
     if (ref.value) return
     ref.show()
     e.stopPropagation()
+  }
+
+  onChangeIsPublic() {
+    if (this.isPublic) {
+      this.createSnippetForm.get('title')?.setValidators(Validators.required)
+      this.createSnippetForm.get('title')?.updateValueAndValidity()
+      this.createSnippetForm.get('title')?.markAsDirty()
+      this.titlePlaceholder = this.titleRequiredPlaceholder
+    } else {
+      this.createSnippetForm.get('title')?.clearValidators()
+      this.createSnippetForm.get('title')?.updateValueAndValidity()
+      this.titlePlaceholder = this.titlePlaceholderNoRequired
+    }
   }
 }

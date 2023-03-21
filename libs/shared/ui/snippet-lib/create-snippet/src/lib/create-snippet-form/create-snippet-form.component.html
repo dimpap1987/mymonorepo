@@ -1,13 +1,13 @@
 <form class="snippet-form" [formGroup]="createSnippetForm">
   <div class="p-float-label p-inputtext-sm">
-    <input id="title" type="text" pInputText autocomplete="off" formControlName="title" required="true" />
-    <label for="title">Title *</label>
+    <input id="title" type="text" pInputText autocomplete="off" formControlName="title" />
+    <label for="title">{{ titlePlaceholder }}</label>
   </div>
 
-  <div class="p-float-label p-inputtext-sm">
+  <!-- <div class="p-float-label p-inputtext-sm">
     <input id="description" type="text" pInputText autocomplete="off" formControlName="description" />
     <label for="description">Description</label>
-  </div>
+  </div> -->
 
   <span class="p-float-label">
     <p-autoComplete
@@ -45,7 +45,13 @@
   </div>
 
   <div>
-    <p-checkbox inputId="isPublic" formControlName="isPublic" [binary]="true" [value]="isPublic"></p-checkbox>
+    <p-checkbox
+      inputId="isPublic"
+      formControlName="isPublic"
+      [binary]="true"
+      [value]="isPublic"
+      (onChange)="onChangeIsPublic()">
+    </p-checkbox>
     <label class="checkbox-public" for="isPublic">Make this snippet public</label>
   </div>
 

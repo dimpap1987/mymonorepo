@@ -1,2 +1,10 @@
-<dp-file-manager></dp-file-manager>
-<dp-create-snippet-form (formSubmit)="handleSubmit($event)"></dp-create-snippet-form>
+<dp-file-manager
+  (workspaceCreated)="workspaceCreated($event)"
+  (entityCreated)="entityCreated($event)"
+  (entityRenamed)="entityRenamed($event)"
+  (entityDeleted)="entityDeleted($event)"
+  (dragDropEvent)="dragDropEvent($event)"
+  (nodeSelectEvent)="nodeSelectEvent($event)">
+</dp-file-manager>
+
+<dp-create-snippet-form (formSubmit)="handleSubmit($event)"> </dp-create-snippet-form>

@@ -4,7 +4,9 @@ import {
   ChangeDetectorRef,
   Component,
   ElementRef,
+  EventEmitter,
   OnInit,
+  Output,
   QueryList,
   Renderer2,
   ViewChildren,
@@ -20,6 +22,13 @@ import { TreeNode } from 'primeng/api'
 export class FileManagerComponent implements OnInit, AfterViewInit {
   @ViewChildren('nodeInput') nodeInput: QueryList<ElementRef>
 
+  @Output() workspaceCreated: EventEmitter<any> = new EventEmitter<any>()
+  @Output() entityCreated: EventEmitter<any> = new EventEmitter<any>()
+  @Output() entityRenamed: EventEmitter<any> = new EventEmitter<any>()
+  @Output() entityDeleted: EventEmitter<any> = new EventEmitter<any>()
+  @Output() dragDropEvent: EventEmitter<any> = new EventEmitter<any>()
+  @Output() nodeSelectEvent: EventEmitter<any> = new EventEmitter<any>()
+
   files: TreeNode[]
   selectedNode: TreeNode | undefined
   workspaceInit: TreeNode = {
@@ -30,19 +39,16 @@ export class FileManagerComponent implements OnInit, AfterViewInit {
   }
 
   constructor(private cdr: ChangeDetectorRef, private renderer: Renderer2) {
-    this.renderer.listen('window', 'click', () => {
-      this.handleFolderSave(this.selectedNode)
+    this.renderer.listen('window', 'click', e => {
+      if (!e.target?.classList?.contains('node-input')) {
+        this.handleFolderOrFileExistence(this.selectedNode)
+      }
     })
   }
 
   ngAfterViewInit(): void {
     this.nodeInput.changes.subscribe(input => {
-      input.first?.nativeElement.focus()
-      input.first?.nativeElement?.addEventListener('keyup', (e: any) => {
-        if (e.key === 'Enter') {
-          this.handleFolderSave(this.selectedNode)
-        }
-      })
+      input.last?.nativeElement.focus()
     })
   }
 
@@ -52,25 +58,32 @@ export class FileManagerComponent implements OnInit, AfterViewInit {
   }
 
   nodeSelect(event: any) {
-    this.handleFolderSave(this.selectedNode)
+    if (!event.originalEvent?.target?.classList?.contains('node-input')) {
+      this.handleFolderOrFileExistence(this.selectedNode)
+    }
     this.selectedNode = event.node
+    this.nodeSelectEvent.emit({
+      nodeSelect: true,
+      selectedNode: this.selectedNode,
+    })
   }
 
   addFolder(event: Event) {
-    const obj = {
+    const obj: TreeNode = {
       key: 'folder-create',
       expandedIcon: 'pi pi-folder-open',
       collapsedIcon: 'pi pi-folder',
-      parent: undefined,
     }
     this.handleFolderFileCreation(obj)
   }
 
   addFile(event: Event) {
-    const file = {
-      key: 'folder-create',
-      expandedIcon: 'pi pi-folder-open',
-      collapsedIcon: 'pi pi-folder',
+    const file: TreeNode = {
+      key: 'file-create',
+      expandedIcon: 'pi pi-file',
+      collapsedIcon: 'pi pi-file',
+      leaf: true,
+      droppable: false,
     }
     this.handleFolderFileCreation(file)
   }
@@ -78,8 +91,13 @@ export class FileManagerComponent implements OnInit, AfterViewInit {
   renameFile() {
     setTimeout(() => {
       if (!this.selectedNode) return
+      const previousKey = this.selectedNode.key
       this.selectedNode.key = 'file-rename'
-      this.selectedNode.data = { ...this.selectedNode.data, previousLabel: this.selectedNode.label }
+      this.selectedNode.data = {
+        ...this.selectedNode.data,
+        previousLabel: this.selectedNode.label,
+        previousKey: previousKey,
+      }
       this.selectedNode.label = undefined
       this.cdr.detectChanges()
     }, 0)
@@ -88,17 +106,28 @@ export class FileManagerComponent implements OnInit, AfterViewInit {
   deleteFile() {
     setTimeout(() => {
       this.handleDeleteFolderOrFile(this.selectedNode)
+      this.entityDeleted.emit({
+        entityDeleted: true,
+        selectedNode: this.selectedNode,
+        files: this.files,
+      })
     }, 0)
   }
 
-  handleFolderSave(node: TreeNode | undefined) {
+  handleFolderOrFileExistence(node: TreeNode | undefined) {
     if (!node) {
       console.warn('Node is null')
       this.selectedNode = this.files[0]
     }
     if (node?.key === 'folder-create' || node?.key === 'file-create') {
       if (node.label && node.label?.trim()?.length !== 0) {
-        node.key = undefined
+        const key = 'folder-create' === node?.key ? 'folderCreated' : 'fileCreated'
+        this.entityCreated.emit({
+          [key]: true,
+          selectedNode: this.selectedNode,
+          files: this.files,
+        })
+        node.key = 'folder-create' === node?.key ? 'folder' : 'file'
       } else {
         this.handleDeleteFolderOrFile(node)
       }
@@ -106,12 +135,23 @@ export class FileManagerComponent implements OnInit, AfterViewInit {
     } else if (node?.key === 'file-rename') {
       if (!node.label || node.label?.trim()?.length === 0) {
         node.label = node.data?.previousLabel
+        node.key = node.data?.previousKey
+      } else {
+        node.key = node.data?.previousKey
+        this.entityRenamed.emit({
+          entityRenamed: true,
+          selectedNode: this.selectedNode,
+          files: this.files,
+        })
       }
-      node.key = undefined
       this.cdr.detectChanges()
     } else if (node?.key === 'create-workspace') {
       if (node.label && node.label?.trim()?.length !== 0) {
         node.key = 'workspace'
+        this.workspaceCreated.emit({
+          workspaceCreated: true,
+          files: this.files,
+        })
       } else {
         this.handleDeleteFolderOrFile(node)
       }
@@ -149,5 +189,20 @@ export class FileManagerComponent implements OnInit, AfterViewInit {
 
   createWorkSpace() {
     this.files.push({ ...this.workspaceInit })
+  }
+
+  dropNode(event: any) {
+    this.dragDropEvent.emit({
+      dragNode: event.dragNode,
+      dropNode: event.dropNode,
+      files: this.files,
+    })
+  }
+
+  inputKeyUp(event: any) {
+    if (event.key === 'Enter') {
+      this.handleFolderOrFileExistence(this.selectedNode)
+      this.cdr.detectChanges()
+    }
   }
 }

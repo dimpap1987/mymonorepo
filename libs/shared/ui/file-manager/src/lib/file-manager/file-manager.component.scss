@@ -1,6 +1,11 @@
+@import 'libs/shared/ui/theme/src/lib/styles/variables';
+
 ::ng-deep {
   .p-tree {
+    height: 100%;
+    background-color: $primary--terminal;
     padding: 0;
+    overflow: hidden;
     .p-treenode-children {
       padding: 0 0 0 0.6rem;
     }
@@ -71,12 +76,14 @@
 }
 
 .workspace-container {
-  padding-top: 0.8rem;
+  padding-top: 0.4rem;
   display: flex;
   justify-content: center;
   button {
     background-color: transparent;
     border: none;
+    padding: 0.5rem;
+    cursor: pointer;
   }
   .workspace {
     font-weight: 700;
