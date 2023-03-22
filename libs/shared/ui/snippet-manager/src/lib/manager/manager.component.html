@@ -1,10 +1,14 @@
-<dp-file-manager
-  (workspaceCreated)="workspaceCreated($event)"
-  (entityCreated)="entityCreated($event)"
-  (entityRenamed)="entityRenamed($event)"
-  (entityDeleted)="entityDeleted($event)"
-  (dragDropEvent)="dragDropEvent($event)"
-  (nodeSelectEvent)="nodeSelectEvent($event)">
-</dp-file-manager>
+<div class="container">
+  <dp-file-manager
+    [files]="files"
+    (workspaceCreated)="workspaceCreated($event)"
+    (entityCreated)="entityCreated($event)"
+    (entityRenamed)="entityRenamed($event)"
+    (entityDeleted)="entityDeleted($event)"
+    (dragDropEvent)="dragDropEvent($event)"
+    (nodeSelectEvent)="nodeSelectEvent($event)">
+  </dp-file-manager>
 
-<dp-create-snippet-form (formSubmit)="handleSubmit($event)"> </dp-create-snippet-form>
+  <dp-create-snippet-form *ngIf="showSnippetForm" (formSubmit)="handleSubmit($event)">
+  </dp-create-snippet-form>
+</div>

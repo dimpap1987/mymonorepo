@@ -5,7 +5,7 @@ import {
   Component,
   ElementRef,
   EventEmitter,
-  OnInit,
+  Input,
   Output,
   QueryList,
   Renderer2,
@@ -19,7 +19,9 @@ import { TreeNode } from 'primeng/api'
   styleUrls: ['./file-manager.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FileManagerComponent implements OnInit, AfterViewInit {
+export class FileManagerComponent implements AfterViewInit {
+  @Input()
+  files: TreeNode[]
   @ViewChildren('nodeInput') nodeInput: QueryList<ElementRef>
 
   @Output() workspaceCreated: EventEmitter<any> = new EventEmitter<any>()
@@ -29,18 +31,22 @@ export class FileManagerComponent implements OnInit, AfterViewInit {
   @Output() dragDropEvent: EventEmitter<any> = new EventEmitter<any>()
   @Output() nodeSelectEvent: EventEmitter<any> = new EventEmitter<any>()
 
-  files: TreeNode[]
   selectedNode: TreeNode | undefined
   workspaceInit: TreeNode = {
     key: 'create-workspace',
     expandedIcon: 'pi pi pi-code',
     collapsedIcon: 'pi pi-code',
     styleClass: 'workspace-node',
+    data: {
+      type: 'workspace',
+    },
   }
 
   constructor(private cdr: ChangeDetectorRef, private renderer: Renderer2) {
     this.renderer.listen('window', 'click', e => {
       if (!e.target?.classList?.contains('node-input')) {
+        console.log('1')
+
         this.handleFolderOrFileExistence(this.selectedNode)
       }
     })
@@ -52,20 +58,17 @@ export class FileManagerComponent implements OnInit, AfterViewInit {
     })
   }
 
-  ngOnInit(): void {
-    //TODO fetch files from db . if null insert the above file
-    this.files = []
-  }
-
   nodeSelect(event: any) {
     if (!event.originalEvent?.target?.classList?.contains('node-input')) {
       this.handleFolderOrFileExistence(this.selectedNode)
     }
     this.selectedNode = event.node
-    this.nodeSelectEvent.emit({
-      nodeSelect: true,
-      selectedNode: this.selectedNode,
-    })
+    if (this.selectedNode?.label) {
+      this.nodeSelectEvent.emit({
+        nodeSelect: true,
+        selectedNode: this.selectedNode,
+      })
+    }
   }
 
   addFolder(event: Event) {
@@ -73,6 +76,9 @@ export class FileManagerComponent implements OnInit, AfterViewInit {
       key: 'folder-create',
       expandedIcon: 'pi pi-folder-open',
       collapsedIcon: 'pi pi-folder',
+      data: {
+        type: 'folder',
+      },
     }
     this.handleFolderFileCreation(obj)
   }
@@ -84,6 +90,9 @@ export class FileManagerComponent implements OnInit, AfterViewInit {
       collapsedIcon: 'pi pi-file',
       leaf: true,
       droppable: false,
+      data: {
+        type: 'file',
+      },
     }
     this.handleFolderFileCreation(file)
   }
@@ -91,12 +100,10 @@ export class FileManagerComponent implements OnInit, AfterViewInit {
   renameFile() {
     setTimeout(() => {
       if (!this.selectedNode) return
-      const previousKey = this.selectedNode.key
       this.selectedNode.key = 'file-rename'
       this.selectedNode.data = {
         ...this.selectedNode.data,
         previousLabel: this.selectedNode.label,
-        previousKey: previousKey,
       }
       this.selectedNode.label = undefined
       this.cdr.detectChanges()
@@ -121,13 +128,14 @@ export class FileManagerComponent implements OnInit, AfterViewInit {
     }
     if (node?.key === 'folder-create' || node?.key === 'file-create') {
       if (node.label && node.label?.trim()?.length !== 0) {
-        const key = 'folder-create' === node?.key ? 'folderCreated' : 'fileCreated'
+        const type = 'folder-create' === node?.key ? 'folderCreated' : 'fileCreated'
+        this.setNodePath(node, node.parent)
         this.entityCreated.emit({
-          [key]: true,
+          [type]: true,
           selectedNode: this.selectedNode,
           files: this.files,
         })
-        node.key = 'folder-create' === node?.key ? 'folder' : 'file'
+        node.key = undefined
       } else {
         this.handleDeleteFolderOrFile(node)
       }
@@ -135,19 +143,19 @@ export class FileManagerComponent implements OnInit, AfterViewInit {
     } else if (node?.key === 'file-rename') {
       if (!node.label || node.label?.trim()?.length === 0) {
         node.label = node.data?.previousLabel
-        node.key = node.data?.previousKey
       } else {
-        node.key = node.data?.previousKey
         this.entityRenamed.emit({
           entityRenamed: true,
           selectedNode: this.selectedNode,
           files: this.files,
         })
       }
+      node.key = undefined
       this.cdr.detectChanges()
     } else if (node?.key === 'create-workspace') {
       if (node.label && node.label?.trim()?.length !== 0) {
-        node.key = 'workspace'
+        node.key = undefined
+        this.setNodePath(node, node.parent)
         this.workspaceCreated.emit({
           workspaceCreated: true,
           files: this.files,
@@ -197,6 +205,7 @@ export class FileManagerComponent implements OnInit, AfterViewInit {
       dropNode: event.dropNode,
       files: this.files,
     })
+    this.setNodePath(event.dragNode, event.dropNode)
   }
 
   inputKeyUp(event: any) {
@@ -204,5 +213,19 @@ export class FileManagerComponent implements OnInit, AfterViewInit {
       this.handleFolderOrFileExistence(this.selectedNode)
       this.cdr.detectChanges()
     }
+  }
+
+  private setNodePath(node: TreeNode, parent: TreeNode | undefined) {
+    let p1 = parent
+    let path = ''
+    while (p1) {
+      path = p1.label + '/' + path
+      p1 = p1.parent
+    }
+    node.data = {
+      ...node.data,
+      path: '/' + path + node.label,
+    }
+    return node
   }
 }

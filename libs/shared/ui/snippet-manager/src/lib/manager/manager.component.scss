@@ -1,7 +1,6 @@
 :host {
   height: 100%;
-  display: flex;
-  gap: 2.5rem;
+  display: block;
 }
 
 dp-file-manager {
@@ -11,4 +10,10 @@ dp-file-manager {
 
 dp-create-snippet-form {
   width: 100%;
+}
+
+.container {
+  height: 100%;
+  gap: 2.5rem;
+  display: flex;
 }

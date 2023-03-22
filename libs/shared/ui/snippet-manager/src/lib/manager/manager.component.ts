@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core'
 import { FormSubmitInterface } from 'libs/shared/ui/snippet-lib/create-snippet/src/lib/create-snippet-form/create-snippet-form.component'
+import { TreeNode } from 'primeng/api'
 
 @Component({
   selector: 'dp-manager',
@@ -8,9 +9,14 @@ import { FormSubmitInterface } from 'libs/shared/ui/snippet-lib/create-snippet/s
   changeDetection: ChangeDetectionStrategy.Default,
 })
 export class ManagerComponent implements OnInit {
+  files: TreeNode[]
+  showSnippetForm = false
+
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.files = []
+  }
 
   handleSubmit(data: FormSubmitInterface) {
     console.log(data)
