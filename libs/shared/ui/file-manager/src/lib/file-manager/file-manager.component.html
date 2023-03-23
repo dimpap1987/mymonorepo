@@ -11,7 +11,7 @@
   <ng-template pTemplate="empty"></ng-template>
 
   <ng-template let-node pTemplate="header">
-    <div *ngIf="!files || files.length === 0" class="workspace-container">
+    <div *ngIf="!showActionButtons()" class="workspace-container">
       <div>
         <button title="Create Workspace" (click)="createWorkSpace()">
           <span class="workspace">Create Workspace</span><em class="pi pi-plus"></em>
@@ -19,7 +19,7 @@
       </div>
     </div>
     <div class="action-buttons">
-      <div *ngIf="files && files.length > 0">
+      <div *ngIf="showActionButtons()">
         <button *ngIf="!selectedNode?.leaf" title="Create file" (click)="addFile($event)">
           <svg
             width="1em"

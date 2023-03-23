@@ -1,8 +1,14 @@
 @import 'libs/shared/ui/theme/src/lib/styles/variables';
 
+:host {
+  --workspace--height: 80px;
+}
+
 ::ng-deep {
   .p-tree {
-    height: 100%;
+    &:has(.workspace-node) {
+      height: 100%;
+    }
     background-color: $primary--terminal;
     padding: 0;
     overflow: hidden;
@@ -27,7 +33,7 @@
   }
   .p-tree-container {
     padding: 0 0.2rem !important;
-    overflow: scroll;
+    // overflow: scroll;
     height: 100%;
   }
   .p-tree-wrapper {
@@ -47,11 +53,31 @@
   .p-treenode-content.p-highlight {
     min-width: fit-content;
   }
-  .workspace-node {
-    font-weight: 800;
+  .workspace-node,
+  .workspace-init {
+    & > div {
+      font-weight: 800;
+      color: #ce93d8;
+    }
   }
   ul[role='group'] {
     font-weight: 100;
+  }
+  .p-tree-wrapper:has(.workspace-init) {
+    animation-duration: 0.3s;
+    animation-name: workspace-animation;
+    transition: height 0.3s;
+    height: var(--workspace--height);
+  }
+
+  .folder-node {
+    & > div[aria-expanded='true'] {
+      // color: darkgoldenrod;
+    }
+  }
+
+  .file-node {
+    color: #deae37 !important;
   }
 }
 
@@ -89,4 +115,13 @@
     font-weight: 700;
     margin-right: 0.5rem;
   }
+}
+
+@keyframes workspace-animation {
+  from {
+    height: 40px;
+  }
+}
+to {
+  height: var(--workspace--height);
 }

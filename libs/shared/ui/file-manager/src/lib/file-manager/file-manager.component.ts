@@ -36,7 +36,7 @@ export class FileManagerComponent implements AfterViewInit {
     key: 'create-workspace',
     expandedIcon: 'pi pi pi-code',
     collapsedIcon: 'pi pi-code',
-    styleClass: 'workspace-node',
+    styleClass: 'workspace-init',
     data: {
       type: 'workspace',
     },
@@ -45,8 +45,6 @@ export class FileManagerComponent implements AfterViewInit {
   constructor(private cdr: ChangeDetectorRef, private renderer: Renderer2) {
     this.renderer.listen('window', 'click', e => {
       if (!e.target?.classList?.contains('node-input')) {
-        console.log('1')
-
         this.handleFolderOrFileExistence(this.selectedNode)
       }
     })
@@ -76,6 +74,7 @@ export class FileManagerComponent implements AfterViewInit {
       key: 'folder-create',
       expandedIcon: 'pi pi-folder-open',
       collapsedIcon: 'pi pi-folder',
+      styleClass: 'folder-node',
       data: {
         type: 'folder',
       },
@@ -88,6 +87,7 @@ export class FileManagerComponent implements AfterViewInit {
       key: 'file-create',
       expandedIcon: 'pi pi-file',
       collapsedIcon: 'pi pi-file',
+      styleClass: 'file-node',
       leaf: true,
       droppable: false,
       data: {
@@ -155,6 +155,7 @@ export class FileManagerComponent implements AfterViewInit {
     } else if (node?.key === 'create-workspace') {
       if (node.label && node.label?.trim()?.length !== 0) {
         node.key = undefined
+        node.styleClass = 'workspace-node'
         this.setNodePath(node, node.parent)
         this.workspaceCreated.emit({
           workspaceCreated: true,
@@ -196,6 +197,9 @@ export class FileManagerComponent implements AfterViewInit {
   }
 
   createWorkSpace() {
+    if (this.files[0]?.key === 'create-workspace') {
+      return
+    }
     this.files.push({ ...this.workspaceInit })
   }
 
@@ -227,5 +231,12 @@ export class FileManagerComponent implements AfterViewInit {
       path: '/' + path + node.label,
     }
     return node
+  }
+
+  showActionButtons() {
+    if (this.files.length === 1) {
+      return this.files[0].key !== 'create-workspace'
+    }
+    return this.files.length > 0
   }
 }
