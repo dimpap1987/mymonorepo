@@ -2,11 +2,13 @@ import { HttpClientModule, HttpClientXsrfModule, HTTP_INTERCEPTORS } from '@angu
 import { APP_INITIALIZER, NgModule } from '@angular/core'
 import { BrowserModule } from '@angular/platform-browser'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
+import { RouteReuseStrategy } from '@angular/router'
 import { SharedUiNavbarModule } from '@mymonorepo/shared/ui/navbar'
 import { SharedUiOnlineUsersModule } from '@mymonorepo/shared/ui/online-users'
 import {
   AppLoader,
   APP_ENVIRONMENT,
+  DpReuseStrategy,
   RequestInterceptor,
   ResponseInterceptor,
   SharedStateModule,
@@ -48,6 +50,10 @@ export function load(loader: AppLoader) {
     {
       provide: APP_ENVIRONMENT,
       useValue: environment,
+    },
+    {
+      provide: RouteReuseStrategy,
+      useClass: DpReuseStrategy,
     },
   ],
   bootstrap: [AppComponent],
