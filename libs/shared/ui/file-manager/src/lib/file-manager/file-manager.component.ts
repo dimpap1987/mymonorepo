@@ -11,7 +11,7 @@ import {
   Renderer2,
   ViewChildren,
 } from '@angular/core'
-import { TreeNode } from 'primeng/api'
+import { ConfirmationService, TreeNode } from 'primeng/api'
 
 @Component({
   selector: 'dp-file-manager',
@@ -42,7 +42,11 @@ export class FileManagerComponent implements AfterViewInit {
     },
   }
 
-  constructor(private cdr: ChangeDetectorRef, private renderer: Renderer2) {
+  constructor(
+    private cdr: ChangeDetectorRef,
+    private renderer: Renderer2,
+    private confirmationService: ConfirmationService
+  ) {
     this.renderer.listen('window', 'click', e => {
       if (!e.target?.classList?.contains('node-input')) {
         this.handleFolderOrFileExistence(this.selectedNode)
@@ -112,11 +116,18 @@ export class FileManagerComponent implements AfterViewInit {
 
   deleteFile() {
     setTimeout(() => {
-      const deletedNode = this.handleDeleteFolderOrFile(this.selectedNode)
-      this.entityDeleted.emit({
-        entityDeleted: true,
-        deletedNode: deletedNode,
-        files: this.files,
+      this.confirmationService.confirm({
+        target: document.getElementById(`${this.selectedNode?.data?.path}`) as EventTarget,
+        message: `Proceed with deleting: "${this.selectedNode?.label}"?`,
+        icon: 'pi pi-exclamation-triangle',
+        accept: () => {
+          const deletedNode = this.handleDeleteFolderOrFile(this.selectedNode)
+          this.entityDeleted.emit({
+            entityDeleted: true,
+            deletedNode: deletedNode,
+            files: this.files,
+          })
+        },
       })
     }, 0)
   }

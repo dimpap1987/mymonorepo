@@ -55,7 +55,7 @@ button[icon='pi pi-facebook'] {
 
 .p-multiselect {
   width: 100%;
-  min-height: 2.07rem;
+  min-height: 2.6rem;
   .p-inputtext {
     padding: 0.5rem !important;
   }
@@ -117,4 +117,19 @@ input.ng-touched.ng-invalid.p-inputtext,
 p-autocomplete.ng-touched.ng-invalid .p-autocomplete-dd-input[required] {
   border: 1px solid red !important;
   box-shadow: 0 0 5px 1px rgba(255, 0, 0, 0.2) inset !important;
+}
+
+.p-confirm-popup .p-confirm-popup-content {
+  padding: 1rem 1.7rem !important;
+}
+
+.p-confirm-popup .p-confirm-popup-footer {
+  padding: 0.5rem 1.7rem !important;
+}
+
+.p-button.p-button-sm {
+  padding: 0.4rem !important;
+}
+.pi-exclamation-triangle:before {
+  color: tomato !important;
 }

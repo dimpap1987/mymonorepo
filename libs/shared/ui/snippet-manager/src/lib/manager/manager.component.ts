@@ -25,7 +25,71 @@ export class ManagerComponent implements OnInit {
   constructor(private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
-    this.files = []
+    this.files = [
+      {
+        expandedIcon: 'pi pi pi-code',
+        collapsedIcon: 'pi pi-code',
+        styleClass: 'workspace-node',
+        data: {
+          type: 'workspace',
+          path: '/workspace',
+        },
+        label: 'workspace',
+        expanded: true,
+        children: [
+          {
+            expandedIcon: 'pi pi-folder-open',
+            collapsedIcon: 'pi pi-folder',
+            styleClass: 'folder-node',
+            data: {
+              type: 'folder',
+              path: '/workspace/java',
+            },
+            label: 'java',
+            expanded: true,
+            children: [
+              {
+                expandedIcon: 'pi pi-file',
+                collapsedIcon: 'pi pi-file',
+                styleClass: 'file-node',
+                leaf: true,
+                droppable: false,
+                data: {
+                  type: 'file',
+                  path: '/workspace/java/App.java',
+                },
+                label: 'App.java',
+              },
+            ],
+          },
+          {
+            expandedIcon: 'pi pi-folder-open',
+            collapsedIcon: 'pi pi-folder',
+            styleClass: 'folder-node',
+            data: {
+              type: 'folder',
+              path: '/workspace/javascript',
+            },
+            label: 'javascript',
+            expanded: true,
+            children: [
+              {
+                expandedIcon: 'pi pi-file',
+                collapsedIcon: 'pi pi-file',
+                styleClass: 'file-node',
+                leaf: true,
+                droppable: false,
+                data: {
+                  type: 'file',
+                  path: '/workspace/javascript/app.js',
+                },
+                label: 'app.js',
+              },
+            ],
+          },
+        ],
+      },
+    ]
   }
 
   handleSubmit(data: FormSubmitInterface) {
