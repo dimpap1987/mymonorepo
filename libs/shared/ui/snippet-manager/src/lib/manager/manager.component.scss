@@ -1,3 +1,5 @@
+@import 'libs/shared/ui/theme/src/lib/styles/variables';
+
 :host {
   height: 100%;
   display: block;
@@ -16,4 +18,18 @@ dp-create-snippet-form {
   height: 100%;
   gap: 2.5rem;
   display: flex;
+}
+::ng-deep {
+  p-tabview {
+    width: 100%;
+  }
+  .p-tabview .p-tabview-nav li .p-tabview-nav-link {
+    padding: 0.5rem 1rem;
+    background-color: $primary--terminal !important;
+    color: white;
+    font-size: 0.86rem;
+  }
+  .pi-times:before {
+    font-size: 0.75rem;
+  }
 }

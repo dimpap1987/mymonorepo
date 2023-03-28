@@ -112,10 +112,10 @@ export class FileManagerComponent implements AfterViewInit {
 
   deleteFile() {
     setTimeout(() => {
-      this.handleDeleteFolderOrFile(this.selectedNode)
+      const deletedNode = this.handleDeleteFolderOrFile(this.selectedNode)
       this.entityDeleted.emit({
         entityDeleted: true,
-        selectedNode: this.selectedNode,
+        deletedNode: deletedNode,
         files: this.files,
       })
     }, 0)
@@ -144,9 +144,12 @@ export class FileManagerComponent implements AfterViewInit {
       if (!node.label || node.label?.trim()?.length === 0) {
         node.label = node.data?.previousLabel
       } else {
+        const previousNode = { ...this.selectedNode, label: node.data?.previousLabel }
+        this.setNodePath(node, node.parent)
         this.entityRenamed.emit({
           entityRenamed: true,
           selectedNode: this.selectedNode,
+          previousNode: previousNode,
           files: this.files,
         })
       }
@@ -192,8 +195,10 @@ export class FileManagerComponent implements AfterViewInit {
     nodes?.forEach((node: TreeNode, index: number) => {
       if (node.key === 'folder-delete') nodes?.splice(index, 1)
     })
+    const deletedNode = { ...this.selectedNode }
     this.selectedNode = undefined
     this.cdr.detectChanges()
+    return deletedNode
   }
 
   createWorkSpace() {
@@ -204,12 +209,21 @@ export class FileManagerComponent implements AfterViewInit {
   }
 
   dropNode(event: any) {
-    this.dragDropEvent.emit({
-      dragNode: event.dragNode,
-      dropNode: event.dropNode,
-      files: this.files,
+    const tree = this.searchNodeRecursion(this.files[0], {
+      ...event.dragNode,
+      data: {
+        ...event.dragNode.data,
+      },
     })
-    this.setNodePath(event.dragNode, event.dropNode)
+
+    if (tree) {
+      tree.data.previousPath = tree.data.path
+      tree.data.path = event.dropNode.data.path + '/' + tree.label
+      this.dragDropEvent.emit({
+        dragNode: tree,
+        files: this.files,
+      })
+    }
   }
 
   inputKeyUp(event: any) {
@@ -238,5 +252,16 @@ export class FileManagerComponent implements AfterViewInit {
       return this.files[0].key !== 'create-workspace'
     }
     return this.files.length > 0
+  }
+
+  searchNodeRecursion(tree: TreeNode, target: TreeNode) {
+    if (tree.data.path === target.data.path) return tree
+    if (tree.children) {
+      for (const child of tree.children) {
+        const found = this.searchNodeRecursion(child, target) as TreeNode
+        if (found) return found
+      }
+    }
+    return
   }
 }

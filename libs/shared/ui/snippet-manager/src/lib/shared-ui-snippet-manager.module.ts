@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core'
 import { RouterModule } from '@angular/router'
 import { SharedUiFileManagerModule } from '@mymonorepo/shared/ui/file-manager'
 import { SharedUiSnippetLibCreateSnippetModule } from '@mymonorepo/shared/ui/snippet-lib/create-snippet'
+import { TabViewModule } from 'primeng/tabview'
 import { sharedUiSnippetManagerRoutes } from './lib.routes'
 import { ManagerComponent } from './manager/manager.component'
 @NgModule({
@@ -11,6 +12,7 @@ import { ManagerComponent } from './manager/manager.component'
     RouterModule.forChild(sharedUiSnippetManagerRoutes),
     SharedUiSnippetLibCreateSnippetModule,
     SharedUiFileManagerModule,
+    TabViewModule,
   ],
   declarations: [ManagerComponent],
   exports: [ManagerComponent, RouterModule],

@@ -1,7 +1,14 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core'
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core'
 import { FormSubmitInterface } from 'libs/shared/ui/snippet-lib/create-snippet/src/lib/create-snippet-form/create-snippet-form.component'
 import { TreeNode } from 'primeng/api'
+import { TabView } from 'primeng/tabview'
 
+export interface TabManager {
+  title: string
+  path: string
+  index: number
+  fileDeleted?: boolean
+}
 @Component({
   selector: 'dp-manager',
   templateUrl: './manager.component.html',
@@ -9,10 +16,13 @@ import { TreeNode } from 'primeng/api'
   changeDetection: ChangeDetectionStrategy.Default,
 })
 export class ManagerComponent implements OnInit {
+  @ViewChild('tabView') tabView: TabView
   files: TreeNode[]
-  showSnippetForm = false
+  isSnippetFormDisplayed = false
+  tabs: TabManager[] = []
+  activeIndex = 0
 
-  constructor() {}
+  constructor(private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     this.files = []
@@ -25,19 +35,85 @@ export class ManagerComponent implements OnInit {
   workspaceCreated(event: any) {
     console.log(event)
   }
+
   entityCreated(event: any) {
     console.log(event)
+    this.createSnippetForm(event.selectedNode)
   }
+
   entityRenamed(event: any) {
     console.log(event)
+    this.handleRename(event)
   }
+
   entityDeleted(event: any) {
     console.log(event)
+    this.handleDelete(event)
   }
+
   dragDropEvent(event: any) {
-    console.log(event)
+    this.handleDragDrop(event)
   }
+
   nodeSelectEvent(event: any) {
     console.log(event)
+    this.createSnippetForm(event.selectedNode)
+  }
+
+  createSnippetForm(selectedNode: TreeNode) {
+    if (selectedNode?.data?.type === 'file') {
+      if (!this.tabs.some(tab => tab.path === selectedNode?.data?.path)) {
+        this.tabs.push({
+          title: selectedNode.label as string,
+          path: selectedNode.data.path,
+          index: this.tabs.length,
+        })
+      }
+      this.handleTabSelection(selectedNode)
+    }
+  }
+
+  private handleTabSelection(selectedNode: TreeNode) {
+    const tab = this.tabs.find((tab: TabManager) => tab.path === selectedNode.data.path)
+    if (tab) {
+      this.goToTab(tab.index)
+    }
+  }
+
+  private goToTab(tab: number) {
+    setTimeout(() => {
+      this.activeIndex = tab
+      this.cdr.detectChanges()
+    })
+  }
+
+  private handleRename(event: any) {
+    this.files = event.files
+    this.tabs.forEach(tab => {
+      if (tab.path === event.previousNode?.data?.path) {
+        tab.path = event.selectedNode?.data?.path
+        tab.title = event.selectedNode.label
+      }
+    })
+  }
+
+  private handleDragDrop(event: any) {
+    this.files = event.files
+    this.tabs.forEach(tab => {
+      if (tab.path === event.dragNode?.data?.previousPath) {
+        tab.path = event.dragNode?.data?.path
+      }
+    })
+  }
+
+  private handleDelete(event: any) {
+    this.files = event.files
+    //TODO hightlight it with red color when these files are open
+    // TODO check also if this file is included in a folder that has been deleted
+    this.tabs.forEach(tab => {
+      if (tab.path == event.deletedNode?.data?.path) {
+        tab.fileDeleted = true
+      }
+    })
   }
 }

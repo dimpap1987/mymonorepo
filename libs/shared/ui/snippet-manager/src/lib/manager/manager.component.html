@@ -9,6 +9,15 @@
     (nodeSelectEvent)="nodeSelectEvent($event)">
   </dp-file-manager>
 
-  <dp-create-snippet-form *ngIf="showSnippetForm" (formSubmit)="handleSubmit($event)">
-  </dp-create-snippet-form>
+  <p-tabView #tabView *ngIf="tabs.length > 0" [(activeIndex)]="activeIndex" [scrollable]="true">
+    <p-tabPanel *ngFor="let tab of tabs" [closable]="true">
+      <ng-template pTemplate="header">
+        <span *ngIf="tab.fileDeleted"
+          ><del style="color: rgb(202, 30, 30)">{{ tab.title }}</del></span
+        >
+        <span *ngIf="!tab.fileDeleted">{{ tab.title }}</span>
+      </ng-template>
+      <dp-create-snippet-form (formSubmit)="handleSubmit($event)"> </dp-create-snippet-form>
+    </p-tabPanel>
+  </p-tabView>
 </div>
