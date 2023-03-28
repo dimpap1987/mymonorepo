@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core'
-import { FormSubmitInterface } from 'libs/shared/ui/snippet-lib/create-snippet/src/lib/create-snippet-form/create-snippet-form.component'
+import { FormSubmitInterface } from '@mymonorepo/shared/ui/snippet-lib/create-snippet'
 import { TreeNode } from 'primeng/api'
 import { TabView } from 'primeng/tabview'
 
