@@ -23,11 +23,16 @@ dp-create-snippet-form {
   p-tabview {
     width: 100%;
   }
+  .p-tabview .p-tabview-panels {
+    padding: 0.8rem 0.2rem;
+  }
   .p-tabview .p-tabview-nav li .p-tabview-nav-link {
-    padding: 0.5rem 1rem;
+    padding: 0.5rem 0.6rem;
     background-color: $primary--terminal !important;
     color: white;
     font-size: 0.86rem;
+    border-right: rgba(255, 255, 255, 0.12) 1px solid;
+    border-radius: 5px;
   }
   .pi-times:before {
     font-size: 0.75rem;

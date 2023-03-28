@@ -62,6 +62,10 @@ button[icon='pi pi-facebook'] {
   .p-multiselect-panel .p-multiselect-header {
     padding: 0.5rem 0 0.5rem 1rem;
   }
+  .p-multiselect-panel .p-multiselect-items {
+    display: flex;
+    flex-wrap: wrap;
+  }
   .p-multiselect-items .p-multiselect-item {
     padding: 0.6rem 1rem !important;
     font-size: 0.9rem;
