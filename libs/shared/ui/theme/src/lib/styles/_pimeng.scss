@@ -1,3 +1,5 @@
+@import 'libs/shared/ui/theme/src/lib/styles/variables';
+
 .pi-sign-out,
 .pi-sign-in,
 .pi-home {
@@ -119,12 +121,15 @@ p-autocomplete.ng-touched.ng-invalid .p-autocomplete-dd-input[required] {
   box-shadow: 0 0 5px 1px rgba(255, 0, 0, 0.2) inset !important;
 }
 
-.p-confirm-popup .p-confirm-popup-content {
-  padding: 1rem 1.7rem !important;
-}
-
-.p-confirm-popup .p-confirm-popup-footer {
-  padding: 0.5rem 1.7rem !important;
+.p-confirm-popup {
+  padding: 0.5rem 1.2rem !important;
+  border: $purple 1px solid !important;
+  .p-confirm-popup-content {
+    padding: 1rem 1rem 1rem 0.3rem !important;
+  }
+  .p-confirm-popup-footer {
+    padding: 1rem 1rem 0.5rem 1rem !important;
+  }
 }
 
 .p-button.p-button-sm {

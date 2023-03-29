@@ -180,4 +180,8 @@ export class ManagerComponent implements OnInit {
       }
     })
   }
+
+  tabClose(event: any) {
+    this.tabs.splice(event.index, 1)
+  }
 }

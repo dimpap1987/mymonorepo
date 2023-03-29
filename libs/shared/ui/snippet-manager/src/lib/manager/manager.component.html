@@ -9,7 +9,12 @@
     (nodeSelectEvent)="nodeSelectEvent($event)">
   </dp-file-manager>
 
-  <p-tabView #tabView *ngIf="tabs.length > 0" [(activeIndex)]="activeIndex" [scrollable]="true">
+  <p-tabView
+    #tabView
+    *ngIf="tabs.length > 0"
+    [(activeIndex)]="activeIndex"
+    [scrollable]="true"
+    (onClose)="tabClose($event)">
     <p-tabPanel *ngFor="let tab of tabs" [closable]="true">
       <ng-template pTemplate="header">
         <span *ngIf="tab.fileDeleted"

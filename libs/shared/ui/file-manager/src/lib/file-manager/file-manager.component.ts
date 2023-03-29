@@ -116,20 +116,20 @@ export class FileManagerComponent implements AfterViewInit {
 
   deleteFile() {
     setTimeout(() => {
-      this.confirmationService.confirm({
+      this.confirm({
         target: document.getElementById(`${this.selectedNode?.data?.path}`) as EventTarget,
-        message: `Proceed with deleting: "${this.selectedNode?.label}"?`,
+        message: `Proceed with deleting : "${this.selectedNode?.label}" ?`,
         icon: 'pi pi-exclamation-triangle',
-        accept: () => {
-          const deletedNode = this.handleDeleteFolderOrFile(this.selectedNode)
-          this.entityDeleted.emit({
-            entityDeleted: true,
-            deletedNode: deletedNode,
-            files: this.files,
-          })
-        },
+      }).then(accept => {
+        if (!accept) return
+        const deletedNode = this.handleDeleteFolderOrFile(this.selectedNode)
+        this.entityDeleted.emit({
+          entityDeleted: true,
+          deletedNode: deletedNode,
+          files: this.files,
+        })
       })
-    }, 0)
+    })
   }
 
   handleFolderOrFileExistence(node: TreeNode | undefined) {
@@ -274,5 +274,22 @@ export class FileManagerComponent implements AfterViewInit {
       }
     }
     return
+  }
+
+  confirm({ target, message, icon }: any): Promise<boolean> {
+    return new Promise(resolve => {
+      this.confirmationService.confirm({
+        target: target,
+        message: message,
+        icon: icon,
+        accept: () => {
+          resolve(true)
+        },
+        reject: () => {
+          this.confirmationService.close()
+          resolve(false)
+        },
+      })
+    })
   }
 }
