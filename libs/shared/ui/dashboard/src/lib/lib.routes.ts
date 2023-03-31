@@ -8,7 +8,13 @@ export const sharedUiDashboardRoutes: Route[] = [
     component: DashboardComponent,
     children: [
       {
-        path: 'manage',
+        path: 'snippets',
+        loadChildren: () =>
+          import('@mymonorepo/shared/ui/dashboard-snippets').then(m => m.SharedUiDashboardSnippetsModule),
+        canActivate: [LoggedInGuard],
+      },
+      {
+        path: 'workspace',
         loadChildren: () =>
           import('@mymonorepo/shared/ui/snippet-manager').then(m => m.SharedUiSnippetManagerModule),
         canActivate: [LoggedInGuard],

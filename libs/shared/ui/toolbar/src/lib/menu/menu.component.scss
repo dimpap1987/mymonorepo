@@ -17,23 +17,23 @@
 
 ::ng-deep {
   .p-panelmenu-header {
-    & > a[aria-expanded='true'] {
-      background: none !important;
-      &::before {
-        content: '';
-        @include menu-underline;
-        transform: scaleX(1);
-      }
-    }
-    a::before {
-      content: '';
-      @include menu-underline;
-      transform: scaleX(0);
-    }
-    a:hover::before {
-      transform-origin: left;
-      transform: scaleX(1);
-    }
+    // & > a[aria-expanded='true'] {
+    //   background: none !important;
+    //   &::before {
+    //     content: '';
+    //     @include menu-underline;
+    //     transform: scaleX(1);
+    //   }
+    // }
+    // a::before {
+    //   content: '';
+    //   @include menu-underline;
+    //   transform: scaleX(0);
+    // }
+    // a:hover::before {
+    //   transform-origin: left;
+    //   transform: scaleX(1);
+    // }
   }
 
   .p-submenu-list {

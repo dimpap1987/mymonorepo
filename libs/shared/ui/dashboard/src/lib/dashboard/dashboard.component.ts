@@ -10,9 +10,14 @@ import { MenuItem } from 'primeng/api'
 export class DashboardComponent {
   menu: MenuItem[] = [
     {
-      label: 'Overview',
+      label: 'Workspace',
       // icon: 'pi pi-code',
-      routerLink: 'manage',
+      routerLink: 'workspace',
+    },
+    {
+      label: 'Snippets',
+      // icon: 'pi pi-code',
+      routerLink: 'snippets',
     },
   ]
 }

@@ -21,6 +21,7 @@
         "libs/shared/templates/desktop-template/src/index.ts"
       ],
       "@mymonorepo/shared/ui/dashboard": ["libs/shared/ui/dashboard/src/index.ts"],
+      "@mymonorepo/shared/ui/dashboard-snippets": ["libs/shared/ui/dashboard-snippets/src/index.ts"],
       "@mymonorepo/shared/ui/file-manager": ["libs/shared/ui/file-manager/src/index.ts"],
       "@mymonorepo/shared/ui/google-button": ["libs/shared/ui/google-button/src/index.ts"],
       "@mymonorepo/shared/ui/home": ["libs/shared/ui/home/src/index.ts"],

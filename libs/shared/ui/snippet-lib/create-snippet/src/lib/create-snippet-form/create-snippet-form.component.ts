@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core'
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
 import { FormBuilder, Validators } from '@angular/forms'
 import { ProgrammingLanguage } from '@mymonorepo/shared/interfaces'
 import { AutoComplete } from 'primeng/autocomplete'
@@ -23,18 +23,20 @@ export interface FormSubmitInterface {
   styleUrls: ['./create-snippet-form.component.scss'],
 })
 export class CreateSnippetFormComponent implements OnInit {
+  @Input() snippetPath: string
   @Output() formSubmit: EventEmitter<FormSubmitInterface> = new EventEmitter<FormSubmitInterface>()
   suggestions: string[]
   langs: string[]
   allLabels: Observable<any>
 
   createSnippetForm = this.fb.group({
-    title: [''],
+    title: [],
     language: ['', { validators: [Validators.required] }],
     // description: [],
     labels: [],
     isPublic: [false],
     code: ['', Validators.required],
+    path: [],
   })
 
   readonly titlePlaceholderNoRequired = 'Title'
