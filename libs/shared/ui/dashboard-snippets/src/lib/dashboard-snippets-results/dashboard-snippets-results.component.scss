@@ -1,0 +1,21 @@
+@import 'libs/shared/ui/theme/src/lib/styles/variables';
+
+:host {
+  display: block;
+}
+
+.no-snippets-result-container {
+  padding: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: $primary--terminal;
+  div:first-child {
+    font-size: 1.2rem;
+    font-weight: 900;
+  }
+  a {
+    margin: 2rem;
+  }
+}

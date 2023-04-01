@@ -1,0 +1,10 @@
+<section *ngIf="!snippets || snippets.length === 0; else elseBlock">
+  <div class="no-snippets-result-container">
+    <div>No snippets Found...</div>
+    <a pButton routerLink="/dashboard/snippets/create"> Create your first snippet </a>
+  </div>
+</section>
+
+<ng-template #elseBlock>
+  <!--Snippet results here -->
+</ng-template>

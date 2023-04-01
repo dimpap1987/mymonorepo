@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
 import { FormBuilder, Validators } from '@angular/forms'
 import { ProgrammingLanguage } from '@mymonorepo/shared/interfaces'
+import { SnippetTheme } from '@mymonorepo/shared/ui/snippet-editor'
 import { AutoComplete } from 'primeng/autocomplete'
 import { Observable } from 'rxjs'
 import { CreateSnippetFormService } from '../create-snippet-form.service'
@@ -24,6 +25,7 @@ export interface FormSubmitInterface {
 })
 export class CreateSnippetFormComponent implements OnInit {
   @Input() snippetPath: string
+  @Input() snippetTheme: SnippetTheme
   @Output() formSubmit: EventEmitter<FormSubmitInterface> = new EventEmitter<FormSubmitInterface>()
   suggestions: string[]
   langs: string[]

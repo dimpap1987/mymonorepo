@@ -1,0 +1,13 @@
+@import 'libs/shared/ui/theme/src/lib/styles/variables';
+
+:host {
+  display: block;
+  padding: 1rem;
+  background-color: $primary--terminal;
+  display: flex;
+  justify-content: center;
+}
+
+section {
+  width: clamp(20rem, 70%, 50rem);
+}

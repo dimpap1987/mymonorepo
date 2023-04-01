@@ -10,12 +10,14 @@ import {
   ViewChild,
 } from '@angular/core'
 import { NG_VALUE_ACCESSOR } from '@angular/forms'
-import { EditorState, Extension, StateEffect } from '@codemirror/state'
-import { oneDark } from '@codemirror/theme-one-dark'
+import { Compartment, EditorState, Extension, StateEffect } from '@codemirror/state'
 import { highlightSpecialChars } from '@codemirror/view'
 import { ProgrammingLanguage } from '@mymonorepo/shared/interfaces'
 import { basicSetup, EditorView } from 'codemirror'
 import { langs } from '../shared-ui-snippet-editor.module'
+import themes, { SnippetTheme } from '../themes/themes'
+
+const themeConfig = new Compartment()
 
 @Component({
   selector: 'dp-snippet-editor',
@@ -43,6 +45,7 @@ export class SnippetEditorComponent implements AfterViewInit {
           [...this.basicExtensions],
           this.editableExtension,
           [...languageSupport],
+          [this.snippetThemeExtension],
         ]),
       })
     }
@@ -54,6 +57,24 @@ export class SnippetEditorComponent implements AfterViewInit {
   set isEditable(value: boolean) {
     this.editableExtension = EditorView.editable.of(value)
   }
+
+  _snippetTheme: SnippetTheme
+  snippetThemeExtension: Extension = themes[0]
+  @Input()
+  set snippetTheme(snippetTheme: SnippetTheme) {
+    const theme = themes.find(t => t.name === snippetTheme) || themes[0]
+    this.snippetThemeExtension = theme.extension
+    if (this.editorView) {
+      this.editorView.dispatch({
+        effects: themeConfig.reconfigure([this.snippetThemeExtension]),
+      })
+      this.cdr.detectChanges()
+    }
+  }
+  get snippetTheme() {
+    return this._snippetTheme
+  }
+
   @ViewChild('editorContainer') editorContainer!: ElementRef
 
   editorView: EditorView
@@ -61,7 +82,6 @@ export class SnippetEditorComponent implements AfterViewInit {
 
   private basicExtensions: any = [
     basicSetup,
-    oneDark,
     highlightSpecialChars(),
     EditorView.lineWrapping,
     EditorView.updateListener.of(e => {
@@ -112,6 +132,7 @@ export class SnippetEditorComponent implements AfterViewInit {
           [...this.basicExtensions],
           this.editableExtension,
           languageSupport ? [...languageSupport] : [],
+          themeConfig.of([this.snippetThemeExtension]),
         ],
       }),
       parent: this.editorContainer?.nativeElement,
