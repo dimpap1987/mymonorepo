@@ -29,6 +29,7 @@
       "@mymonorepo/shared/ui/login": ["libs/shared/ui/login/src/index.ts"],
       "@mymonorepo/shared/ui/navbar": ["libs/shared/ui/navbar/src/index.ts"],
       "@mymonorepo/shared/ui/online-users": ["libs/shared/ui/online-users/src/index.ts"],
+      "@mymonorepo/shared/ui/snippet-card": ["libs/shared/ui/snippet-card/src/index.ts"],
       "@mymonorepo/shared/ui/snippet-editor": ["libs/shared/ui/snippet-editor/src/index.ts"],
       "@mymonorepo/shared/ui/snippet-lib/create-snippet": [
         "libs/shared/ui/snippet-lib/create-snippet/src/index.ts"

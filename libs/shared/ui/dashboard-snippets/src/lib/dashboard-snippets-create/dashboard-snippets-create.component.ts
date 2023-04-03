@@ -13,6 +13,6 @@ export class DashboardSnippetsCreateComponent implements OnInit {
   ngOnInit(): void {}
 
   handleSubmit(form: FormSubmitInterface) {
-    console.log(form)
+    console.log('form', form)
   }
 }

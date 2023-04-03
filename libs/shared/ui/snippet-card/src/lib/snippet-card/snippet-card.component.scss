@@ -1,0 +1,40 @@
+:host {
+  display: inline-block;
+  overflow: hidden;
+}
+
+.content-image {
+  border-radius: 7px;
+}
+
+.content-section {
+  cursor: pointer;
+}
+
+.header-container {
+  padding: 1rem;
+  padding-bottom: 0;
+  display: flex;
+}
+
+.header-image {
+  width: 30px;
+  border-radius: 25px;
+}
+
+.tags-container {
+  display: flex;
+  gap: 0.4rem;
+}
+
+::ng-deep {
+  .p-card {
+    border-radius: 25px;
+    border: var(--primary-color) 1px solid;
+    width: 320px !important;
+  }
+  .p-card-content {
+    height: 151px;
+    max-height: 151px;
+  }
+}

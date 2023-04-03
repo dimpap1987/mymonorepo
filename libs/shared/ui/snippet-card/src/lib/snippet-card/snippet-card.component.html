@@ -1,0 +1,47 @@
+<p-card *ngIf="state" [style]="{ width: '360px' }">
+  <!-- Header -->
+  <ng-container *ngIf="state.imageSrc">
+    <ng-template pTemplate="header">
+      <div class="header-container">
+        <img class="header-image" alt="Card" [src]="state.imageSrc" />
+      </div>
+    </ng-template>
+  </ng-container>
+
+  <!-- Title -->
+  <ng-container *ngIf="state.title">
+    <ng-template pTemplate="title">
+      <div>{{ state.title }}</div>
+    </ng-template>
+  </ng-container>
+
+  <!-- SubTitle -->
+  <ng-container *ngIf="state.labels">
+    <ng-template pTemplate="subtitle">
+      <div class="tags-container">
+        <p-tag *ngFor="let label of state.labels" [value]="label" [rounded]="true"></p-tag>
+      </div>
+    </ng-template>
+  </ng-container>
+
+  <!-- content -->
+  <ng-container *ngIf="state.content">
+    <ng-template pTemplate="content">
+      <div class="content-section" *ngIf="state.content.type === 'image'">
+        <img class="content-image" alt="image-post" [src]="state.content.data" />
+      </div>
+      <div class="content-section" *ngIf="state.content.type === 'txt'">
+        <span>
+          {{ state.content.data }}
+        </span>
+      </div>
+    </ng-template>
+  </ng-container>
+
+  <!-- content -->
+  <ng-container *ngIf="state.footer">
+    <ng-template pTemplate="footer">
+      <div>{{ state.footer }}</div>
+    </ng-template>
+  </ng-container>
+</p-card>

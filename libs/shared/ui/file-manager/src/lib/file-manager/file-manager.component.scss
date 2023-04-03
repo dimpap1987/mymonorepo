@@ -58,7 +58,7 @@
   .workspace-init {
     & > div {
       font-weight: 800;
-      color: #ce93d8;
+      color: var(--primary-color);
     }
   }
   ul[role='group'] {

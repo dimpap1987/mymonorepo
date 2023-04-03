@@ -10,7 +10,6 @@ import { InputTextModule } from 'primeng/inputtext'
 import { MultiSelectModule } from 'primeng/multiselect'
 import { CreateSnippetFormService } from './create-snippet-form.service'
 import { CreateSnippetFormComponent } from './create-snippet-form/create-snippet-form.component'
-
 @NgModule({
   imports: [
     CommonModule,

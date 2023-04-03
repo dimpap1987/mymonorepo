@@ -1,7 +1,9 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core'
 import { FormBuilder, Validators } from '@angular/forms'
 import { ProgrammingLanguage } from '@mymonorepo/shared/interfaces'
 import { SnippetTheme } from '@mymonorepo/shared/ui/snippet-editor'
+import html2canvas from 'html2canvas'
+import { SnippetEditorComponent } from 'libs/shared/ui/snippet-editor/src/lib/editor/snippet-editor.component'
 import { AutoComplete } from 'primeng/autocomplete'
 import { Observable } from 'rxjs'
 import { CreateSnippetFormService } from '../create-snippet-form.service'
@@ -26,6 +28,9 @@ export interface FormSubmitInterface {
 export class CreateSnippetFormComponent implements OnInit {
   @Input() snippetPath: string
   @Input() snippetTheme: SnippetTheme
+
+  @ViewChild(SnippetEditorComponent) snippetEditorRef: SnippetEditorComponent
+
   @Output() formSubmit: EventEmitter<FormSubmitInterface> = new EventEmitter<FormSubmitInterface>()
   suggestions: string[]
   langs: string[]
@@ -60,24 +65,32 @@ export class CreateSnippetFormComponent implements OnInit {
     this.suggestions = this.langs.filter(lang => lang.toUpperCase().startsWith(input))
   }
 
-  onSubmit() {
+  async onSubmit() {
     const { title, language, labels, isPublic, code } = this.createSnippetForm.value
     const valid = this.createSnippetForm.valid
-    const data = valid
-      ? {
-          title: title,
-          language: language,
-          // description: description,
-          labels: labels,
-          isPublic: isPublic,
-          code: code,
-        }
-      : null
+    if (valid) {
+      this.snippetEditorRef.editorView.dom.children[1].scrollTop = 0
+      const canvasResult = await html2canvas(this.snippetEditorRef?.editorContainer?.nativeElement, {
+        height: 195,
+      })
+      console.log(canvasResult.toDataURL())
 
-    this.formSubmit.emit({
-      valid: valid,
-      data: data,
-    })
+      //TODO execute 2 different calls 'uploadImage' & save form
+      await this.uploadImage(canvasResult)
+
+      const data = {
+        title: title,
+        language: language,
+        labels: labels,
+        isPublic: isPublic,
+        code: code,
+      }
+
+      this.formSubmit.emit({
+        valid: valid,
+        data: data,
+      })
+    }
   }
 
   get lang(): ProgrammingLanguage {
@@ -107,5 +120,19 @@ export class CreateSnippetFormComponent implements OnInit {
       this.createSnippetForm.get('title')?.updateValueAndValidity()
       this.titlePlaceholder = this.titlePlaceholderNoRequired
     }
+  }
+
+  uploadImage(canvas: any): Promise<any> {
+    return new Promise((resolve, reject) => {
+      canvas.toBlob(
+        function (myBlob: any) {
+          // send blob to server here!!
+          resolve(true)
+          console.log(myBlob)
+        },
+        'image/jpeg',
+        0.5
+      )
+    })
   }
 }

@@ -7,4 +7,9 @@
 
 <ng-template #elseBlock>
   <!--Snippet results here -->
+  <section class="snippet-container">
+    <div *ngFor="let snippet of snippets">
+      <dp-snippet-card [state]="snippet"></dp-snippet-card>
+    </div>
+  </section>
 </ng-template>
