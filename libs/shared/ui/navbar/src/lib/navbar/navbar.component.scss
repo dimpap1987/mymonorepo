@@ -12,7 +12,7 @@
 }
 ::ng-deep {
   .p-toolbar {
-    height: 100px !important;
+    height: $navbar-height !important;
   }
 }
 .p-toolbar-group-left,

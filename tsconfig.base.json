@@ -20,6 +20,7 @@
       "@mymonorepo/shared/templates/desktop-template": [
         "libs/shared/templates/desktop-template/src/index.ts"
       ],
+      "@mymonorepo/shared/ui/advanced-search": ["libs/shared/ui/advanced-search/src/index.ts"],
       "@mymonorepo/shared/ui/dashboard": ["libs/shared/ui/dashboard/src/index.ts"],
       "@mymonorepo/shared/ui/dashboard-snippets": ["libs/shared/ui/dashboard-snippets/src/index.ts"],
       "@mymonorepo/shared/ui/file-manager": ["libs/shared/ui/file-manager/src/index.ts"],

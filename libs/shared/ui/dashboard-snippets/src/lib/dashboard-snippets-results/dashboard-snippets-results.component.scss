@@ -34,5 +34,24 @@ a em.pi.pi-plus {
 
 .snippet-result-bar {
   padding-bottom: 1.5rem;
+}
+
+.advance-search-wrapper {
   display: flex;
+  justify-content: center;
+  padding-bottom: 1rem;
+}
+
+dp-advanced-search {
+  width: 400px;
+}
+
+.create-button {
+  .p-button {
+    border-radius: 50%;
+    min-width: auto;
+  }
+  em.pi.pi-plus {
+    margin-right: auto;
+  }
 }

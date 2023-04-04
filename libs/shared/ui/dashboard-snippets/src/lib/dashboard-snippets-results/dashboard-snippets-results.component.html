@@ -8,7 +8,12 @@
 <ng-template #elseBlock>
   <!--Snippet results here -->
   <div class="snippet-result-bar">
-    <a pButton routerLink="/dashboard/snippets/create"> <em class="pi pi-plus"></em>New snippet </a>
+    <div class="advance-search-wrapper">
+      <dp-advanced-search></dp-advanced-search>
+    </div>
+    <div class="create-button">
+      <a pButton routerLink="/dashboard/snippets/create"> <em class="pi pi-plus"></em></a>
+    </div>
   </div>
 
   <section class="snippet-container">

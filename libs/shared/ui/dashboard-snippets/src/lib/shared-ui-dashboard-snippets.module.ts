@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common'
 import { NgModule } from '@angular/core'
 import { RouterModule } from '@angular/router'
+import { SharedUiAdvancedSearchModule } from '@mymonorepo/shared/ui/advanced-search'
 import { SharedUiSnippetCardModule } from '@mymonorepo/shared/ui/snippet-card'
 import { SharedUiSnippetLibCreateSnippetModule } from '@mymonorepo/shared/ui/snippet-lib/create-snippet'
 import { ButtonModule } from 'primeng/button'
@@ -16,6 +17,7 @@ import { sharedUiDashboardSnippetsRoutes } from './lib.routes'
     ButtonModule,
     SharedUiSnippetLibCreateSnippetModule,
     SharedUiSnippetCardModule,
+    SharedUiAdvancedSearchModule,
   ],
   exports: [RouterModule],
   declarations: [
