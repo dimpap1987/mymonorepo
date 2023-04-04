@@ -19,7 +19,7 @@
   <ng-container *ngIf="state.labels">
     <ng-template pTemplate="subtitle">
       <div class="tags-container">
-        <p-tag *ngFor="let label of state.labels" [value]="label" [rounded]="true"></p-tag>
+        <p-tag *ngFor="let label of state.labels" [value]="label" severity="success" [rounded]="true"></p-tag>
       </div>
     </ng-template>
   </ng-container>

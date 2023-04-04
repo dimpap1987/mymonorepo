@@ -43,7 +43,19 @@ export class DashboardSnippetsResultsComponent implements OnInit {
       },
       {
         title: 'This is a title 2',
-        labels: ['Python', 'Python', 'Python', 'Python', 'Python', 'Python', 'Python'],
+        labels: [
+          'Python',
+          'Python',
+          'Python',
+          'Python',
+          'Python',
+          'Python',
+          'Python',
+          'Python',
+          'Python',
+          'Python',
+          'Python',
+        ],
         imageSrc: `../assets/shared/images/python.png`,
         content: {
           type: 'txt',

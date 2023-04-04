@@ -1,14 +1,11 @@
 :host {
   display: inline-block;
   overflow: hidden;
+  cursor: pointer;
 }
 
 .content-image {
   border-radius: 7px;
-}
-
-.content-section {
-  cursor: pointer;
 }
 
 .header-container {
@@ -24,17 +21,29 @@
 
 .tags-container {
   display: flex;
+  flex-wrap: wrap;
   gap: 0.4rem;
 }
 
 ::ng-deep {
   .p-card {
     border-radius: 25px;
-    border: var(--primary-color) 1px solid;
+    border: grey 2px solid;
     width: 320px !important;
+    &:hover {
+      border: whitesmoke 2px solid;
+    }
   }
   .p-card-content {
     height: 151px;
     max-height: 151px;
+  }
+  .p-card-subtitle {
+    overflow: hidden;
+  }
+  .tags-container {
+    height: 60px;
+    max-height: 60px;
+    overflow: auto;
   }
 }
