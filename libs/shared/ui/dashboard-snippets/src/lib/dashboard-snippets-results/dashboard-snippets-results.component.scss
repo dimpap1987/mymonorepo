@@ -55,3 +55,18 @@ dp-advanced-search {
     margin-right: auto;
   }
 }
+
+dp-snippet-card {
+  ::ng-deep {
+    .content-section:hover {
+      -webkit-transition: transform 0.3s ease-in-out;
+      -moz-transition: transform 0.3s ease-in-out;
+      -ms-transition: transform 0.3s ease-in-out;
+      -o-transition: transform 0.3s ease-in-out;
+      transition: transform 0.3s ease-in-out;
+      transition-delay: 0.75s;
+      transform-origin: center center;
+      transform: scale(1.5);
+    }
+  }
+}
