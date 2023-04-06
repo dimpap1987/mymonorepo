@@ -3,6 +3,7 @@ import { RolesEnum } from '@mymonorepo/shared/interfaces'
 export interface User {
   email?: string
   firstName?: string
+  githubUsername?: string
   lastName?: string
   picture?: string
   profileId?: string

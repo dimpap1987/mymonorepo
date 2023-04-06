@@ -1,0 +1,13 @@
+<div *ngIf="(user$ | async)?.provider === 'github'">
+  <p-button
+    styleClass="import-github"
+    (click)="getRepositories()"
+    icon="pi pi-github"
+    label="Import from Github"></p-button>
+  <p-dropdown
+    *ngIf="this.repositoryList$ | async as repos"
+    placeholder="Select repository"
+    [options]="repos"
+    [(ngModel)]="selectedRepo"
+    optionLabel="name"></p-dropdown>
+</div>

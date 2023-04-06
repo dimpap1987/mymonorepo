@@ -18,7 +18,7 @@ export class GithubOauthStrategy extends PassportStrategy(Strategy, 'github') {
     const { username, profileUrl, photos, id } = profile
     return {
       profileUrl: profileUrl,
-      firstName: username,
+      githubUsername: username,
       picture: photos[0].value,
       profileId: id,
       accessTokenGithub: accessToken,

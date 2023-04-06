@@ -51,6 +51,7 @@
     "moment": "^2.29.4",
     "ngx-cookie-service": "^14.0.1",
     "ngx-socket-io": "^4.3.0",
+    "octokit": "^2.0.14",
     "passport": "^0.6.0",
     "passport-facebook": "^3.0.0",
     "passport-github": "^1.1.0",

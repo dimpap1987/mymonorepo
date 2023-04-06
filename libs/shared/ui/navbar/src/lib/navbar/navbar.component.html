@@ -15,9 +15,20 @@
 
   <div class="p-toolbar-group-right right-wrapper">
     <div *ngIf="(user$ | async)?.loggedIn" class="user-details">
-      <div class="welcome-message" *ngIf="(user$ | async)?.firstName">
+      <!-- TODO create a pipe  -->
+      <div
+        class="welcome-message"
+        *ngIf="
+          (user$ | async)?.provider !== 'github'
+            ? (user$ | async)?.firstName
+            : (user$ | async)?.githubUsername
+        ">
         <span class="welcome">Welcome , </span>
-        <span class="user-email">{{ (user$ | async)?.firstName }}</span>
+        <span class="user-email">{{
+          (user$ | async)?.provider !== 'github'
+            ? (user$ | async)?.firstName
+            : (user$ | async)?.githubUsername
+        }}</span>
       </div>
       <div *ngIf="(user$ | async)?.picture">
         <img

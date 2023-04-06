@@ -7,6 +7,6 @@ export class RemoteRepoController {
 
   @Get('repo/list')
   getRepositories() {
-    this.githubService.getRepositories()
+    return this.githubService.getRepositories()
   }
 }

@@ -1,5 +1,5 @@
-import { UserInterface } from './user.interface'
+import { GithubUserInterface, GoogleUserInterface, UserInterface } from './user.interface'
 
 export interface JwtPayloadInterface {
-  user: UserInterface
+  user: UserInterface | GithubUserInterface | GoogleUserInterface
 }
