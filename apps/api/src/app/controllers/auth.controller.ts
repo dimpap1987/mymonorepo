@@ -1,13 +1,5 @@
 import { ProvidersEnum, SessionInterface } from '@mymonorepo/shared/interfaces'
-import {
-  Controller,
-  Get,
-  HttpCode,
-  HttpStatus,
-  Req,
-  Res,
-  UseGuards,
-} from '@nestjs/common'
+import { Controller, Get, HttpCode, HttpStatus, Req, Res, UseGuards } from '@nestjs/common'
 import { AuthGuard } from '@nestjs/passport'
 import { JwtAuthGuard } from '../guards/jwt-auth-guard'
 import { AuthService } from '../services/auth.service'
@@ -41,6 +33,21 @@ export class AuthController {
   @UseGuards(AuthGuard('facebook'))
   async facebookLoginRedirect(@Req() req, @Res() res) {
     const tokens = this.authService.handleLogin(req.user, ProvidersEnum.FACEBOOK)
+    res.cookie('accessToken', tokens.accessToken, { httpOnly: true })
+    res.cookie('refreshToken', tokens.refreshToken, { httpOnly: true })
+    res.redirect(AuthController.handleRedirectUrl())
+  }
+
+  @Get('github/login')
+  @UseGuards(AuthGuard('github'))
+  async githubAuth() {
+    return HttpStatus.OK
+  }
+
+  @Get('/github/redirect')
+  @UseGuards(AuthGuard('github'))
+  async githubAuthCallback(@Req() req, @Res() res) {
+    const tokens = this.authService.handleLogin(req.user, ProvidersEnum.GITHUB)
     res.cookie('accessToken', tokens.accessToken, { httpOnly: true })
     res.cookie('refreshToken', tokens.refreshToken, { httpOnly: true })
     res.redirect(AuthController.handleRedirectUrl())

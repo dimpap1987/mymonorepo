@@ -3,18 +3,19 @@ import { CacheModule, MiddlewareConsumer, Module, NestModule } from '@nestjs/com
 import { AppController } from './controllers/app.controller'
 import { AuthController } from './controllers/auth.controller'
 import { UserController } from './controllers/user.controller'
-import { CorsMiddleware } from './middlewares/cors.middleware'
 import { RolesGuard } from './guards/roles-guard'
 import { WsGuard } from './guards/ws-guard'
+import { CorsMiddleware } from './middlewares/cors.middleware'
+import { CsrfGeneratorMiddleware } from './middlewares/csrf-generator.middleware'
+import { CsrfValidatorMiddleware } from './middlewares/csrf-validator.middleware'
 import { AppService } from './services/app.service'
 import { AuthService } from './services/auth.service'
 import { JwtTokenService } from './services/jwt-token.service'
 import { UserSessionCache } from './services/user-session-cache'
 import { FacebookStrategy } from './strategies/facebook-strategy'
+import { GithubOauthStrategy } from './strategies/github-strategy'
 import { GoogleStrategy } from './strategies/google-strategy'
 import { AppGateway } from './websocket/app.gateway'
-import { CsrfValidatorMiddleware } from './middlewares/csrf-validator.middleware'
-import { CsrfGeneratorMiddleware } from './middlewares/csrf-generator.middleware'
 // import {ServeStaticModule} from '@nestjs/serve-static';
 // import {join} from 'path';
 // import {ConfigModule} from "@nestjs/config";
@@ -37,6 +38,7 @@ import { CsrfGeneratorMiddleware } from './middlewares/csrf-generator.middleware
     AuthService,
     GoogleStrategy,
     FacebookStrategy,
+    GithubOauthStrategy,
     AppGateway,
     UserSessionCache,
     WsGuard,

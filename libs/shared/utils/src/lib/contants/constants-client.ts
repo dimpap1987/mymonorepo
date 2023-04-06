@@ -11,6 +11,7 @@ export class ConstantsClient {
       refreshToken: 'refreshToken',
       facebookRedirectUrl: '/api/v1/auth/facebook/login',
       googleRedirectUrl: '/api/v1/auth/google/login',
+      githubRedirectUrl: '/api/v1/auth/github/login',
     }
   }
 
@@ -39,6 +40,7 @@ export interface Authentication {
   refreshToken: string
   googleRedirectUrl: string
   facebookRedirectUrl: string
+  githubRedirectUrl: string
 }
 
 export interface Endpoints {

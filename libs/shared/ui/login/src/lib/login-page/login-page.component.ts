@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
-import { AuthService, saveUser, User } from '@mymonorepo/shared/utils'
+import { AuthService, ConstantsClient, saveUser, User } from '@mymonorepo/shared/utils'
 import { Store } from '@ngrx/store'
 import { filter, map, mergeMap } from 'rxjs'
 
@@ -27,5 +27,9 @@ export class LoginPageComponent implements OnInit {
       .subscribe(response => {
         this.store.dispatch(saveUser({ user: response.user }))
       })
+  }
+
+  loginWithGithub() {
+    window.location.href = ConstantsClient.auth().githubRedirectUrl
   }
 }
