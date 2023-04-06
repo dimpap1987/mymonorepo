@@ -14,14 +14,14 @@ export class GithubOauthStrategy extends PassportStrategy(Strategy, 'github') {
   }
 
   async validate(accessToken: string, _refreshToken: string, profile: Profile) {
-    console.log(accessToken)
-
+    //TODO maybe with should store the access token and refresh token in the db
     const { username, profileUrl, photos, id } = profile
     return {
       profileUrl: profileUrl,
       firstName: username,
       picture: photos[0].value,
       profileId: id,
+      accessTokenGithub: accessToken,
     }
   }
 }

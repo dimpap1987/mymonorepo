@@ -1,7 +1,10 @@
+import { JwtPayloadInterface } from '@mymonorepo/shared/interfaces'
 import { CacheModule, MiddlewareConsumer, Module, NestModule } from '@nestjs/common'
+import { REQUEST } from '@nestjs/core'
 
 import { AppController } from './controllers/app.controller'
 import { AuthController } from './controllers/auth.controller'
+import { RemoteRepoController } from './controllers/remote-repo.controller'
 import { UserController } from './controllers/user.controller'
 import { RolesGuard } from './guards/roles-guard'
 import { WsGuard } from './guards/ws-guard'
@@ -10,6 +13,7 @@ import { CsrfGeneratorMiddleware } from './middlewares/csrf-generator.middleware
 import { CsrfValidatorMiddleware } from './middlewares/csrf-validator.middleware'
 import { AppService } from './services/app.service'
 import { AuthService } from './services/auth.service'
+import { GithubService } from './services/github.service'
 import { JwtTokenService } from './services/jwt-token.service'
 import { UserSessionCache } from './services/user-session-cache'
 import { FacebookStrategy } from './strategies/facebook-strategy'
@@ -32,7 +36,7 @@ import { AppGateway } from './websocket/app.gateway'
       isGlobal: true,
     }),
   ],
-  controllers: [AppController, AuthController, UserController],
+  controllers: [AppController, AuthController, UserController, RemoteRepoController],
   providers: [
     AppService,
     AuthService,
@@ -44,7 +48,16 @@ import { AppGateway } from './websocket/app.gateway'
     WsGuard,
     RolesGuard,
     JwtTokenService,
+    GithubService,
+    {
+      provide: 'jwt',
+      useFactory: async (jwtService: JwtTokenService, req: any): Promise<JwtPayloadInterface> => {
+        return jwtService.extractPayload(req?.cookies['accessToken'])
+      },
+      inject: [JwtTokenService, REQUEST],
+    },
   ],
+  exports: ['jwt'],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
