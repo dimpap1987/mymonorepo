@@ -29,9 +29,12 @@
   .p-autocomplete-items {
     padding-top: 9.6px !important;
   }
-  .p-autocomplete-panel .p-autocomplete-items .p-autocomplete-item {
-    padding: 0.6rem 1rem;
-    font-size: 0.9rem;
+  .p-autocomplete-panel {
+    max-height: 185px !important;
+    .p-autocomplete-items .p-autocomplete-item {
+      padding: 0.6rem 1rem;
+      font-size: 0.9rem;
+    }
   }
 }
 
@@ -50,12 +53,12 @@
   padding: 0.4rem 1rem !important;
 }
 
-button.p-button {
+.p-button {
   letter-spacing: 0.05em !important;
-  padding: 0.54rem 0.8rem;
-  // &:hover {
-  //   background: linear-gradient(to right, var(--primary-color), #8b1f80) !important;
-  // }
+  padding: 0.54rem 0.8rem !important;
+  &:hover {
+    background: linear-gradient(to left, var(--primary-color), #d67bcd) !important;
+  }
 }
 
 button[icon='pi pi-google'],
@@ -147,6 +150,12 @@ p-autocomplete.ng-touched.ng-invalid .p-autocomplete-dd-input[required] {
   color: tomato !important;
 }
 
-a.p-button {
-  border-radius: 25px;
+a {
+  &.p-button {
+    display: inline-block;
+    text-align: center;
+    .pi-plus:before {
+      margin-right: 0.5rem;
+    }
+  }
 }

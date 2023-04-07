@@ -55,7 +55,11 @@ export class SnippetEditorComponent implements AfterViewInit {
   }
   @Input()
   set isEditable(value: boolean) {
+    this._isEditable = value
     this.editableExtension = EditorView.editable.of(value)
+  }
+  get isEditable() {
+    return this._isEditable
   }
 
   _snippetTheme: SnippetTheme

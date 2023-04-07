@@ -17,6 +17,7 @@ export interface FormSubmitInterface {
     labels?: [] | unknown
     isPublic: boolean | unknown
     code: string | unknown
+    blob?: Blob
   } | null
 }
 
@@ -32,6 +33,8 @@ export class CreateSnippetFormComponent implements OnInit {
   @ViewChild(SnippetEditorComponent) snippetEditorRef: SnippetEditorComponent
 
   @Output() formSubmit: EventEmitter<FormSubmitInterface> = new EventEmitter<FormSubmitInterface>()
+  @Output() loading: EventEmitter<boolean> = new EventEmitter<boolean>()
+
   suggestions: string[]
   langs: string[]
   allLabels: Observable<any>
@@ -69,27 +72,23 @@ export class CreateSnippetFormComponent implements OnInit {
     const { title, language, labels, isPublic, code } = this.createSnippetForm.value
     const valid = this.createSnippetForm.valid
     if (valid) {
+      this.loading.emit(true)
       this.snippetEditorRef.editorView.dom.children[1].scrollTop = 0
-      const canvasResult = await html2canvas(this.snippetEditorRef?.editorContainer?.nativeElement, {
-        height: 195,
-      })
-      console.log(canvasResult.toDataURL())
-
-      //TODO execute 2 different calls 'uploadImage' & save form
-      await this.uploadImage(canvasResult)
-
+      const blob = await this.getImageBlob()
       const data = {
         title: title,
         language: language,
         labels: labels,
         isPublic: isPublic,
         code: code,
+        blob: blob,
       }
 
       this.formSubmit.emit({
         valid: valid,
         data: data,
       })
+      this.loading.emit(false)
     }
   }
 
@@ -122,17 +121,16 @@ export class CreateSnippetFormComponent implements OnInit {
     }
   }
 
-  uploadImage(canvas: any): Promise<any> {
-    return new Promise((resolve, reject) => {
-      canvas.toBlob(
-        function (myBlob: any) {
-          // send blob to server here!!
-          resolve(true)
-          console.log(myBlob)
-        },
-        'image/jpeg',
-        0.5
-      )
+  getPromiseBlob(canvas: any): Promise<any> {
+    return new Promise(resolve => {
+      canvas.toBlob((myBlob: any) => resolve(myBlob), 'image/jpeg', 0.5)
     })
+  }
+
+  async getImageBlob() {
+    const canvasResult = await html2canvas(this.snippetEditorRef?.editorContainer?.nativeElement, {
+      height: 195,
+    })
+    return await this.getPromiseBlob(canvasResult)
   }
 }

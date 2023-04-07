@@ -7,9 +7,10 @@
 }
 
 .snippet-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1.5rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(305px, 1fr));
+  grid-gap: 15px;
+  justify-items: center;
 }
 
 .no-snippets-result-container {
@@ -48,7 +49,6 @@ dp-advanced-search {
 
 .create-button {
   .p-button {
-    border-radius: 50%;
     min-width: auto;
   }
   em.pi.pi-plus {

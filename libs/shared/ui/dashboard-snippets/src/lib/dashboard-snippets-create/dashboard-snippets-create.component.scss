@@ -3,11 +3,22 @@
 :host {
   display: block;
   padding: 1rem;
-  background-color: $primary--terminal;
   display: flex;
   justify-content: center;
 }
 
 section {
   width: clamp(20rem, 70%, 60rem);
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.snippet-form {
+  width: 100%;
+  padding: 1rem;
+  background: $primary--terminal;
+  margin-top: 2rem;
+  border-radius: 10px;
 }

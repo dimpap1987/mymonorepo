@@ -31,12 +31,7 @@
         }}</span>
       </div>
       <div *ngIf="(user$ | async)?.picture">
-        <img
-          [title]="(user$ | async)?.firstName"
-          class="user-image"
-          [src]="(user$ | async)?.picture"
-          alt=""
-          referrerpolicy="no-referrer" />
+        <img class="user-image" [src]="(user$ | async)?.picture" alt="" referrerpolicy="no-referrer" />
       </div>
     </div>
 

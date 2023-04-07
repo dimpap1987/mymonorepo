@@ -3,6 +3,7 @@ import { APP_INITIALIZER, NgModule } from '@angular/core'
 import { BrowserModule } from '@angular/platform-browser'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { RouteReuseStrategy } from '@angular/router'
+import { LoaderService } from '@mymonorepo/shared/ui/loader'
 import { SharedUiNavbarModule } from '@mymonorepo/shared/ui/navbar'
 import { SharedUiOnlineUsersModule } from '@mymonorepo/shared/ui/online-users'
 import {
@@ -55,6 +56,7 @@ export function load(loader: AppLoader) {
       provide: RouteReuseStrategy,
       useClass: DpReuseStrategy,
     },
+    LoaderService,
   ],
   bootstrap: [AppComponent],
 })

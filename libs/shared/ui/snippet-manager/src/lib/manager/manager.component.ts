@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core'
+import { LoaderService } from '@mymonorepo/shared/ui/loader'
 import { FormSubmitInterface } from '@mymonorepo/shared/ui/snippet-lib/create-snippet'
 import { TreeNode } from 'primeng/api'
 import { TabView } from 'primeng/tabview'
@@ -22,7 +23,7 @@ export class ManagerComponent implements OnInit {
   tabs: TabManager[] = []
   activeIndex = 0
 
-  constructor(private cdr: ChangeDetectorRef) {}
+  constructor(private cdr: ChangeDetectorRef, private loaderService: LoaderService) {}
 
   ngOnInit(): void {
     // this.files = [
@@ -184,5 +185,13 @@ export class ManagerComponent implements OnInit {
 
   tabClose(event: any) {
     this.tabs.splice(event.index, 1)
+  }
+
+  handleLoading(loading: boolean): void {
+    if (loading) {
+      this.loaderService.show()
+    } else {
+      this.loaderService.hide()
+    }
   }
 }

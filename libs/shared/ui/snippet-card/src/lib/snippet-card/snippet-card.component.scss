@@ -11,6 +11,7 @@
   padding: 1rem;
   padding-bottom: 0;
   display: flex;
+  justify-content: space-between;
 }
 
 .header-image {
@@ -45,4 +46,12 @@
     max-height: 60px;
     overflow: auto;
   }
+}
+
+.private-icon {
+  color: grey;
+}
+
+.public-icon {
+  color: greenyellow;
 }

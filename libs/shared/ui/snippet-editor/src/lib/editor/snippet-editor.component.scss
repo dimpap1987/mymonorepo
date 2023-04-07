@@ -21,7 +21,9 @@
   .cm-editor {
     overflow: auto;
     max-height: 400px;
-    min-height: 100px;
+  }
+  .editable-snippet .cm-editor {
+    min-height: 200px;
   }
   .cm-content {
     padding: 0 !important;

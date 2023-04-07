@@ -8,6 +8,7 @@ export interface SnippetCardState {
     type?: 'image' | 'txt'
     data?: string
   }
+  isPublic?: boolean
   footer?: string
 }
 

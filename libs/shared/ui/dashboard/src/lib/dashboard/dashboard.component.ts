@@ -15,7 +15,7 @@ export class DashboardComponent {
       routerLink: 'workspace',
     },
     {
-      label: 'Snippets',
+      label: 'My Snippets',
       // icon: 'pi pi-code',
       routerLink: 'snippets',
     },

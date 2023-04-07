@@ -4,6 +4,8 @@
     <ng-template pTemplate="header">
       <div class="header-container">
         <img class="header-image" alt="Card" [src]="state.imageSrc" />
+        <em *ngIf="state.isPublic" title="Public Snippet" class="pi pi-circle-fill public-icon"></em>
+        <em *ngIf="!state.isPublic" title="Private Snippet" class="pi pi-circle-fill private-icon"></em>
       </div>
     </ng-template>
   </ng-container>

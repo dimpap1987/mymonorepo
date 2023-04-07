@@ -1,3 +1,5 @@
+import { UserInterface } from '@mymonorepo/shared/interfaces'
+import { Logger, UseGuards } from '@nestjs/common'
 import {
   OnGatewayConnection,
   OnGatewayDisconnect,
@@ -6,18 +8,14 @@ import {
   WebSocketGateway,
   WebSocketServer,
 } from '@nestjs/websockets'
-import { Server, Socket } from 'socket.io'
-import { Logger, UseGuards } from '@nestjs/common'
-import { UserSessionCache } from '../services/user-session-cache'
-import { WsGuard } from '../guards/ws-guard'
 import * as json from 'jsonwebtoken'
-import { UserInterface } from '@mymonorepo/shared/interfaces'
+import { Server, Socket } from 'socket.io'
+import { WsGuard } from '../guards/ws-guard'
+import { UserSessionCache } from '../services/user-session-cache'
 
 @UseGuards(WsGuard)
 @WebSocketGateway({ cors: true })
-export class AppGateway
-  implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect
-{
+export class AppGateway implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect {
   public static readonly ONLINE_ROOM = 'online-room'
 
   constructor(private userSessionCache: UserSessionCache) {}
@@ -39,7 +37,7 @@ export class AppGateway
     const token = client.handshake.headers?.authorization
     const user = json.verify(token, process.env.JWT_SECRET_KEY) as UserInterface
     if (user) {
-      await this.userSessionCache.addOrUpdate(user.email, client.id)
+      // await this.userSessionCache.addOrUpdate(user.email, client.id)
     }
   }
 
