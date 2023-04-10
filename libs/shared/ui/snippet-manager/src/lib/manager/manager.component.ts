@@ -1,4 +1,11 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core'
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  Input,
+  OnInit,
+  ViewChild,
+} from '@angular/core'
 import { LoaderService } from '@mymonorepo/shared/ui/loader'
 import { FormSubmitInterface } from '@mymonorepo/shared/ui/snippet-lib/create-snippet'
 import { TreeNode } from 'primeng/api'
@@ -17,6 +24,7 @@ export interface TabManager {
   changeDetection: ChangeDetectionStrategy.Default,
 })
 export class ManagerComponent implements OnInit {
+  @Input() isLoading = false
   @ViewChild('tabView') tabView: TabView
   files: TreeNode[]
   isSnippetFormDisplayed = false
@@ -94,8 +102,13 @@ export class ManagerComponent implements OnInit {
     this.files = []
   }
 
-  handleSubmit(data: FormSubmitInterface) {
-    console.log(data)
+  async handleSubmit(result: FormSubmitInterface) {
+    this.loaderService.show()
+    this.isLoading = true
+    const data = await result.promise
+    console.log('data', data)
+    this.loaderService.hide()
+    this.isLoading = false
   }
 
   workspaceCreated(event: any) {
@@ -185,13 +198,5 @@ export class ManagerComponent implements OnInit {
 
   tabClose(event: any) {
     this.tabs.splice(event.index, 1)
-  }
-
-  handleLoading(loading: boolean): void {
-    if (loading) {
-      this.loaderService.show()
-    } else {
-      this.loaderService.hide()
-    }
   }
 }

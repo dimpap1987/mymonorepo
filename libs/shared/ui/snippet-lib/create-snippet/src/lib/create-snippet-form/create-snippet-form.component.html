@@ -57,6 +57,11 @@
   </div>
 
   <div class="form-button">
-    <p-button label="Create snippet" (onClick)="onSubmit()" [disabled]="createSnippetForm.invalid"></p-button>
+    <p-button
+      label="Create snippet"
+      (onClick)="onSubmit()"
+      [loading]="isLoading"
+      [disabled]="createSnippetForm.invalid">
+    </p-button>
   </div>
 </form>

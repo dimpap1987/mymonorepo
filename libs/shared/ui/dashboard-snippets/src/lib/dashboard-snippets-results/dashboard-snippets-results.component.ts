@@ -1,4 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core'
+import { SnippetDialogComponent } from 'libs/shared/ui/snippet-dialog/src/lib/snippet-dialog/snippet-dialog.component'
+import { DialogService } from 'primeng/dynamicdialog'
 
 @Component({
   selector: 'dp-dashboard-snippets-results',
@@ -13,7 +15,7 @@ export class DashboardSnippetsResultsComponent implements OnInit {
   rows: number
   totalRecord: number
 
-  constructor() {}
+  constructor(private dialogService: DialogService) {}
 
   ngOnInit(): void {
     // fetch snippets here
@@ -145,5 +147,12 @@ export class DashboardSnippetsResultsComponent implements OnInit {
 
   getFilteredSnippets(array: any[], first: number, rows: number) {
     return array.slice(first, rows + first)
+  }
+
+  openCreteSnippetDialog() {
+    this.dialogService.open(SnippetDialogComponent, {
+      header: 'Create & share code snippets',
+      width: '700px',
+    })
   }
 }

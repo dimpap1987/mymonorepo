@@ -1,4 +1,4 @@
-<div class="overlay" *ngIf="showSpinner$ | async">
+<div class="overlay" *ngIf="loaderService.loader$ | async">
   <div class="spinner-wrapper">
     <dp-loader></dp-loader>
   </div>
@@ -6,8 +6,7 @@
 
 <div
   class="loaded-content"
-  [class.blurred]="showSpinner$ | async"
-  [class.disable-events]="showSpinner$ | async"
->
+  [class.blurred]="loaderService.loader$ | async"
+  [class.disable-events]="loaderService.loader$ | async">
   <ng-content></ng-content>
 </div>

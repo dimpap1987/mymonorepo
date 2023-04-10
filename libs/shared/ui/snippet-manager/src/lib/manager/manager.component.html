@@ -22,7 +22,7 @@
         >
         <span *ngIf="!tab.fileDeleted">{{ tab.title }}</span>
       </ng-template>
-      <dp-create-snippet-form (formSubmit)="handleSubmit($event)" (loading)="handleLoading($event)">
+      <dp-create-snippet-form [isLoading]="isLoading" (formSubmit)="handleSubmit($event)">
       </dp-create-snippet-form>
     </p-tabPanel>
   </p-tabView>

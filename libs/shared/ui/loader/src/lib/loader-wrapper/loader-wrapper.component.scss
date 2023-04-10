@@ -1,3 +1,5 @@
+@import 'libs/shared/ui/theme/src/lib/styles/mix-in';
+
 :host {
   height: 100%;
   width: 100%;
@@ -7,7 +9,7 @@
 
 .overlay {
   position: absolute;
-  z-index: 10;
+  z-index: 2001;
   top: 35%;
   left: 55%;
   transform: translate(-50%, -50%);
@@ -24,15 +26,11 @@
 }
 
 .blurred {
-  filter: blur(0.1rem);
+  @include blurred;
 }
 
 .disable-events {
-  pointer-events: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
+  @include disable-events;
 }
 
 .loaded-content {

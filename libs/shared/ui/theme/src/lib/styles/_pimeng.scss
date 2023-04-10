@@ -184,3 +184,17 @@ a {
     border-radius: 0 !important;
   }
 }
+
+.p-dialog-header {
+  border-radius: 15px 15px 0 0 !important;
+  border: var(--primary-color) 2px ridge;
+  border-bottom-style: none !important;
+  .p-dialog-title {
+    font-weight: 600 !important;
+  }
+}
+.p-dialog-content {
+  border-radius: 0 0 15px 15px !important;
+  border: var(--primary-color) 2px ridge;
+  border-top-style: none !important;
+}

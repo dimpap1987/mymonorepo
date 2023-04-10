@@ -1,8 +1,8 @@
 import { PassportStrategy } from '@nestjs/passport'
 import { Strategy, VerifyCallback } from 'passport-google-oauth20'
 
+import { GoogleUserInterface } from '@mymonorepo/shared/interfaces'
 import { Injectable } from '@nestjs/common'
-import { UserInterface } from '@mymonorepo/shared/interfaces'
 
 @Injectable()
 export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
@@ -23,7 +23,7 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
   ): Promise<any> {
     const { name, emails, photos, id } = profile
 
-    const user: UserInterface = {
+    const user: GoogleUserInterface = {
       email: emails[0].value,
       firstName: name.givenName,
       lastName: name.familyName,

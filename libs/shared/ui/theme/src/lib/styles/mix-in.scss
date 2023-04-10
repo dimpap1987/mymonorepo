@@ -38,3 +38,15 @@
   -webkit-animation: fadein 2s ease-in alternate infinite;
   -moz-animation: fadein 2s ease-in alternate infinite;
 }
+
+@mixin blurred {
+  filter: blur(0.1rem);
+}
+
+@mixin disable-events {
+  pointer-events: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}

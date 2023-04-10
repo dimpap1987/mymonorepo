@@ -10,15 +10,14 @@ import { CreateSnippetFormService } from '../create-snippet-form.service'
 
 export interface FormSubmitInterface {
   valid?: boolean
-  data?: {
+  promise?: Promise<{
     title: string | unknown
     language: string | unknown
-    // description?: string | unknown
     labels?: [] | unknown
     isPublic: boolean | unknown
     code: string | unknown
-    blob?: Blob
-  } | null
+    blob?: any
+  }> | null
 }
 
 @Component({
@@ -28,13 +27,12 @@ export interface FormSubmitInterface {
 })
 export class CreateSnippetFormComponent implements OnInit {
   @Input() snippetPath: string
+  @Input() isLoading = false
   @Input() snippetTheme: SnippetTheme
 
   @ViewChild(SnippetEditorComponent) snippetEditorRef: SnippetEditorComponent
 
   @Output() formSubmit: EventEmitter<FormSubmitInterface> = new EventEmitter<FormSubmitInterface>()
-  @Output() loading: EventEmitter<boolean> = new EventEmitter<boolean>()
-
   suggestions: string[]
   langs: string[]
   allLabels: Observable<any>
@@ -42,7 +40,6 @@ export class CreateSnippetFormComponent implements OnInit {
   createSnippetForm = this.fb.group({
     title: [],
     language: ['', { validators: [Validators.required] }],
-    // description: [],
     labels: [],
     isPublic: [false],
     code: ['', Validators.required],
@@ -69,26 +66,13 @@ export class CreateSnippetFormComponent implements OnInit {
   }
 
   async onSubmit() {
-    const { title, language, labels, isPublic, code } = this.createSnippetForm.value
-    const valid = this.createSnippetForm.valid
-    if (valid) {
-      this.loading.emit(true)
+    if (this.createSnippetForm.valid) {
       this.snippetEditorRef.editorView.dom.children[1].scrollTop = 0
-      const blob = await this.getImageBlob()
-      const data = {
-        title: title,
-        language: language,
-        labels: labels,
-        isPublic: isPublic,
-        code: code,
-        blob: blob,
-      }
-
+      const promise = this.handleSubmit(this.createSnippetForm.value)
       this.formSubmit.emit({
-        valid: valid,
-        data: data,
+        promise: promise,
+        valid: true,
       })
-      this.loading.emit(false)
     }
   }
 
@@ -121,16 +105,37 @@ export class CreateSnippetFormComponent implements OnInit {
     }
   }
 
-  getPromiseBlob(canvas: any): Promise<any> {
-    return new Promise(resolve => {
-      canvas.toBlob((myBlob: any) => resolve(myBlob), 'image/jpeg', 0.5)
+  async getImageBlob() {
+    const canvas = await html2canvas(this.snippetEditorRef?.editorContainer?.nativeElement, {
+      height: 195,
+      useCORS: true, // Add useCORS option
     })
+    const myBlob = await new Promise(resolve => {
+      canvas.toBlob(
+        (blob: any) => {
+          resolve(blob)
+        },
+        'image/jpeg',
+        0.5
+      )
+    })
+    return myBlob
   }
 
-  async getImageBlob() {
-    const canvasResult = await html2canvas(this.snippetEditorRef?.editorContainer?.nativeElement, {
-      height: 195,
+  private handleSubmit({ title, language, labels, isPublic, code }: any): Promise<any> {
+    return new Promise(resolve => {
+      setTimeout(async () => {
+        const blob = await this.getImageBlob()
+        const data = {
+          title: title,
+          language: language,
+          labels: labels,
+          isPublic: isPublic,
+          code: code,
+          blob: blob,
+        }
+        resolve(data)
+      }, 100)
     })
-    return await this.getPromiseBlob(canvasResult)
   }
 }

@@ -14,6 +14,11 @@ export interface GoogleUserInterface extends UserInterface {
   email: string
 }
 
+export interface FacebookInterface extends UserInterface {
+  firstName?: string
+  lastName?: string
+  email: string
+}
 export interface GithubUserInterface extends UserInterface {
   githubUsername: string
   accessTokenGithub?: string
