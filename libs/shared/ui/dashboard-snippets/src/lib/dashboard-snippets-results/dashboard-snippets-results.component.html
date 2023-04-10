@@ -17,8 +17,18 @@
   </div>
 
   <section class="snippet-container">
-    <div *ngFor="let snippet of snippets">
+    <div *ngFor="let snippet of filteredSnippets">
       <dp-snippet-card [state]="snippet"></dp-snippet-card>
     </div>
   </section>
+
+  <p-paginator
+    (onPageChange)="onPageChange($event)"
+    [showCurrentPageReport]="true"
+    [alwaysShow]="true"
+    [first]="first"
+    [rows]="rows"
+    [totalRecords]="totalRecord"
+    [rowsPerPageOptions]="[5, 10, 15, 20]">
+  </p-paginator>
 </ng-template>

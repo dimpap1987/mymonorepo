@@ -5,6 +5,7 @@ import { SharedUiAdvancedSearchModule } from '@mymonorepo/shared/ui/advanced-sea
 import { SharedUiSnippetCardModule } from '@mymonorepo/shared/ui/snippet-card'
 import { SharedUiSnippetLibCreateSnippetModule } from '@mymonorepo/shared/ui/snippet-lib/create-snippet'
 import { ButtonModule } from 'primeng/button'
+import { PaginatorModule } from 'primeng/paginator'
 import { DashboardSnippetsCreateComponent } from './dashboard-snippets-create/dashboard-snippets-create.component'
 import { DashboardSnippetsResultsComponent } from './dashboard-snippets-results/dashboard-snippets-results.component'
 import { DashboardSnippetsComponent } from './dashboard-snippets/dashboard-snippets.component'
@@ -18,6 +19,7 @@ import { sharedUiDashboardSnippetsRoutes } from './lib.routes'
     SharedUiSnippetLibCreateSnippetModule,
     SharedUiSnippetCardModule,
     SharedUiAdvancedSearchModule,
+    PaginatorModule,
   ],
   exports: [RouterModule],
   declarations: [

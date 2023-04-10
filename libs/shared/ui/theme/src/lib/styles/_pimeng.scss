@@ -159,3 +159,28 @@ a {
     }
   }
 }
+
+.p-paginator {
+  padding: 0 !important;
+  .p-inputtext {
+    padding: 0.2rem !important;
+  }
+  .p-dropdown-label.p-inputtext {
+    align-items: center !important;
+    display: flex !important;
+  }
+
+  .p-dropdown .p-dropdown-trigger {
+    width: 1.5rem !important;
+  }
+
+  button,
+  .p-paginator-current,
+  .p-dropdown {
+    height: 2rem !important;
+  }
+
+  .p-paginator-pages .p-paginator-page {
+    border-radius: 0 !important;
+  }
+}
