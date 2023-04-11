@@ -14,6 +14,8 @@ export class LoginDialogService {
       style: { top: '-100px' },
       styleClass: 'login-dialog',
       width: '400px',
+      closeOnEscape: true,
+      dismissableMask: true,
     })
   }
 }

@@ -9,4 +9,4 @@ import { GoogleButtonComponent } from './google-button/google-button.component'
   declarations: [GoogleButtonComponent, FacebookButtonComponent, GithubButtonComponent],
   exports: [GoogleButtonComponent, FacebookButtonComponent, GithubButtonComponent],
 })
-export class GoogleButtonModule {}
+export class SocialButtonModule {}
