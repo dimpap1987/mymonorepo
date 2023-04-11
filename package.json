@@ -46,6 +46,7 @@
     "cookie-parser": "^1.4.6",
     "csurf": "^1.11.0",
     "dotenv": "^16.0.3",
+    "express-session": "^1.17.3",
     "helmet": "^6.0.1",
     "html2canvas": "^1.4.1",
     "moment": "^2.29.4",

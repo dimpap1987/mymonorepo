@@ -1,4 +1,2 @@
-<span class="p-input-icon-left">
-  <i class="pi pi-search"></i>
-  <input type="text" pInputText [(ngModel)]="value" />
-</span>
+<p-autoComplete [(ngModel)]="search" [suggestions]="suggestions" [showClear]="true" placeholder="Search">
+</p-autoComplete>

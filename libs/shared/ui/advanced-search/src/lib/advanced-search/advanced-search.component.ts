@@ -7,7 +7,8 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AdvancedSearchComponent implements OnInit {
-  value: string
+  search: string
+  suggestions: []
 
   constructor() {}
 

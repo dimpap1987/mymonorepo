@@ -20,7 +20,7 @@ export class AuthController {
     const tokens = this.authService.handleLogin(req.user, ProvidersEnum.GOOGLE)
     res.cookie('accessToken', tokens.accessToken, { httpOnly: true })
     res.cookie('refreshToken', tokens.refreshToken, { httpOnly: true })
-    res.redirect(AuthController.handleRedirectUrl())
+    res.redirect(AuthController.handleRedirectUrl(req))
   }
 
   @Get('/facebook/login')
@@ -35,7 +35,7 @@ export class AuthController {
     const tokens = this.authService.handleLogin(req.user, ProvidersEnum.FACEBOOK)
     res.cookie('accessToken', tokens.accessToken, { httpOnly: true })
     res.cookie('refreshToken', tokens.refreshToken, { httpOnly: true })
-    res.redirect(AuthController.handleRedirectUrl())
+    res.redirect(AuthController.handleRedirectUrl(req))
   }
 
   @Get('github/login')
@@ -50,7 +50,7 @@ export class AuthController {
     const tokens = this.authService.handleLogin(req.user, ProvidersEnum.GITHUB)
     res.cookie('accessToken', tokens.accessToken, { httpOnly: true })
     res.cookie('refreshToken', tokens.refreshToken, { httpOnly: true })
-    res.redirect(AuthController.handleRedirectUrl())
+    res.redirect(AuthController.handleRedirectUrl(req))
   }
 
   @Get('/refresh-token')
@@ -79,7 +79,7 @@ export class AuthController {
     res.send({})
   }
 
-  private static handleRedirectUrl(): string {
-    return `${process.env.UI_URL}`
+  private static handleRedirectUrl(req: any): string {
+    return req.session['redirect-after-login'] || `${process.env.UI_URL}`
   }
 }

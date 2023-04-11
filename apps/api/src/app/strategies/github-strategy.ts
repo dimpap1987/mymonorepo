@@ -16,7 +16,7 @@ export class GithubOauthStrategy extends PassportStrategy(Strategy, 'github') {
 
   async validate(accessToken: string, _refreshToken: string, profile: any, done: any) {
     const userEmails = await this.octokitUtils.getUsersEmailsResponse(accessToken)
-    const emailObj = userEmails.data.find(d => d.primary && d.verified)
+    const emailObj = userEmails?.data?.find(d => d.primary && d.verified)
 
     const { username, profileUrl, photos, id } = profile
     done(null, {

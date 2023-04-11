@@ -7,7 +7,7 @@ import { GithubBoardComponent } from './github-board/github-board.component'
 
 @NgModule({
   imports: [CommonModule, DropdownModule, ButtonModule, FormsModule],
-  declarations: [GithubBoardComponent, GithubBoardComponent],
+  declarations: [GithubBoardComponent],
   exports: [GithubBoardComponent],
 })
 export class SharedUiGithubModule {}

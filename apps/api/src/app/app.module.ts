@@ -2,6 +2,7 @@ import { JwtPayloadInterface } from '@mymonorepo/shared/interfaces'
 import { CacheModule, MiddlewareConsumer, Module, NestModule } from '@nestjs/common'
 import { REQUEST } from '@nestjs/core'
 
+import * as session from 'express-session'
 import { AppController } from './controllers/app.controller'
 import { AuthController } from './controllers/auth.controller'
 import { RemoteRepoController } from './controllers/remote-repo.controller'
@@ -11,6 +12,8 @@ import { WsGuard } from './guards/ws-guard'
 import { CorsMiddleware } from './middlewares/cors.middleware'
 import { CsrfGeneratorMiddleware } from './middlewares/csrf-generator.middleware'
 import { CsrfValidatorMiddleware } from './middlewares/csrf-validator.middleware'
+import { LoggerMiddleware } from './middlewares/logger.middleware'
+import { RefererMiddleware } from './middlewares/referer.middleware'
 import { AppService } from './services/app.service'
 import { AuthService } from './services/auth.service'
 import { GithubService } from './services/github.service'
@@ -64,11 +67,23 @@ import { AppGateway } from './websocket/app.gateway'
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
+      .apply(
+        session({
+          secret: process.env.SESSION_SECRET,
+          resave: false,
+          saveUninitialized: false,
+        })
+      )
+      .forRoutes('*')
       .apply(CorsMiddleware)
       .forRoutes('/')
       .apply(CsrfValidatorMiddleware)
       .forRoutes('/')
       .apply(CsrfGeneratorMiddleware)
+      .forRoutes('/')
+      .apply(RefererMiddleware)
+      .forRoutes('/')
+      .apply(LoggerMiddleware)
       .forRoutes('/')
   }
 }
