@@ -56,9 +56,9 @@
 .p-button {
   letter-spacing: 0.05em !important;
   padding: 0.54rem 0.8rem !important;
-  &:hover {
-    background: linear-gradient(to left, var(--primary-color), #d67bcd) !important;
-  }
+  // &:hover {
+  //   background: linear-gradient(to left, var(--primary-color), #d67bcd) !important;
+  // }
 }
 
 button[icon='pi pi-google'],
@@ -197,4 +197,8 @@ a {
   border-radius: 0 0 15px 15px !important;
   border: var(--primary-color) 2px ridge;
   border-top-style: none !important;
+}
+
+.p-overflow-hidden {
+  overflow: initial !important;
 }
