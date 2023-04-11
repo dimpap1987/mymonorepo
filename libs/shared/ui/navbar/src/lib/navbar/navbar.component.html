@@ -37,14 +37,14 @@
 
     <div class="buttons-wrapper">
       <div *ngIf="!(user$ | async)?.loggedIn">
-        <a routerLink="/login">
+        <p-button styleClass="p-button-text" (click)="login()">
           <em title="Sign in" class="pi pi-sign-in login-icon"></em>
-        </a>
+        </p-button>
       </div>
       <div *ngIf="(user$ | async)?.loggedIn" (click)="logOut()">
-        <a routerLink="/">
+        <p-button styleClass="p-button-text">
           <em title="Sign out" class="pi pi-sign-out logout-icon"></em>
-        </a>
+        </p-button>
       </div>
     </div>
   </div>

@@ -1,30 +1,15 @@
 import { CommonModule } from '@angular/common'
 import { NgModule } from '@angular/core'
-import { RouterModule, Routes } from '@angular/router'
 import { GoogleButtonModule } from '@mymonorepo/shared/ui/google-button'
-import { SharedUiNavbarModule } from '@mymonorepo/shared/ui/navbar'
 import { ButtonModule } from 'primeng/button'
+import { DialogService } from 'primeng/dynamicdialog'
 import { RippleModule } from 'primeng/ripple'
-import { LoginPageComponent } from './login-page/login-page.component'
-
-const routes: Routes = [
-  {
-    path: '',
-    pathMatch: 'full',
-    component: LoginPageComponent,
-  },
-]
+import { LoginDialogComponent } from './login-dialog/login-dialog.component'
 
 @NgModule({
-  imports: [
-    CommonModule,
-    GoogleButtonModule,
-    RouterModule.forChild(routes),
-    SharedUiNavbarModule,
-    ButtonModule,
-    RippleModule,
-  ],
-  declarations: [LoginPageComponent],
-  exports: [LoginPageComponent, RouterModule],
+  imports: [CommonModule, GoogleButtonModule, ButtonModule, RippleModule],
+  declarations: [LoginDialogComponent],
+  exports: [LoginDialogComponent],
+  providers: [DialogService],
 })
 export class SharedUiLoginModule {}

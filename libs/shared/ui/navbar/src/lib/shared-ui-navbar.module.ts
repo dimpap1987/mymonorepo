@@ -1,12 +1,13 @@
-import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
-import { NavbarComponent } from './navbar/navbar.component'
-import { ToolbarModule } from 'primeng/toolbar'
-import { ButtonModule } from 'primeng/button'
+import { NgModule } from '@angular/core'
 import { RouterModule } from '@angular/router'
+import { SharedUiLoginModule } from '@mymonorepo/shared/ui/login'
+import { ButtonModule } from 'primeng/button'
+import { ToolbarModule } from 'primeng/toolbar'
+import { NavbarComponent } from './navbar/navbar.component'
 
 @NgModule({
-  imports: [CommonModule, ToolbarModule, ButtonModule, RouterModule],
+  imports: [CommonModule, ToolbarModule, ButtonModule, SharedUiLoginModule, RouterModule],
   declarations: [NavbarComponent],
   exports: [NavbarComponent],
 })

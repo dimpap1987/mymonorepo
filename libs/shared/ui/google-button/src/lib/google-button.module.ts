@@ -1,14 +1,12 @@
-import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
-import { GoogleButtonComponent } from './google-button/google-button.component'
+import { NgModule } from '@angular/core'
 import { FacebookButtonComponent } from './facebook-button/facebook-button.component'
-import { ButtonModule } from 'primeng/button'
-import { RippleModule } from 'primeng/ripple'
+import { GithubButtonComponent } from './github-button/github-button.component'
+import { GoogleButtonComponent } from './google-button/google-button.component'
 
 @NgModule({
-  imports: [CommonModule, ButtonModule, RippleModule],
-  declarations: [GoogleButtonComponent, FacebookButtonComponent],
-  exports: [GoogleButtonComponent, FacebookButtonComponent],
-  providers: [],
+  imports: [CommonModule],
+  declarations: [GoogleButtonComponent, FacebookButtonComponent, GithubButtonComponent],
+  exports: [GoogleButtonComponent, FacebookButtonComponent, GithubButtonComponent],
 })
 export class GoogleButtonModule {}

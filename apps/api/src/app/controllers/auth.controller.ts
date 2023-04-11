@@ -80,6 +80,6 @@ export class AuthController {
   }
 
   private static handleRedirectUrl(): string {
-    return `${process.env.LOGIN_URL}?success=true`
+    return `${process.env.UI_URL}`
   }
 }

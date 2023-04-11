@@ -1,4 +1,11 @@
-.fb-button {
+@import 'libs/shared/ui/theme/src/lib/styles/mix-in';
+
+:host {
+  width: 100%;
+}
+
+button {
   color: white;
-  background-color: #3F5793;
+  background-color: rgb(67, 99, 182);
+  @include social-buttons;
 }

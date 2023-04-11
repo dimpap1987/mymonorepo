@@ -1,14 +1,9 @@
 import { CommonModule } from '@angular/common'
 import { NgModule } from '@angular/core'
 import { RouterModule, Routes } from '@angular/router'
-import { LoggedInGuard, LoginGuard } from '@mymonorepo/shared/utils'
+import { LoggedInGuard } from '@mymonorepo/shared/utils'
 
 const routes: Routes = [
-  {
-    path: 'login',
-    canActivate: [LoginGuard],
-    loadChildren: () => import('@mymonorepo/shared/ui/login').then(m => m.SharedUiLoginModule),
-  },
   {
     path: 'browse',
     redirectTo: 'home',

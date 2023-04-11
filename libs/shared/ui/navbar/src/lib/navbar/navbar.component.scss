@@ -13,6 +13,10 @@
 ::ng-deep {
   .p-toolbar {
     height: $navbar-height !important;
+    .p-button {
+      min-width: 0 !important;
+      padding: 0.2rem !important;
+    }
   }
 }
 .p-toolbar-group-left,

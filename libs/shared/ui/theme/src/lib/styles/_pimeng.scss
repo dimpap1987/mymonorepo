@@ -187,7 +187,7 @@ a {
 
 .p-dialog-header {
   border-radius: 15px 15px 0 0 !important;
-  border: var(--primary-color) 2px ridge;
+  border: grey 2px ridge;
   border-bottom-style: none !important;
   .p-dialog-title {
     font-weight: 600 !important;
@@ -195,10 +195,24 @@ a {
 }
 .p-dialog-content {
   border-radius: 0 0 15px 15px !important;
-  border: var(--primary-color) 2px ridge;
+  border: grey 2px ridge;
   border-top-style: none !important;
 }
 
 .p-overflow-hidden {
   overflow: initial !important;
+}
+
+.login-dialog.p-dialog {
+  .p-dialog-header {
+    .p-dialog-title {
+      font-size: 1rem !important;
+      font-weight: 600 !important;
+    }
+    padding-bottom: 0.8rem !important;
+  }
+  .p-dialog-content {
+    padding-top: 0.8rem !important;
+    padding-bottom: 3rem !important;
+  }
 }

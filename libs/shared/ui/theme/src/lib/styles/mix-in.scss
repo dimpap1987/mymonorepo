@@ -50,3 +50,30 @@
   -ms-user-select: none;
   user-select: none;
 }
+
+@mixin social-buttons {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  border: 0px;
+  font-weight: normal;
+  border-radius: 15px;
+  padding: 8px;
+  align-items: center;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+
+  .fb,
+  .google,
+  .github {
+    margin-left: 1rem;
+  }
+  em,
+  .svg-container {
+    font-size: 1.5rem !important;
+  }
+
+  &:hover {
+    box-shadow: 0px 3px 3px whitesmoke;
+  }
+}

@@ -1,9 +1,8 @@
 import { HttpClient } from '@angular/common/http'
 import { Component, OnInit } from '@angular/core'
-import { LoaderService } from '@mymonorepo/shared/ui/loader'
 import { getUser, User, UserState } from '@mymonorepo/shared/utils'
 import { Store } from '@ngrx/store'
-import { filter, Observable, take } from 'rxjs'
+import { Observable } from 'rxjs'
 
 @Component({
   selector: 'dp-app',
@@ -13,11 +12,7 @@ import { filter, Observable, take } from 'rxjs'
 export class AppComponent implements OnInit {
   user$: Observable<UserState> = this.store.select(getUser)
 
-  constructor(
-    private store: Store<{ user: User }>,
-    private http: HttpClient,
-    private loader: LoaderService
-  ) {}
+  constructor(private store: Store<{ user: User }>, private http: HttpClient) {}
 
   ngOnInit(): void {
     // this.user$
@@ -39,9 +34,7 @@ export class AppComponent implements OnInit {
   }
 
   clickMePOST() {
-    this.http
-      .post('//localhost:3333/api/v1/users/secure', {})
-      .subscribe(res => console.log(res))
+    this.http.post('//localhost:3333/api/v1/users/secure', {}).subscribe(res => console.log(res))
   }
   clickMeGET() {
     this.http.get('//localhost:3333/api/v1/users').subscribe(res => console.log(res))
