@@ -19,6 +19,7 @@ import { UserSessionCache } from './services/user-session-cache'
 import { FacebookStrategy } from './strategies/facebook-strategy'
 import { GithubOauthStrategy } from './strategies/github-strategy'
 import { GoogleStrategy } from './strategies/google-strategy'
+import { OctokitUtils } from './utils/octokit-utils'
 import { AppGateway } from './websocket/app.gateway'
 // import {ServeStaticModule} from '@nestjs/serve-static';
 // import {join} from 'path';
@@ -49,6 +50,7 @@ import { AppGateway } from './websocket/app.gateway'
     RolesGuard,
     JwtTokenService,
     GithubService,
+    OctokitUtils,
     {
       provide: 'jwt',
       useFactory: async (jwtService: JwtTokenService, req: any): Promise<JwtPayloadInterface> => {

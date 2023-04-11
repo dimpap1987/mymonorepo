@@ -1,22 +1,20 @@
 import { GithubUserInterface, JwtPayloadInterface } from '@mymonorepo/shared/interfaces'
 import { Inject, Injectable } from '@nestjs/common'
-import { Octokit } from 'octokit'
+import { OctokitUtils } from '../utils/octokit-utils'
 
 @Injectable()
 export class GithubService {
-  constructor(@Inject('jwt') private readonly jwt: JwtPayloadInterface) {}
+  constructor(
+    @Inject('jwt') private readonly jwt: JwtPayloadInterface,
+    private readonly octokitUtils: OctokitUtils
+  ) {}
 
   async getRepositories() {
-    const githubUser = this.jwt.user as GithubUserInterface
-    const octokit = new Octokit({
-      auth: githubUser.accessTokenGithub,
-    })
-    const response = await octokit.request('GET /users/{username}/repos', {
-      username: githubUser.githubUsername,
-      headers: {
-        'X-GitHub-Api-Version': '2022-11-28',
-      },
-    })
+    const githubUser = this.jwt?.user as GithubUserInterface
+    const response = await this.octokitUtils.getRepositoriesResponse(
+      githubUser.accessTokenGithub,
+      githubUser.githubUsername
+    )
     return response.data.map(d => {
       return {
         id: d.id,
