@@ -16,19 +16,9 @@
   <div class="p-toolbar-group-right right-wrapper">
     <div *ngIf="(user$ | async)?.loggedIn" class="user-details">
       <!-- TODO create a pipe  -->
-      <div
-        class="welcome-message"
-        *ngIf="
-          (user$ | async)?.provider !== 'github'
-            ? (user$ | async)?.firstName
-            : (user$ | async)?.githubUsername
-        ">
+      <div class="welcome-message">
         <span class="welcome">Welcome , </span>
-        <span class="user-email">{{
-          (user$ | async)?.provider !== 'github'
-            ? (user$ | async)?.firstName
-            : (user$ | async)?.githubUsername
-        }}</span>
+        <span class="user-email">{{ (user$ | async)?.username }}</span>
       </div>
       <div *ngIf="(user$ | async)?.picture">
         <img class="user-image" [src]="(user$ | async)?.picture" alt="" referrerpolicy="no-referrer" />
