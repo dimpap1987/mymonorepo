@@ -17,7 +17,13 @@ export class AuthController {
   @Get('google/redirect')
   @UseGuards(AuthGuard('google'))
   async googleAuthRedirect(@Req() req, @Res() res) {
-    const tokens = this.authService.handleLogin(req.user, ProvidersEnum.GOOGLE)
+    const tokens = await this.authService.handleLogin(
+      {
+        ...req.user,
+        username: req.user.firstName,
+      },
+      ProvidersEnum.GOOGLE
+    )
     res.cookie('accessToken', tokens.accessToken, { httpOnly: true })
     res.cookie('refreshToken', tokens.refreshToken, { httpOnly: true })
     res.redirect(AuthController.handleRedirectUrl(req))
@@ -32,7 +38,13 @@ export class AuthController {
   @Get('/facebook/redirect')
   @UseGuards(AuthGuard('facebook'))
   async facebookLoginRedirect(@Req() req, @Res() res) {
-    const tokens = this.authService.handleLogin(req.user, ProvidersEnum.FACEBOOK)
+    const tokens = await this.authService.handleLogin(
+      {
+        ...req.user,
+        username: req.user.firstName,
+      },
+      ProvidersEnum.FACEBOOK
+    )
     res.cookie('accessToken', tokens.accessToken, { httpOnly: true })
     res.cookie('refreshToken', tokens.refreshToken, { httpOnly: true })
     res.redirect(AuthController.handleRedirectUrl(req))
@@ -47,7 +59,14 @@ export class AuthController {
   @Get('/github/redirect')
   @UseGuards(AuthGuard('github'))
   async githubAuthCallback(@Req() req, @Res() res) {
-    const tokens = this.authService.handleLogin(req.user, ProvidersEnum.GITHUB)
+    const tokens = await this.authService.handleLogin(
+      {
+        ...req.user,
+        username: req.user.githubUsername,
+      },
+      ProvidersEnum.GITHUB,
+      req.user.accessTokenGithub
+    )
     res.cookie('accessToken', tokens.accessToken, { httpOnly: true })
     res.cookie('refreshToken', tokens.refreshToken, { httpOnly: true })
     res.redirect(AuthController.handleRedirectUrl(req))

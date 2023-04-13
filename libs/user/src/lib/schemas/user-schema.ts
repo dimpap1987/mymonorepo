@@ -5,26 +5,32 @@ export type UserDocument = User & Document
 
 @Schema()
 export class User {
-  @Prop()
-  id: string
+  @Prop({ required: true })
+  id?: string
 
   @Prop()
-  username: string
+  username?: string
+
+  @Prop({ required: true })
+  email?: string
 
   @Prop()
-  email: string
+  emailVerified?: boolean
 
   @Prop()
-  emailVerified: boolean
+  enabled?: boolean
 
   @Prop()
-  enabled: boolean
-
-  @Prop()
-  createdAt: string
+  createdAt?: string
 
   @Prop()
   updatedAt?: string
+
+  @Prop()
+  lastLoggedIn?: string
+
+  @Prop({ type: [String], enum: ['ADMIN', 'USER'], required: true })
+  roles?: string[]
 }
 
 export const UserSchema = SchemaFactory.createForClass(User)
