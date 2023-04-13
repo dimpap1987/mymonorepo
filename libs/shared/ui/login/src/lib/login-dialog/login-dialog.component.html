@@ -1,7 +1,10 @@
 <div class="login-container">
-  <div class="login-buttons">
-    <dp-google-button></dp-google-button>
-    <dp-facebook-button></dp-facebook-button>
-    <dp-github-button></dp-github-button>
+  <div class="login-buttons" *ngIf="!loading">
+    <dp-google-button (click)="onClick()"></dp-google-button>
+    <dp-facebook-button (click)="onClick()"></dp-facebook-button>
+    <dp-github-button (click)="onClick()"></dp-github-button>
+  </div>
+  <div class="loader" *ngIf="loading">
+    <dp-loader></dp-loader>
   </div>
 </div>

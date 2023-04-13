@@ -6,4 +6,10 @@ import { ChangeDetectionStrategy, Component } from '@angular/core'
   styleUrls: ['./login-dialog.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LoginDialogComponent {}
+export class LoginDialogComponent {
+  loading = false
+
+  onClick() {
+    this.loading = true
+  }
+}

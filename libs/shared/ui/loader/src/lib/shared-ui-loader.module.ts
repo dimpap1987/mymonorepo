@@ -6,6 +6,6 @@ import { LoaderComponent } from './loader/loader.component'
 @NgModule({
   imports: [CommonModule],
   declarations: [LoaderComponent, LoaderWrapperComponent],
-  exports: [LoaderWrapperComponent],
+  exports: [LoaderWrapperComponent, LoaderComponent],
 })
 export class SharedUiLoaderModule {}
