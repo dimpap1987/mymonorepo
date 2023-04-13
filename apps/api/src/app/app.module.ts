@@ -2,11 +2,12 @@ import { JwtPayloadInterface } from '@mymonorepo/shared/interfaces'
 import { CacheModule, MiddlewareConsumer, Module, NestModule } from '@nestjs/common'
 import { REQUEST } from '@nestjs/core'
 
+import { UserController, UserModule } from '@mymonorepo/user'
+import { MongooseModule } from '@nestjs/mongoose'
 import * as session from 'express-session'
 import { AppController } from './controllers/app.controller'
 import { AuthController } from './controllers/auth.controller'
 import { RemoteRepoController } from './controllers/remote-repo.controller'
-import { UserController } from './controllers/user.controller'
 import { RolesGuard } from './guards/roles-guard'
 import { WsGuard } from './guards/ws-guard'
 import { CorsMiddleware } from './middlewares/cors.middleware'
@@ -30,6 +31,14 @@ import { AppGateway } from './websocket/app.gateway'
 
 @Module({
   imports: [
+    MongooseModule.forRoot(`mongodb://localhost/${process.env.MONGO_DB_SCHEMA}`, {
+      auth: {
+        username: process.env.MONGO_DB_USERNAME,
+        password: process.env.MONGO_DB_PASSWORD,
+      },
+      authSource: process.env.MONGO_DB_AUTH_SOURCE,
+    }),
+    UserModule,
     //This is to bundle front-back together
     // ConfigModule.forRoot(),
     // ServeStaticModule.forRoot({
@@ -77,10 +86,10 @@ export class AppModule implements NestModule {
       .forRoutes('*')
       .apply(CorsMiddleware)
       .forRoutes('/')
-      .apply(CsrfValidatorMiddleware)
-      .forRoutes('/')
-      .apply(CsrfGeneratorMiddleware)
-      .forRoutes('/')
+      // .apply(CsrfValidatorMiddleware)
+      // .forRoutes('/')
+      // .apply(CsrfGeneratorMiddleware)
+      // .forRoutes('/')
       .apply(RefererMiddleware)
       .forRoutes('/')
       .apply(LoggerMiddleware)

@@ -25,7 +25,6 @@
       "@mymonorepo/shared/ui/dashboard-snippets": ["libs/shared/ui/dashboard-snippets/src/index.ts"],
       "@mymonorepo/shared/ui/file-manager": ["libs/shared/ui/file-manager/src/index.ts"],
       "@mymonorepo/shared/ui/github": ["libs/shared/ui/github/src/index.ts"],
-      "@mymonorepo/shared/ui/social-button": ["libs/shared/ui/social-button/src/index.ts"],
       "@mymonorepo/shared/ui/home": ["libs/shared/ui/home/src/index.ts"],
       "@mymonorepo/shared/ui/loader": ["libs/shared/ui/loader/src/index.ts"],
       "@mymonorepo/shared/ui/login": ["libs/shared/ui/login/src/index.ts"],
@@ -39,9 +38,11 @@
       ],
       "@mymonorepo/shared/ui/snippet-manager": ["libs/shared/ui/snippet-manager/src/index.ts"],
       "@mymonorepo/shared/ui/snippets": ["libs/shared/ui/snippets/src/index.ts"],
+      "@mymonorepo/shared/ui/social-button": ["libs/shared/ui/social-button/src/index.ts"],
       "@mymonorepo/shared/ui/theme": ["libs/shared/ui/theme/src/index.ts"],
       "@mymonorepo/shared/ui/toolbar": ["libs/shared/ui/toolbar/src/index.ts"],
-      "@mymonorepo/shared/utils": ["libs/shared/utils/src/index.ts"]
+      "@mymonorepo/shared/utils": ["libs/shared/utils/src/index.ts"],
+      "@mymonorepo/user": ["libs/user/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
