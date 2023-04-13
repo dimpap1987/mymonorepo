@@ -32,7 +32,6 @@ export class UserService {
       { id },
       {
         ...user,
-        updatedAt: new Date().toLocaleString(),
       }
     )
   }

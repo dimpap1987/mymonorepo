@@ -1,6 +1,6 @@
-import { JwtPayloadInterface } from '@mymonorepo/shared/interfaces'
-import { Injectable } from '@nestjs/common'
-import { decode, sign, SignOptions, verify } from 'jsonwebtoken'
+import { JwtPayloadInterface, JwtTokensInterface } from '@mymonorepo/shared/interfaces'
+import { HttpException, HttpStatus, Injectable, InternalServerErrorException } from '@nestjs/common'
+import { decode, sign, verify } from 'jsonwebtoken'
 
 @Injectable()
 export class JwtTokenService {
@@ -23,11 +23,38 @@ export class JwtTokenService {
     return this.decodeComplete(token)?.payload?.['exp']
   }
 
-  sign(payload, secret, options: SignOptions) {
-    return sign(payload, secret, options)
+  createJwtToken(payload: JwtPayloadInterface): JwtTokensInterface {
+    const accessToken = this.createAccessToken(payload)
+    const refreshToken = this.createRefreshToken(payload)
+    return {
+      accessToken,
+      refreshToken,
+    }
   }
 
-  verify(token, secret) {
-    return verify(token, secret)
+  createAccessToken(payload: JwtPayloadInterface) {
+    return this.signToken(payload, 300 * 5) // 5 minutes
+  }
+
+  createRefreshToken(payload: JwtPayloadInterface) {
+    return this.signToken(payload, 86400) // 1 day
+  }
+
+  verify(token): JwtPayloadInterface {
+    try {
+      return verify(token, process.env.JWT_SECRET_KEY) as JwtPayloadInterface
+    } catch (e) {
+      throw new HttpException('UNAUTHORIZED', HttpStatus.UNAUTHORIZED)
+    }
+  }
+
+  private signToken(payload: JwtPayloadInterface, expiry) {
+    try {
+      return sign(payload, process.env.JWT_SECRET_KEY, {
+        expiresIn: expiry,
+      })
+    } catch (err) {
+      throw new InternalServerErrorException('createJwtToken', err.message)
+    }
   }
 }
