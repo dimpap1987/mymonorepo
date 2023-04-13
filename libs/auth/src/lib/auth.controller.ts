@@ -1,8 +1,8 @@
 import { ProvidersEnum, SessionInterface } from '@mymonorepo/shared/interfaces'
 import { Controller, Get, HttpCode, HttpStatus, Req, Res, UseGuards } from '@nestjs/common'
 import { AuthGuard } from '@nestjs/passport'
-import { JwtAuthGuard } from '../guards/jwt-auth-guard'
-import { AuthService } from '../services/auth.service'
+import { AuthService } from './services/auth.service'
+import { JwtAuthGuard } from './services/jwt-auth-guard'
 
 @Controller('auth')
 export class AuthController {

@@ -4,13 +4,8 @@ import {
   ProvidersEnum,
   SessionInterface,
 } from '@mymonorepo/shared/interfaces'
-import {
-  HttpException,
-  HttpStatus,
-  Injectable,
-  InternalServerErrorException,
-} from '@nestjs/common'
-import { JwtTokenService } from './jwt-token.service'
+import { HttpException, HttpStatus, Injectable, InternalServerErrorException } from '@nestjs/common'
+import { JwtTokenService } from 'libs/jwt-utils/src/lib/jwt-token.service'
 
 @Injectable()
 export class AuthService {
@@ -35,10 +30,7 @@ export class AuthService {
 
   verify(token): JwtPayloadInterface {
     try {
-      return this.jwtService.verify(
-        token,
-        process.env.JWT_SECRET_KEY
-      ) as JwtPayloadInterface
+      return this.jwtService.verify(token, process.env.JWT_SECRET_KEY) as JwtPayloadInterface
     } catch (e) {
       throw new HttpException('UNAUTHORIZED', HttpStatus.UNAUTHORIZED)
     }

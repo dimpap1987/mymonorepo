@@ -8,6 +8,8 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Get(':userId')
+  //   @HasRoles(RolesEnum.USER)
+  //   @UseGuards(JwtAuthGuard, RolesGuard)
   async getUser(@Param('userId') userId: string): Promise<User> {
     return this.userService.getUserById(userId)
   }

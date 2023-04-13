@@ -1,7 +1,7 @@
 import { RolesEnum } from '@mymonorepo/shared/interfaces'
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common'
 import { Reflector } from '@nestjs/core'
-import { AuthService } from '../services/auth.service'
+import { AuthService } from './services/auth.service'
 
 @Injectable()
 export class RolesGuard implements CanActivate {
