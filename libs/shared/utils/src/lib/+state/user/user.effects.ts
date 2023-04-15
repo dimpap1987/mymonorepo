@@ -15,7 +15,11 @@ export class UserEffects {
 
   loadUser$ = createEffect(() =>
     this.actions$.pipe(
-      filter(() => Boolean(this.cookieService.get('XSRF-TOKEN'))),
+      filter(
+        () =>
+          Boolean(this.cookieService.get('XSRF-TOKEN')) &&
+          Boolean(!this.cookieService.get('UNREGISTERED-USER'))
+      ),
       ofType(UserActions.loadUser),
       mergeMap(() => this.authService.session()),
       map(payload => {

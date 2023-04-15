@@ -1,6 +1,7 @@
 import { ProvidersEnum, SessionInterface } from '@mymonorepo/shared/interfaces'
-import { Controller, Get, HttpCode, HttpStatus, Req, Res, UseGuards } from '@nestjs/common'
+import { Body, Controller, Get, HttpCode, HttpStatus, Post, Req, Res, UseGuards } from '@nestjs/common'
 import { AuthGuard } from '@nestjs/passport'
+import { RegisterSocialUserDto } from '../dtos/register-social-user.dto'
 import { AuthService } from '../services/auth.service'
 import { JwtAuthGuard } from '../services/jwt-auth-guard'
 
@@ -17,16 +18,7 @@ export class AuthController {
   @Get('google/redirect')
   @UseGuards(AuthGuard('google'))
   async googleAuthRedirect(@Req() req, @Res() res) {
-    const tokens = await this.authService.handleLogin(
-      {
-        ...req.user,
-        username: req.user.firstName,
-      },
-      ProvidersEnum.GOOGLE
-    )
-    res.cookie('accessToken', tokens.accessToken, { httpOnly: true })
-    res.cookie('refreshToken', tokens.refreshToken, { httpOnly: true })
-    res.redirect(AuthController.handleRedirectUrl(req))
+    return this.authService.handleSocialRedirect(req, res, ProvidersEnum.GOOGLE)
   }
 
   @Get('/facebook/login')
@@ -38,16 +30,7 @@ export class AuthController {
   @Get('/facebook/redirect')
   @UseGuards(AuthGuard('facebook'))
   async facebookLoginRedirect(@Req() req, @Res() res) {
-    const tokens = await this.authService.handleLogin(
-      {
-        ...req.user,
-        username: req.user.firstName,
-      },
-      ProvidersEnum.FACEBOOK
-    )
-    res.cookie('accessToken', tokens.accessToken, { httpOnly: true })
-    res.cookie('refreshToken', tokens.refreshToken, { httpOnly: true })
-    res.redirect(AuthController.handleRedirectUrl(req))
+    return this.authService.handleSocialRedirect(req, res, ProvidersEnum.FACEBOOK)
   }
 
   @Get('github/login')
@@ -59,17 +42,7 @@ export class AuthController {
   @Get('/github/redirect')
   @UseGuards(AuthGuard('github'))
   async githubAuthCallback(@Req() req, @Res() res) {
-    const tokens = await this.authService.handleLogin(
-      {
-        ...req.user,
-        username: req.user.githubUsername,
-      },
-      ProvidersEnum.GITHUB,
-      req.user.accessTokenGithub
-    )
-    res.cookie('accessToken', tokens.accessToken, { httpOnly: true })
-    res.cookie('refreshToken', tokens.refreshToken, { httpOnly: true })
-    res.redirect(AuthController.handleRedirectUrl(req))
+    return this.authService.handleSocialRedirect(req, res, ProvidersEnum.GITHUB)
   }
 
   @Get('/refresh-token')
@@ -98,7 +71,16 @@ export class AuthController {
     res.send({})
   }
 
-  private static handleRedirectUrl(req: any): string {
-    return req.session['redirect-after-login'] || `${process.env.UI_URL}`
+  @Post('/register-user')
+  async registerUser(@Body() registerUserDto: RegisterSocialUserDto, @Res() res) {
+    const registerResult = await this.authService.registerSocialUser(registerUserDto)
+    const tokens = await this.authService.createJwtTokenAfterRegister(
+      registerResult.user,
+      registerResult.accessToken,
+      registerResult.providerUsername
+    )
+    res.cookie('refreshToken', tokens.refreshToken, { httpOnly: true })
+    res.cookie('accessToken', tokens.accessToken, { httpOnly: true })
+    res.send({})
   }
 }

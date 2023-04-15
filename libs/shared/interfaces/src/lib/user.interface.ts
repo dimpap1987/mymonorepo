@@ -20,6 +20,6 @@ export interface FacebookInterface extends UserInterface {
   email: string
 }
 export interface GithubUserInterface extends UserInterface {
-  githubUsername: string
-  accessTokenGithub?: string
+  providerUsername: string
+  accessToken?: string
 }

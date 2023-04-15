@@ -1,7 +1,8 @@
 import { Injectable } from '@nestjs/common'
 import { v4 as uuidv4 } from 'uuid'
-import { User } from './schemas/user-schema'
-import { UserRepository } from './user.repository'
+import { UserDto } from '../dto/user.dto'
+import { UserRepository } from '../repos/user.repository'
+import { User } from '../schemas/user-schema'
 
 @Injectable()
 export class UserService {
@@ -19,15 +20,15 @@ export class UserService {
     return this.userRepository.find({})
   }
 
-  async createUser(user: User): Promise<User> {
+  async createUser(user: UserDto): Promise<User> {
     return this.userRepository.create({
-      id: uuidv4(),
+      // id: uuidv4(),
       createdAt: new Date().toLocaleString(),
       ...user,
     })
   }
 
-  async updateUser(id: string, user: User): Promise<User> {
+  async updateUser(id: string, user: UserDto): Promise<User> {
     return this.userRepository.findOneAndUpdate(
       { id },
       {

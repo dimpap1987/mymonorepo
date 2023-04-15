@@ -12,8 +12,8 @@ export class GithubService {
   async getRepositories() {
     const githubUser = this.jwt?.user as GithubUserInterface
     const response = await this.octokitUtils.getRepositoriesResponse(
-      githubUser.accessTokenGithub,
-      githubUser.githubUsername
+      githubUser.accessToken,
+      githubUser.providerUsername
     )
     return response.data.map(d => {
       return {

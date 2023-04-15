@@ -1,0 +1,35 @@
+<section class="register-container" [formGroup]="registerForm" *ngIf="userFromCookie">
+  <div class="p-inputgroup">
+    <span class="p-inputgroup-addon">
+      <i
+        class="pi"
+        [ngClass]="
+          userFromCookie.provider === 'github'
+            ? 'pi-github'
+            : userFromCookie.provider === 'google'
+            ? 'pi-google'
+            : ''
+        "></i>
+    </span>
+    <input type="text" class="register-form-input" readonly [value]="userFromCookie.email" />
+    <span class="p-inputgroup-addon">
+      <i class="pi pi-lock"></i>
+    </span>
+  </div>
+
+  <div class="p-inputgroup username">
+    <span class="p-inputgroup-addon">
+      <i class="pi pi-user"></i>
+    </span>
+    <input
+      type="text"
+      pAutoFocus
+      [autofocus]="true"
+      class="register-form-input"
+      placeholder="Enter your username"
+      pInputText
+      formControlName="username" />
+  </div>
+
+  <p-button label="Register" [disabled]="!this.registerForm.valid" (click)="registerUser()"></p-button>
+</section>

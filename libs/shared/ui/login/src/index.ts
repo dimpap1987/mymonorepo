@@ -1,3 +1,5 @@
 export * from './lib/login-dialog.service'
 export * from './lib/login-dialog/login-dialog.component'
+export * from './lib/register-dialog.service'
+export * from './lib/register-dialog/register-dialog.component'
 export * from './lib/shared-ui-login.module'

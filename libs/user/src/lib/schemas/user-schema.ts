@@ -4,10 +4,7 @@ import { Document } from 'mongoose'
 export type UserDocument = User & Document
 
 @Schema()
-export class User {
-  @Prop({ required: true })
-  id?: string
-
+export class User extends Document {
   @Prop({ index: true, unique: true })
   username?: string
 
@@ -31,6 +28,9 @@ export class User {
 
   @Prop({ type: [String], enum: ['ADMIN', 'USER'], required: true })
   roles?: string[]
+
+  // @Prop({ type: [{ type: SchemaTypes.ObjectId, ref: 'UserSocialProvider' }] })
+  // userSocialProvider?: UserSocialProvider[]
 }
 
 export const UserSchema = SchemaFactory.createForClass(User)
