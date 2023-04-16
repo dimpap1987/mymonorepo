@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common'
-import { v4 as uuidv4 } from 'uuid'
 import { UserDto } from '../dto/user.dto'
 import { UserRepository } from '../repos/user.repository'
 import { User } from '../schemas/user-schema'
@@ -7,6 +6,10 @@ import { User } from '../schemas/user-schema'
 @Injectable()
 export class UserService {
   constructor(private readonly userRepository: UserRepository) {}
+
+  async findUserByUsername(username: string) {
+    return this.userRepository.findOne({ username })
+  }
 
   async getUserById(id: string): Promise<User> {
     return this.userRepository.findOne({ id })
@@ -22,7 +25,6 @@ export class UserService {
 
   async createUser(user: UserDto): Promise<User> {
     return this.userRepository.create({
-      // id: uuidv4(),
       createdAt: new Date().toLocaleString(),
       ...user,
     })

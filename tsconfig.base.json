@@ -17,6 +17,7 @@
     "strictPropertyInitialization": false,
     "paths": {
       "@mymonorepo/auth": ["libs/auth/src/index.ts"],
+      "@mymonorepo/back-end-utils": ["libs/back-end-utils/src/index.ts"],
       "@mymonorepo/jwt-utils": ["libs/jwt-utils/src/index.ts"],
       "@mymonorepo/shared/interfaces": ["libs/shared/interfaces/src/index.ts"],
       "@mymonorepo/shared/templates/desktop-template": [

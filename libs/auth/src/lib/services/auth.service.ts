@@ -1,3 +1,4 @@
+import { ApiException } from '@mymonorepo/back-end-utils'
 import { JwtTokensInterface, ProvidersEnum, SessionInterface } from '@mymonorepo/shared/interfaces'
 import { UserService } from '@mymonorepo/user'
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common'
@@ -71,6 +72,12 @@ export class AuthService {
   }
 
   public async registerSocialUser(registerForm: RegisterSocialUserDto) {
+    //check if user already exists
+    const user = this.userService.findUserByUsername(registerForm.username)
+    if (user) {
+      throw new ApiException(HttpStatus.BAD_REQUEST, 'Username already exists', 1001)
+    }
+
     // get unregistered user by uuid
     const unregisteredUser = await this.unRegisteredUserService.getUnregisteredUserByUuid(registerForm.uuid)
     if (!unregisteredUser) {
