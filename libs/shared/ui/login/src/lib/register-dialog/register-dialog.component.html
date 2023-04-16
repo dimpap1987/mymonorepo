@@ -1,4 +1,8 @@
 <section class="register-container" [formGroup]="registerForm" *ngIf="userFromCookie">
+  <div class="image-container">
+    <img class="image-profile" [src]="userFromCookie.picture" alt="User profile picture" />
+  </div>
+
   <div class="p-inputgroup">
     <span class="p-inputgroup-addon">
       <i

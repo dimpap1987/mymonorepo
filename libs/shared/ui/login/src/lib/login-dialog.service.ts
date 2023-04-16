@@ -11,7 +11,7 @@ export class LoginDialogService {
   open() {
     this.dialogService.open(LoginDialogComponent, {
       header: 'Sign in with',
-      style: { top: '-100px' },
+      style: { top: '-50px' },
       styleClass: 'login-dialog',
       width: '400px',
       closeOnEscape: true,

@@ -42,3 +42,13 @@ p-button {
     @include hover--box-shadow;
   }
 }
+
+.image-container {
+  margin-bottom: 1rem;
+}
+
+.image-profile {
+  width: 6rem;
+  aspect-ratio: 1;
+  border-radius: 30%;
+}

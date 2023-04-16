@@ -4,4 +4,5 @@ export class UnRegisteredUserDto {
   provider: string
   jwtJson: string
   createdAt: string
+  picture?: string
 }

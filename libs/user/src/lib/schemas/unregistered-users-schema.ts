@@ -14,6 +14,9 @@ export class UnRegisteredUser extends Document {
   @Prop({ required: true })
   provider: string
 
+  @Prop()
+  picture?: string
+
   @Prop({ required: true })
   jwtJson: string
 

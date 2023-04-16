@@ -66,6 +66,7 @@ export class AuthService {
       uuid: uuidv4(),
       provider: provider,
       createdAt: new Date().toLocaleString(),
+      picture: user.picture,
     })
   }
 
@@ -145,6 +146,7 @@ export class AuthService {
           email: unRegisteredUser.email,
           uuid: unRegisteredUser.uuid,
           provider: unRegisteredUser.provider,
+          picture: unRegisteredUser.picture,
         })
       ).toString('base64')
       res.cookie('UNREGISTERED-USER', unregisteredUser)
