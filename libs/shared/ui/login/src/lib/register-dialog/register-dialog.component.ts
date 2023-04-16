@@ -15,6 +15,7 @@ import { RegisterDialogService } from '../register-dialog.service'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RegisterDialogComponent implements OnInit {
+  displayProfileImage = true
   userFromCookie: any
   registerForm = this.fb.group({
     username: ['', Validators.required],
@@ -45,8 +46,7 @@ export class RegisterDialogComponent implements OnInit {
             this.store.dispatch(saveUser({ user: payload.user }))
           })
         )
-        .subscribe()
-        .add(() => {
+        .subscribe(() => {
           this.cookieService.delete('UNREGISTERED-USER', '/')
           this.ref.close()
         })

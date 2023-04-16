@@ -1,6 +1,12 @@
 <section class="register-container" [formGroup]="registerForm" *ngIf="userFromCookie">
   <div class="image-container">
-    <img class="image-profile" [src]="userFromCookie.picture" alt="User profile picture" />
+    <img
+      *ngIf="displayProfileImage"
+      (error)="displayProfileImage = false"
+      class="image-profile"
+      [src]="userFromCookie.picture"
+      alt="User profile picture"
+      referrerpolicy="no-referrer" />
   </div>
 
   <div class="p-inputgroup">

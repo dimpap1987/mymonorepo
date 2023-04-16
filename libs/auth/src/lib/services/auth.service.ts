@@ -73,7 +73,7 @@ export class AuthService {
 
   public async registerSocialUser(registerForm: RegisterSocialUserDto) {
     //check if user already exists
-    const user = this.userService.findUserByUsername(registerForm.username)
+    const user = await this.userService.findUserByUsername(registerForm.username)
     if (user) {
       throw new ApiException(HttpStatus.BAD_REQUEST, 'Username already exists', 1001)
     }
