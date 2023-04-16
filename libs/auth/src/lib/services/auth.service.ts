@@ -93,7 +93,6 @@ export class AuthService {
       username: registerForm.username,
       email: unregisteredUser.email,
       roles: ['USER'],
-      emailVerified: false,
       enabled: true,
       lastLoggedIn: new Date().toLocaleString(),
     })

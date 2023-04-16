@@ -12,9 +12,6 @@ export class User extends Document {
   email?: string
 
   @Prop()
-  emailVerified?: boolean
-
-  @Prop()
   enabled?: boolean
 
   @Prop()
