@@ -16,7 +16,7 @@ export class RegisterDialogService {
 
   open() {
     const ref = this.dialogService.open(RegisterDialogComponent, {
-      header: 'Sign Up',
+      header: 'Sign up',
       style: { top: '-100px' },
       styleClass: 'register-dialog',
       width: '400px',

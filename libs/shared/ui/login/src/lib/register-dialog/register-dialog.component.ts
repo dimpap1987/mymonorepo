@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core'
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core'
 import { FormBuilder, Validators } from '@angular/forms'
 import { AuthService, saveUser, User } from '@mymonorepo/shared/utils'
 import { Store } from '@ngrx/store'
@@ -12,6 +12,7 @@ import { RegisterDialogService } from '../register-dialog.service'
   selector: 'dp-register-dialog',
   templateUrl: './register-dialog.component.html',
   styleUrls: ['./register-dialog.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RegisterDialogComponent implements OnInit {
   userFromCookie: any
