@@ -12,6 +12,6 @@ export class MaxValidator implements AppValidator {
   }
 
   getErrorMessage(): string {
-    return `must be less than ${this.max} letters`
+    return `must have less than ${this.max} letters`
   }
 }

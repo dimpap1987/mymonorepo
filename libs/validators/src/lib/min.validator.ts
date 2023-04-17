@@ -12,6 +12,6 @@ export class MinValidator implements AppValidator {
   }
 
   getErrorMessage(): string {
-    return `must be more than ${this.min} letters`
+    return `must have more than ${this.min} letters`
   }
 }

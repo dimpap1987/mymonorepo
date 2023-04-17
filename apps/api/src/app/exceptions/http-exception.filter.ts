@@ -1,5 +1,12 @@
 import { ApiException } from '@mymonorepo/back-end-utils'
-import { ArgumentsHost, Catch, ExceptionFilter, Logger, RpcExceptionFilter } from '@nestjs/common'
+import {
+  ArgumentsHost,
+  BadRequestException,
+  Catch,
+  ExceptionFilter,
+  Logger,
+  RpcExceptionFilter,
+} from '@nestjs/common'
 import { Response } from 'express'
 import { Error } from 'mongoose'
 import ValidationError = Error.ValidationError
@@ -26,8 +33,28 @@ export class ValidationErrorFilter implements RpcExceptionFilter {
     Logger.error(`Validation Exception of type: '${exception.name}' - message: '${exception.message}'`)
     return host.switchToHttp().getResponse().status(400).json({
       createdBy: 'ValidationErrorFilter',
-      errors: exception.errors,
+      message: exception.errors,
     })
+  }
+}
+
+@Catch(BadRequestException)
+export class BadRequestExceptionFilter implements ExceptionFilter {
+  catch(exception: any, host: ArgumentsHost) {
+    const errorMessage = exception.response?.message?.join(`, `)
+    Logger.error(
+      `BadRequest Exception of type: '${exception.name}' - message: '${
+        errorMessage ? errorMessage : exception.message
+      }'`
+    )
+    host
+      .switchToHttp()
+      .getResponse<Response>()
+      .status(400)
+      .json({
+        createdBy: 'BadRequestExceptionFilter',
+        message: errorMessage ? errorMessage : 'Something went wrong',
+      })
   }
 }
 
@@ -38,7 +65,6 @@ export class GenericExceptionFilter implements ExceptionFilter {
     Logger.error(`Generic Exception of type: '${exception.name}' - message: '${exception.message}'`)
     host.switchToHttp().getResponse<Response>().status(500).json({
       createdBy: 'GenericExceptionFilter',
-      errorCode: 0,
       message: 'Something went wrong',
     })
   }

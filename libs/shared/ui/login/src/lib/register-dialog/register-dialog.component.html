@@ -1,4 +1,8 @@
-<section class="register-container" [formGroup]="registerForm" *ngIf="userFromCookie && !loading">
+<form
+  class="register-form"
+  [formGroup]="registerForm"
+  *ngIf="userFromCookie && !loading"
+  (keyup.enter)="registerUser()">
   <div class="image-container">
     <img
       *ngIf="displayProfileImage"
@@ -46,7 +50,7 @@
   </div>
 
   <p-button label="Sign up" [disabled]="!this.registerForm.valid" (click)="registerUser()"> </p-button>
-</section>
+</form>
 
 <section class="success-container">
   <div class="loader" *ngIf="loading">

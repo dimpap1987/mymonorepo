@@ -13,6 +13,7 @@ import { AppController } from './controllers/app.controller'
 import { RemoteRepoController } from './controllers/remote-repo.controller'
 import {
   ApiExceptionFilter,
+  BadRequestExceptionFilter,
   GenericExceptionFilter,
   ValidationErrorFilter,
 } from './exceptions/http-exception.filter'
@@ -73,6 +74,10 @@ import { OctokitUtils } from './utils/octokit-utils'
     {
       provide: APP_FILTER,
       useClass: ValidationErrorFilter,
+    },
+    {
+      provide: APP_FILTER,
+      useClass: BadRequestExceptionFilter,
     },
   ],
   exports: ['jwt'],
