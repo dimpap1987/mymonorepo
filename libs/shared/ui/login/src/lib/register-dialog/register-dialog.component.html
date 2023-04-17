@@ -1,4 +1,4 @@
-<section class="register-container" [formGroup]="registerForm" *ngIf="userFromCookie">
+<section class="register-container" [formGroup]="registerForm" *ngIf="userFromCookie && !loading">
   <div class="image-container">
     <img
       *ngIf="displayProfileImage"
@@ -41,5 +41,18 @@
       formControlName="username" />
   </div>
 
-  <p-button label="Sign up" [disabled]="!this.registerForm.valid" (click)="registerUser()"></p-button>
+  <div class="response-message">
+    <small *ngIf="response && !response.success" class="error">{{ response.message }}</small>
+  </div>
+
+  <p-button label="Sign up" [disabled]="!this.registerForm.valid" (click)="registerUser()"> </p-button>
+</section>
+
+<section class="success-container">
+  <div class="loader" *ngIf="loading">
+    <dp-loader></dp-loader>
+  </div>
+  <div class="response-message">
+    <small *ngIf="response?.success" class="success">{{ response?.message }}</small>
+  </div>
 </section>

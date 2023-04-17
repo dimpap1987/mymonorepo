@@ -1,6 +1,7 @@
 @import 'libs/shared/ui/theme/src/lib/styles/mix-in';
 
-.register-container {
+.register-container,
+.success-container {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -51,4 +52,20 @@ p-button {
   width: 6rem;
   aspect-ratio: 1;
   border-radius: 30%;
+}
+
+.response-message {
+  height: 2rem;
+  .error {
+    color: tomato;
+  }
+  .success {
+    color: greenyellow;
+    font-size: 1rem;
+    font-weight: 800;
+  }
+}
+
+.loader {
+  min-height: 100px;
 }

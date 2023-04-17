@@ -7,7 +7,7 @@ export class ApiException extends HttpException {
   constructor(
     status: HttpStatus = HttpStatus.INTERNAL_SERVER_ERROR,
     message: string = ApiException.defaultMessage,
-    errorCode?: number
+    errorCode: number
   ) {
     super(message, status)
     this.errorCode = errorCode

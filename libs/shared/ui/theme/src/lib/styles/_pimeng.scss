@@ -125,11 +125,11 @@ p-button button {
   width: 100%;
 }
 
-input.ng-dirty.ng-invalid.p-inputtext,
-input.ng-touched.ng-invalid.p-inputtext,
+input.ng-dirty.ng-invalid,
+input.ng-touched.ng-invalid,
 p-autocomplete.ng-touched.ng-invalid .p-autocomplete-dd-input[required] {
-  border: 1px solid red !important;
-  box-shadow: 0 0 5px 1px rgba(255, 0, 0, 0.2) inset !important;
+  border: 1px solid tomato !important;
+  box-shadow: 0 0 5px 1px tomato inset !important;
 }
 
 .p-confirm-popup {
