@@ -75,7 +75,7 @@ export class AuthService {
     //check if user already exists
     const user = await this.userService.findUserByUsername(registerForm.username)
     if (user) {
-      throw new ApiException(HttpStatus.BAD_REQUEST, 'Username already exists', 1001)
+      throw new ApiException(HttpStatus.BAD_REQUEST, 'Username already exists', 'REGISTRATION_ERROR')
     }
 
     // get unregistered user by uuid

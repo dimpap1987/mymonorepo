@@ -11,7 +11,11 @@ import { RolesGuard } from 'libs/auth/src/lib/guards/roles-guard'
 import { JwtTokenService } from 'libs/jwt-utils/src/lib/jwt-token.service'
 import { AppController } from './controllers/app.controller'
 import { RemoteRepoController } from './controllers/remote-repo.controller'
-import { ApiExceptionFilter, GenericExceptionFilter } from './exceptions/http-exception.filter'
+import {
+  ApiExceptionFilter,
+  GenericExceptionFilter,
+  ValidationErrorFilter,
+} from './exceptions/http-exception.filter'
 import { WsGuard } from './guards/ws-guard'
 import { CorsMiddleware } from './middlewares/cors.middleware'
 import { CsrfGeneratorMiddleware } from './middlewares/csrf-generator.middleware'
@@ -65,6 +69,10 @@ import { OctokitUtils } from './utils/octokit-utils'
     {
       provide: APP_FILTER,
       useClass: ApiExceptionFilter,
+    },
+    {
+      provide: APP_FILTER,
+      useClass: ValidationErrorFilter,
     },
   ],
   exports: ['jwt'],

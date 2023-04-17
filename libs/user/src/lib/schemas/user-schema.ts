@@ -1,11 +1,21 @@
+import { UsernameValidator } from '@mymonorepo/validators'
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
 import { Document } from 'mongoose'
 
 export type UserDocument = User & Document
+const usernameValidator = new UsernameValidator()
 
 @Schema()
 export class User extends Document {
-  @Prop({ index: true, unique: true, required: true })
+  @Prop({
+    index: true,
+    unique: true,
+    required: true,
+    validate: {
+      validator: username => usernameValidator.validate(username),
+      message: () => usernameValidator.getErrorMessage(),
+    },
+  })
   username: string
 
   @Prop({ required: true, index: true, unique: true })

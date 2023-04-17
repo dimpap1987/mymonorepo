@@ -1,13 +1,13 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core'
 import { FormBuilder, Validators } from '@angular/forms'
 import { AuthService, saveUser, User } from '@mymonorepo/shared/utils'
+import { extractErrorMessage } from '@mymonorepo/validators'
 import { Store } from '@ngrx/store'
 import { Buffer } from 'buffer'
 import { CookieService } from 'ngx-cookie-service'
 import { DynamicDialogRef } from 'primeng/dynamicdialog'
 import { catchError, map, mergeMap, throwError } from 'rxjs'
 import { RegisterDialogService } from '../register-dialog.service'
-
 @Component({
   selector: 'dp-register-dialog',
   templateUrl: './register-dialog.component.html',
@@ -80,10 +80,16 @@ export class RegisterDialogComponent implements OnInit {
   }
 
   private handleRegisterError(error: any) {
-    if (error?.error?.errorCode === 1001) {
+    if (error?.error?.createdBy === 'ApiExceptionFilter') {
       this.registerForm.get('username')?.setErrors({ invalid: true })
       this.response = {
-        message: error.error.message,
+        message: extractErrorMessage(error.error),
+        success: false,
+      }
+      this.cdr.detectChanges()
+    } else if (error?.error?.createdBy === 'ValidationErrorFilter') {
+      this.response = {
+        message: extractErrorMessage(error.error),
         success: false,
       }
       this.cdr.detectChanges()
