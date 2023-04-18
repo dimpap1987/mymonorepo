@@ -28,6 +28,7 @@ export class UserSocialProviderRepository {
   ): Promise<UserSocialProvider> {
     return this.UserSocialProviderModel.findOneAndUpdate(UserSocialProviderFilterQuery, UserSocialProvider, {
       new: true,
+      upsert: true,
     })
   }
 }

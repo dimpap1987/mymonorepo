@@ -52,8 +52,8 @@
   <p-button label="Sign up" [disabled]="!this.registerForm.valid" (click)="registerUser()"> </p-button>
 </form>
 
-<section class="success-container">
-  <div class="loader" *ngIf="loading">
+<section class="success-container" *ngIf="loading">
+  <div class="loader">
     <dp-loader></dp-loader>
   </div>
   <div class="response-message">

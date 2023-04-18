@@ -32,7 +32,7 @@ export class UserService {
 
   async updateUser(id: string, user: UserDto): Promise<User> {
     return this.userRepository.findOneAndUpdate(
-      { id },
+      { _id: id },
       {
         ...user,
       }

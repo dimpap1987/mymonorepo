@@ -4,6 +4,7 @@ import { APP_FILTER, REQUEST } from '@nestjs/core'
 
 import { AuthModule } from '@mymonorepo/auth'
 import { UserController, UserModule } from '@mymonorepo/user'
+import { ConfigModule } from '@nestjs/config'
 import { MongooseModule } from '@nestjs/mongoose'
 import * as session from 'express-session'
 import { AuthController } from 'libs/auth/src/lib/controllers/auth.controller'
@@ -32,7 +33,8 @@ import { OctokitUtils } from './utils/octokit-utils'
 
 @Module({
   imports: [
-    MongooseModule.forRoot(`mongodb://localhost/${process.env.MONGO_DB_SCHEMA}`, {
+    ConfigModule.forRoot(),
+    MongooseModule.forRoot(process.env.MONGO_DB_URL, {
       auth: {
         username: process.env.MONGO_DB_USERNAME,
         password: process.env.MONGO_DB_PASSWORD,

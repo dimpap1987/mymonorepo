@@ -38,7 +38,7 @@ export class AuthService {
   ): Promise<JwtTokensInterface | null> {
     const lastLoggedIn = new Date().toLocaleString()
     //update user
-    this.userService.updateUser(userFromDb._id, {
+    this.userService.updateUser(userFromDb.id, {
       lastLoggedIn: lastLoggedIn,
     })
 

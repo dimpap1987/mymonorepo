@@ -15,20 +15,20 @@ export class UserSocialProviderService {
     return this.userSocialProviderRepository.find({})
   }
 
-  async createUserSocialProvider(UserSocialProvider: UserSocialProviderDto): Promise<UserSocialProvider> {
+  async createUserSocialProvider(userSocialProvider: UserSocialProviderDto): Promise<UserSocialProvider> {
     return this.userSocialProviderRepository.create({
-      ...UserSocialProvider,
+      ...userSocialProvider,
     })
   }
 
   async updateUserSocialProvider(
     id: string,
-    UserSocialProvider: UserSocialProviderDto
+    userSocialProvider: UserSocialProviderDto
   ): Promise<UserSocialProvider> {
     return this.userSocialProviderRepository.findOneAndUpdate(
-      { id },
+      { _id: id },
       {
-        ...UserSocialProvider,
+        ...userSocialProvider,
       }
     )
   }
