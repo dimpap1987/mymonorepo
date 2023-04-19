@@ -4,6 +4,7 @@ import {
   BadRequestException,
   Catch,
   ExceptionFilter,
+  HttpException,
   Logger,
   RpcExceptionFilter,
 } from '@nestjs/common'
@@ -11,7 +12,7 @@ import { Response } from 'express'
 import { Error } from 'mongoose'
 import ValidationError = Error.ValidationError
 
-@Catch(ApiException)
+@Catch(ApiException, HttpException)
 export class ApiExceptionFilter implements ExceptionFilter {
   catch(exception: ApiException, host: ArgumentsHost) {
     Logger.error(

@@ -42,7 +42,9 @@ async function bootstrap() {
 
   app.useGlobalPipes(new ValidationPipe())
   await app.listen(port)
-  Logger.log(`🚀 Application is running on: http://localhost:${port}/${globalPrefix}`)
+  Logger.log(
+    `🚀 Application is running on: 'http://localhost:${port}/${globalPrefix}' in '${process.env.NODE_ENV}' mode`
+  )
 }
 
 bootstrap()

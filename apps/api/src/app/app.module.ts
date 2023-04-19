@@ -27,10 +27,13 @@ import { RefererMiddleware } from './middlewares/referer.middleware'
 import { AppService } from './services/app.service'
 import { GithubService } from './services/github.service'
 import { OctokitUtils } from './utils/octokit-utils'
+const ENV = process.env.NODE_ENV
 
 @Module({
   imports: [
-    ConfigModule.forRoot(),
+    ConfigModule.forRoot({
+      envFilePath: ['.env', `.env.${ENV}`, `environments/.env.${ENV}`],
+    }),
     MongooseModule.forRoot(process.env.MONGO_DB_URL, {
       auth: {
         username: process.env.MONGO_DB_USERNAME,

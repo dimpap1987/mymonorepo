@@ -40,3 +40,4 @@ Thumbs.db
 
 .angular
 **/api/.env
+.env*
