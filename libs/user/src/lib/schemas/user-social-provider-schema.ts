@@ -4,7 +4,7 @@ import { User } from './user-schema'
 
 export type UserSocialProviderDocument = UserSocialProvider & Document
 
-@Schema()
+@Schema({ collection: 'user-social-provider' })
 export class UserSocialProvider extends Document {
   @Prop({ type: String, enum: ['github', 'google', 'facebook'], required: true })
   name: string

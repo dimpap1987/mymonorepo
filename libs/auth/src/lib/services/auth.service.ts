@@ -1,11 +1,11 @@
 import { ApiException } from '@mymonorepo/back-end-utils'
 import { JwtTokensInterface, ProvidersEnum, SessionInterface } from '@mymonorepo/shared/interfaces'
-import { UserService } from '@mymonorepo/user'
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common'
 import { JwtTokenService } from 'libs/jwt-utils/src/lib/jwt-token.service'
 import { User } from 'libs/user/src/lib/schemas/user-schema'
 import { UnregisteredUserService } from 'libs/user/src/lib/services/unregistered.user.service'
 import { UserSocialProviderService } from 'libs/user/src/lib/services/user-social-provider.service'
+import { UserService } from 'libs/user/src/lib/services/user.service'
 import { v4 as uuidv4 } from 'uuid'
 import { RegisterSocialUserDto } from '../dtos/register-social-user.dto'
 

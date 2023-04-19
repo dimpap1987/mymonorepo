@@ -6,10 +6,12 @@ import { AuthModule } from '@mymonorepo/auth'
 import { UserController, UserModule } from '@mymonorepo/user'
 import { ConfigModule } from '@nestjs/config'
 import { MongooseModule } from '@nestjs/mongoose'
+import { ServeStaticModule } from '@nestjs/serve-static'
 import * as session from 'express-session'
 import { AuthController } from 'libs/auth/src/lib/controllers/auth.controller'
 import { RolesGuard } from 'libs/auth/src/lib/guards/roles-guard'
 import { JwtTokenService } from 'libs/jwt-utils/src/lib/jwt-token.service'
+import { join } from 'path'
 import { AppController } from './controllers/app.controller'
 import { RemoteRepoController } from './controllers/remote-repo.controller'
 import {
@@ -27,9 +29,6 @@ import { RefererMiddleware } from './middlewares/referer.middleware'
 import { AppService } from './services/app.service'
 import { GithubService } from './services/github.service'
 import { OctokitUtils } from './utils/octokit-utils'
-// import {ServeStaticModule} from '@nestjs/serve-static';
-// import {join} from 'path';
-// import {ConfigModule} from "@nestjs/config";
 
 @Module({
   imports: [
@@ -44,11 +43,10 @@ import { OctokitUtils } from './utils/octokit-utils'
     UserModule,
     AuthModule,
     //This is to bundle front-back together
-    // ConfigModule.forRoot(),
-    // ServeStaticModule.forRoot({
-    //   rootPath: join(__dirname, '..', 'client'),
-    //   exclude: [],
-    // })
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'client'),
+      exclude: [],
+    }),
   ],
   controllers: [AppController, AuthController, UserController, RemoteRepoController],
   providers: [
