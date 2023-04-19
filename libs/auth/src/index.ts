@@ -1,4 +1,6 @@
 export * from './lib/auth.module'
+export * from './lib/controllers/auth.controller'
 export * from './lib/decorators/has-roles.decorator'
+export * from './lib/guards/roles-guard'
 export * from './lib/services/auth.service'
 export * from './lib/username.validation'

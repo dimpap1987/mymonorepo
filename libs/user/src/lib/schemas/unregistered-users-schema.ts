@@ -3,7 +3,7 @@ import { Document } from 'mongoose'
 
 export type UnRegisteredUserDocument = UnRegisteredUser & Document
 
-@Schema({ collection: 'un-registered-user' })
+@Schema({ collection: 'un-registered-users' })
 export class UnRegisteredUser extends Document {
   @Prop({ required: true })
   uuid: string

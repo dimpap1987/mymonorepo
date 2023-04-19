@@ -19,14 +19,27 @@ async function bootstrap() {
     defaultVersion: '1',
   })
 
-  // app.use(
-  //   helmet.contentSecurityPolicy({
-  //     useDefaults: true,
-  //     directives: {
-  //       'img-src': ["'self'", 'https: data:'],
-  //     },
-  //   })
-  // )
+  app.use(
+    helmet({
+      contentSecurityPolicy: false,
+      // TODO need to fix that
+      // contentSecurityPolicy: {
+      //   directives: {
+      //     defaultSrc: ["'self'"],
+      //     scriptSrc: ["'self'"],
+      //     styleSrc: ["'self'", 'https://fonts.googleapis.com', "'unsafe-inline'"],
+      //     styleSrcElem:["'self'"],
+      //     imgSrc: ["'self'", 'data:', 'https://lh3.googleusercontent.com'],
+      //     connectSrc: ["'self'"],
+      //     fontSrc: ["'self'", 'https://fonts.gstatic.com'],
+      //     objectSrc: ["'self'"],
+      //     mediaSrc: ["'self'"],
+      //     frameSrc: ["'self'"],
+      //   },
+      // },
+    })
+  )
+
   app.useGlobalPipes(new ValidationPipe())
   await app.listen(port)
   Logger.log(`🚀 Application is running on: http://localhost:${port}/${globalPrefix}`)

@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core'
-import { SnippetDialogComponent } from 'libs/shared/ui/snippet-dialog/src/lib/snippet-dialog/snippet-dialog.component'
+import { SnippetDialogComponent } from '@mymonorepo/shared/ui/snippet-dialog'
 import { DialogService } from 'primeng/dynamicdialog'
 
 @Component({

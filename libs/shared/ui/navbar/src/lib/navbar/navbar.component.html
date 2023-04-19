@@ -21,7 +21,12 @@
         <span class="user-email">{{ (user$ | async)?.username }}</span>
       </div>
       <div *ngIf="(user$ | async)?.picture">
-        <img class="user-image" [src]="(user$ | async)?.picture" alt="" referrerpolicy="no-referrer" />
+        <img
+          crossorigin="anonymous"
+          class="user-image"
+          [src]="(user$ | async)?.picture"
+          alt=""
+          referrerpolicy="no-referrer" />
       </div>
     </div>
 
