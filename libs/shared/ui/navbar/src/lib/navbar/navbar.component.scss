@@ -13,18 +13,35 @@
 ::ng-deep {
   .p-toolbar {
     height: $navbar-height !important;
+    flex-wrap: nowrap !important;
     .p-button {
       min-width: 0 !important;
-      padding: 0.2rem !important;
+      padding: 0.5rem 1rem !important;
+      color: white;
+
+      &.button-radius {
+        border-radius: 13px !important;
+      }
     }
   }
+
+  .pi-bars {
+    font-size: 1.4rem !important;
+  }
+
+  .pi-sign-out,
+  .pi-user,
+  .pi-sign-in {
+    align-self: center;
+    font-size: 1.1rem !important;
+  }
 }
+
 .p-toolbar-group-left,
 .p-toolbar-group-right {
   @include animation-fade-in;
   color: $white-color;
   display: flex;
-  gap: 1rem;
 }
 
 .navigation-logo {
@@ -32,6 +49,8 @@
 }
 
 .navigation-list {
+  display: flex;
+  gap: 1rem;
   a {
     position: relative;
     font-weight: 900;
@@ -58,38 +77,107 @@
 }
 
 .right-wrapper {
-  gap: 1.5rem;
-  padding-right: 1.2rem;
+  padding-right: 1rem;
   .user-details {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-
-    .welcome {
-      font-size: 0.8rem;
-    }
+    border-radius: 22px;
+    cursor: pointer;
+    user-select: none;
+    position: relative;
 
     .user-image {
       border-radius: 50%;
-      width: 2.5rem;
+      width: 2.2rem;
+    }
+
+    .user-username {
+      min-width: 80px;
+      max-width: 150px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .user-logo-username {
+      padding: 4.5px 7.2px 4.5px 21.5px;
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      align-items: center;
     }
   }
+}
 
-  .login-icon {
-    color: $green-color;
-  }
-
-  .logout-icon {
-    color: $sign-out-color;
-  }
+.logout-icon {
+  color: $sign-out-color;
 }
 
 .navbar-logo {
   width: 2.5rem;
 }
 
+.menu-bar {
+  display: none;
+}
+
+.dp-hover {
+  @include hover--box-shadow;
+}
+
+em[title='Sign out'],
+em[title='Profile'] {
+  margin-left: 10px;
+}
+
+.profile-options {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  right: 2px;
+  padding: 0.6rem;
+  background-color: var(--surface-e);
+  border-radius: 13px;
+  top: 62px;
+  width: 100%;
+  ul {
+    list-style: none;
+    width: 90%;
+    li {
+      padding: 0.3rem 0;
+    }
+  }
+  animation-name: profile-options-animation;
+  animation-duration: 1s;
+}
+
+@keyframes profile-options-animation {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 @media (max-width: 640px) {
-  .welcome-message {
-    display: none;
+  .navigation-list,
+  .user-details,
+  .user-image,
+  .buttons-wrapper,
+  .user-username {
+    display: none !important;
+  }
+  .menu-bar {
+    display: block;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+  .side-bar {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
 }

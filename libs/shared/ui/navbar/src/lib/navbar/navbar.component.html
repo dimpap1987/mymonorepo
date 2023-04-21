@@ -7,40 +7,74 @@
     </div>
     <div class="navigation-list">
       <a routerLink="/browse"> Browse </a>
-    </div>
-    <div *ngIf="(user$ | async)?.loggedIn" class="navigation-list">
-      <a routerLink="/dashboard"> Dashboard </a>
+      <a routerLink="/dashboard" *ngIf="(user$ | async)?.loggedIn"> Dashboard </a>
     </div>
   </div>
 
   <div class="p-toolbar-group-right right-wrapper">
-    <div *ngIf="(user$ | async)?.loggedIn" class="user-details">
-      <!-- TODO create a pipe  -->
-      <div class="welcome-message">
-        <span class="welcome">Welcome , </span>
-        <span class="user-email">{{ (user$ | async)?.username }}</span>
+    <div *ngIf="(user$ | async)?.loggedIn" class="user-details dp-shadow">
+      <div class="user-logo-username" #toggleButton (click)="toggleProfileOptions()">
+        <div class="user-username">
+          <span>{{ (user$ | async)?.username }}</span>
+        </div>
+        <div *ngIf="(user$ | async)?.picture">
+          <img
+            crossorigin="anonymous"
+            class="user-image"
+            [src]="(user$ | async)?.picture"
+            alt=""
+            referrerpolicy="no-referrer" />
+        </div>
       </div>
-      <div *ngIf="(user$ | async)?.picture">
-        <img
-          crossorigin="anonymous"
-          class="user-image"
-          [src]="(user$ | async)?.picture"
-          alt=""
-          referrerpolicy="no-referrer" />
+      <!-- User options dropdown -->
+      <div
+        #profileOptions
+        class="profile-options dp-shadow"
+        *ngIf="(user$ | async)?.loggedIn && profileOptionsShow">
+        <ul>
+          <li>
+            <p-button
+              styleClass="p-button-text button-radius dp-shadow dp-hover"
+              icon="pi pi-user"
+              label="Profile">
+            </p-button>
+          </li>
+          <li>
+            <p-button
+              styleClass="p-button-text dp-shadow dp-hover button-radius"
+              (click)="logOut()"
+              icon="pi pi-sign-out"
+              label="Sign out">
+            </p-button>
+          </li>
+        </ul>
       </div>
     </div>
 
     <div class="buttons-wrapper">
       <div *ngIf="!(user$ | async)?.loggedIn">
-        <p-button styleClass="p-button-text" (click)="login()">
-          <em title="Sign in" class="pi pi-sign-in login-icon"></em>
-        </p-button>
-      </div>
-      <div *ngIf="(user$ | async)?.loggedIn" (click)="logOut()">
-        <p-button styleClass="p-button-text">
-          <em title="Sign out" class="pi pi-sign-out logout-icon"></em>
+        <p-button
+          styleClass="p-button-text button-radius dp-shadow"
+          iconPos="right"
+          label="Sign in"
+          icon="pi pi-sign-in"
+          (click)="login()">
         </p-button>
       </div>
     </div>
+    <div class="menu-bar">
+      <em class="pi pi-bars" (click)="sidebarVisible = true"></em>
+    </div>
   </div>
 </p-toolbar>
+
+<p-sidebar [(visible)]="sidebarVisible" position="right" [modal]="false">
+  <div class="side-bar">
+    <div>
+      <a routerLink="/browse"> Browse </a>
+    </div>
+    <div>
+      <a routerLink="/dashboard" *ngIf="(user$ | async)?.loggedIn"> Dashboard </a>
+    </div>
+  </div>
+</p-sidebar>
