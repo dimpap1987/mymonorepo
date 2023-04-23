@@ -9,6 +9,7 @@ import {
 import { LoginDialogService } from '@mymonorepo/shared/ui/login'
 import { AuthService, getUser, User, UserState } from '@mymonorepo/shared/utils'
 import { Store } from '@ngrx/store'
+import { Sidebar } from 'primeng/sidebar'
 import { Observable } from 'rxjs'
 
 @Component({
@@ -19,12 +20,16 @@ import { Observable } from 'rxjs'
 })
 export class NavbarComponent {
   @ViewChild('toggleButton') toggleButton: ElementRef
-  @ViewChild('profileOptions') profileOptions: ElementRef
+  @ViewChild('profileOptionsRef') profileOptionsRef: ElementRef
+  @ViewChild('sideBarRef') sideBarRef: Sidebar
+  @ViewChild('barsRef') barsRef: ElementRef
 
   user$: Observable<UserState> = this.store.select(getUser)
 
   profileOptionsShow = false
   sidebarVisible = false
+
+  profileOptionsList: any[] = []
 
   constructor(
     private store: Store<{ user: User }>,
@@ -33,14 +38,22 @@ export class NavbarComponent {
     private renderer: Renderer2,
     private cdr: ChangeDetectorRef
   ) {
+    this.initProfileOptionsList()
     //TODO make a directive
     this.renderer.listen('window', 'click', (e: Event) => {
       if (
         !this.toggleButton?.nativeElement?.contains(e.target) &&
-        e.target !== this.profileOptions?.nativeElement
+        e.target !== this.profileOptionsRef?.nativeElement
       ) {
         this.profileOptionsShow = false
         this.cdr.detectChanges()
+      }
+      if (
+        this.sideBarRef.visible &&
+        !this.sideBarRef?.el.nativeElement?.contains(e.target) &&
+        !this.barsRef.nativeElement.contains(e.target)
+      ) {
+        this.sideBarRef.close(e)
       }
     })
   }
@@ -54,5 +67,22 @@ export class NavbarComponent {
 
   toggleProfileOptions() {
     this.profileOptionsShow = !this.profileOptionsShow
+  }
+
+  initProfileOptionsList() {
+    this.profileOptionsList = [
+      {
+        icon: 'pi pi-user',
+        style: 'p-button-text button-radius',
+        label: 'Profile',
+        clickCallback: () => {},
+      },
+      {
+        icon: 'pi pi-sign-out',
+        style: 'p-button-text button-radius',
+        label: 'Sign out',
+        clickCallback: () => this.logOut(),
+      },
+    ]
   }
 }

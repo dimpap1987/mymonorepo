@@ -28,23 +28,16 @@
       </div>
       <!-- User options dropdown -->
       <div
-        #profileOptions
+        #profileOptionsRef
         class="profile-options dp-shadow"
-        *ngIf="(user$ | async)?.loggedIn && profileOptionsShow">
+        *ngIf="(user$ | async)?.loggedIn && profileOptionsShow && profileOptionsList?.length">
         <ul>
-          <li>
+          <li *ngFor="let item of profileOptionsList">
             <p-button
-              styleClass="p-button-text button-radius dp-shadow dp-hover"
-              icon="pi pi-user"
-              label="Profile">
-            </p-button>
-          </li>
-          <li>
-            <p-button
-              styleClass="p-button-text dp-shadow dp-hover button-radius"
-              (click)="logOut()"
-              icon="pi pi-sign-out"
-              label="Sign out">
+              [styleClass]="item.style"
+              [icon]="item.icon"
+              [label]="item.label"
+              (click)="item.clickCallback()">
             </p-button>
           </li>
         </ul>
@@ -54,7 +47,7 @@
     <div class="buttons-wrapper">
       <div *ngIf="!(user$ | async)?.loggedIn">
         <p-button
-          styleClass="p-button-text button-radius dp-shadow"
+          styleClass="p-button-text dp-shadow"
           iconPos="right"
           label="Sign in"
           icon="pi pi-sign-in"
@@ -62,19 +55,30 @@
         </p-button>
       </div>
     </div>
-    <div class="menu-bar">
+    <div #barsRef class="menu-bar">
       <em class="pi pi-bars" (click)="sidebarVisible = true"></em>
     </div>
   </div>
 </p-toolbar>
 
-<p-sidebar [(visible)]="sidebarVisible" position="right" [modal]="false">
-  <div class="side-bar">
+<p-sidebar #sideBarRef [(visible)]="sidebarVisible" position="right" [modal]="false" [showCloseIcon]="false">
+  <section class="side-bar-items">
     <div>
-      <a routerLink="/browse"> Browse </a>
+      <div>
+        <a routerLink="/browse"> Browse </a>
+      </div>
+      <div>
+        <a routerLink="/dashboard" *ngIf="(user$ | async)?.loggedIn"> Dashboard </a>
+      </div>
     </div>
-    <div>
-      <a routerLink="/dashboard" *ngIf="(user$ | async)?.loggedIn"> Dashboard </a>
+
+    <div *ngIf="(user$ | async)?.loggedIn && profileOptionsList?.length">
+      <hr />
+      <ul>
+        <li *ngFor="let item of profileOptionsList">
+          <a (click)="item.clickCallback()"> <em [class]="item.icon"></em> {{ item.label }} </a>
+        </li>
+      </ul>
     </div>
-  </div>
+  </section>
 </p-sidebar>
