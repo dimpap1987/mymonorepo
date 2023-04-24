@@ -1,4 +1,4 @@
-version: '3.1'
+version: '3.9'
 
 services:
   mongo:
@@ -23,3 +23,17 @@ services:
       ME_CONFIG_MONGODB_ADMINUSERNAME: ${MONGO_DB_USERNAME}
       ME_CONFIG_MONGODB_ADMINPASSWORD: ${MONGO_DB_PASSWORD}
       ME_CONFIG_MONGODB_URL: mongodb://${MONGO_DB_USERNAME}:${MONGO_DB_PASSWORD}@mongo:27017/?authSource=${MONGO_DB_AUTH_SOURCE}
+    depends_on:
+      - mongo
+
+  app:
+    build:
+      context: .
+    container_name: app_container
+    restart: always
+    ports:
+      - 3333:3333
+    env_file:
+      - .env.production
+    depends_on:
+      - mongo
