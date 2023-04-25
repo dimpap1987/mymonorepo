@@ -2,7 +2,7 @@ import { ApiException } from '@mymonorepo/back-end-utils'
 import { JwtTokenService } from '@mymonorepo/jwt-utils'
 import { JwtTokensInterface, ProvidersEnum, SessionInterface } from '@mymonorepo/shared/interfaces'
 import { UnregisteredUserService, User, UserService, UserSocialProviderService } from '@mymonorepo/user'
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common'
+import { HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common'
 import { v4 as uuidv4 } from 'uuid'
 import { RegisterSocialUserDto } from '../dtos/register-social-user.dto'
 
@@ -154,6 +154,8 @@ export class AuthService {
       ).toString('base64')
       res.cookie('UNREGISTERED-USER', unregisteredUser)
     }
-    res.redirect(req.session['redirect-after-login'] || `${process.env.UI_URL}`)
+    const redirectUrl = req.session['redirect-after-login'] || `${process.env.UI_URL}`
+    Logger.log(`Redirecting to: '${redirectUrl}' after provider: '${provider}' login`)
+    res.redirect(redirectUrl)
   }
 }

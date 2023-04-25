@@ -34,6 +34,7 @@
         <ul>
           <li *ngFor="let item of profileOptionsList">
             <p-button
+              *ngIf="item.type !== 'SING_IN'"
               [styleClass]="item.style"
               [icon]="item.icon"
               [label]="item.label"
@@ -48,7 +49,7 @@
       <div *ngIf="!(user$ | async)?.loggedIn">
         <p-button
           styleClass="p-button-text dp-shadow"
-          iconPos="right"
+          iconPos="left"
           label="Sign in"
           icon="pi pi-sign-in"
           (click)="login()">
@@ -72,11 +73,18 @@
       </div>
     </div>
 
-    <div *ngIf="(user$ | async)?.loggedIn && profileOptionsList?.length">
+    <div>
       <hr />
       <ul>
         <li *ngFor="let item of profileOptionsList">
-          <a (click)="item.clickCallback()"> <em [class]="item.icon"></em> {{ item.label }} </a>
+          <a
+            *ngIf="(user$ | async)?.loggedIn && (item.type === 'SIGN_OUT' || item.type === 'USER_PROFILE')"
+            (click)="item.clickCallback()">
+            <em [class]="item.icon"></em> {{ item.label }}
+          </a>
+          <a *ngIf="!(user$ | async)?.loggedIn && item.type === 'SING_IN'" (click)="item.clickCallback()">
+            <em [class]="item.icon"></em> {{ item.label }}
+          </a>
         </li>
       </ul>
     </div>

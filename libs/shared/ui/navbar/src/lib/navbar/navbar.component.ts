@@ -72,15 +72,24 @@ export class NavbarComponent {
   initProfileOptionsList() {
     this.profileOptionsList = [
       {
+        icon: 'pi pi-sign-in',
+        style: 'p-button-text button-radius',
+        label: 'Sign in',
+        type: 'SING_IN',
+        clickCallback: () => this.login(),
+      },
+      {
         icon: 'pi pi-user',
         style: 'p-button-text button-radius',
         label: 'Profile',
+        type: 'USER_PROFILE',
         clickCallback: () => {},
       },
       {
         icon: 'pi pi-sign-out',
         style: 'p-button-text button-radius',
         label: 'Sign out',
+        type: 'SIGN_OUT',
         clickCallback: () => this.logOut(),
       },
     ]

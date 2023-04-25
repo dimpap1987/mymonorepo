@@ -13,7 +13,7 @@ export class LoginDialogService {
       header: 'Sign in with',
       style: { top: '-50px' },
       styleClass: 'login-dialog',
-      width: '400px',
+      width: 'min(80%, 400px)',
       closeOnEscape: true,
       dismissableMask: true,
     })

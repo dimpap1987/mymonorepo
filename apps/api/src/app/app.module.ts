@@ -1,5 +1,5 @@
 import { JwtPayloadInterface } from '@mymonorepo/shared/interfaces'
-import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common'
+import { MiddlewareConsumer, Module, NestModule, RequestMethod } from '@nestjs/common'
 import { APP_FILTER, REQUEST } from '@nestjs/core'
 
 import { AuthController, AuthModule, RolesGuard } from '@mymonorepo/auth'
@@ -101,7 +101,11 @@ export class AppModule implements NestModule {
       .apply(CsrfGeneratorMiddleware)
       .forRoutes('/')
       .apply(RefererMiddleware)
-      .forRoutes('/')
+      .forRoutes(
+        { path: '*google/login*', method: RequestMethod.GET },
+        { path: '*github/login*', method: RequestMethod.GET },
+        { path: '*facebook/login*', method: RequestMethod.GET }
+      )
       .apply(LoggerMiddleware)
       .forRoutes('/')
   }
