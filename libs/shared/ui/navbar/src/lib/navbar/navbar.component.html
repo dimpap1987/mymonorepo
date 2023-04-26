@@ -1,30 +1,23 @@
 <p-toolbar>
   <div class="p-toolbar-group-left">
-    <div class="navigation-logo">
-      <a routerLink="/">
-        <em title="Home" class="pi pi-home"></em>
-      </a>
-    </div>
-    <div class="navigation-list">
-      <a routerLink="/browse"> Browse </a>
-      <a routerLink="/dashboard" *ngIf="(user$ | async)?.loggedIn"> Dashboard </a>
-    </div>
+    <ng-container [ngTemplateOutlet]="logoTemplate || logoDefaultRef"> </ng-container>
+  </div>
+
+  <!-- navigation list -->
+  <div class="navigation-list">
+    <ng-container
+      [ngTemplateOutlet]="navigationListTemplate || navigationDefaultRef"
+      [ngTemplateOutletContext]="{ $implicit: (user$ | async) }">
+    </ng-container>
   </div>
 
   <div class="p-toolbar-group-right right-wrapper">
     <div *ngIf="(user$ | async)?.loggedIn" class="user-details dp-shadow">
       <div class="user-logo-username" #toggleButton (click)="toggleProfileOptions()">
-        <div class="user-username">
-          <span>{{ (user$ | async)?.username }}</span>
-        </div>
-        <div *ngIf="(user$ | async)?.picture">
-          <img
-            crossorigin="anonymous"
-            class="user-image"
-            [src]="(user$ | async)?.picture"
-            alt=""
-            referrerpolicy="no-referrer" />
-        </div>
+        <ng-container
+          [ngTemplateOutlet]="userProfileTemplate || userProfileDefaultRef"
+          [ngTemplateOutletContext]="{ $implicit: (user$ | async) }">
+        </ng-container>
       </div>
       <!-- User options dropdown -->
       <div
@@ -45,7 +38,7 @@
       </div>
     </div>
 
-    <div class="buttons-wrapper">
+    <div class="login-wrapper">
       <div *ngIf="!(user$ | async)?.loggedIn">
         <p-button
           styleClass="p-button-text dp-shadow"
@@ -64,29 +57,82 @@
 
 <p-sidebar #sideBarRef [(visible)]="sidebarVisible" position="right" [modal]="false" [showCloseIcon]="false">
   <section class="side-bar-items">
-    <div>
-      <div>
-        <a routerLink="/browse"> Browse </a>
-      </div>
-      <div>
-        <a routerLink="/dashboard" *ngIf="(user$ | async)?.loggedIn"> Dashboard </a>
-      </div>
-    </div>
+    <!-- navigation list -->
+    <ng-container
+      [ngTemplateOutlet]="navigationListTemplate || navigationDefaultRef"
+      [ngTemplateOutletContext]="{ $implicit: (user$ | async) }">
+    </ng-container>
 
     <div>
       <hr />
+      <!-- User's Profile options -->
       <ul>
-        <li *ngFor="let item of profileOptionsList">
-          <a
-            *ngIf="(user$ | async)?.loggedIn && (item.type === 'SIGN_OUT' || item.type === 'USER_PROFILE')"
-            (click)="item.clickCallback()">
-            <em [class]="item.icon"></em> {{ item.label }}
-          </a>
-          <a *ngIf="!(user$ | async)?.loggedIn && item.type === 'SING_IN'" (click)="item.clickCallback()">
-            <em [class]="item.icon"></em> {{ item.label }}
-          </a>
-        </li>
+        <ng-container *ngFor="let item of profileOptionsList">
+          <ng-container *ngIf="(user$ | async)?.loggedIn && item.type !== 'SING_IN'">
+            <li (click)="item.clickCallback()">
+              <a> <em [class]="item.icon"></em> {{ item.label }} </a>
+            </li>
+          </ng-container>
+          <ng-container *ngIf="!(user$ | async)?.loggedIn && item.type === 'SING_IN'">
+            <li (click)="item.clickCallback()">
+              <a> <em [class]="item.icon"></em> {{ item.label }} </a>
+            </li>
+          </ng-container>
+        </ng-container>
       </ul>
     </div>
   </section>
 </p-sidebar>
+
+<ng-template #navigationDefaultRef>
+  <ul>
+    <li>
+      <a routerLink="/browse"> Browse </a>
+    </li>
+    <li *ngIf="(user$ | async)?.loggedIn">
+      <a routerLink="/dashboard"> Dashboard </a>
+    </li>
+  </ul>
+</ng-template>
+
+<ng-template #userProfileDefaultRef>
+  <div class="user-username">
+    <span>{{ (user$ | async)?.username }}</span>
+  </div>
+  <div *ngIf="(user$ | async)?.picture">
+    <img
+      crossorigin="anonymous"
+      class="user-image"
+      [src]="(user$ | async)?.picture"
+      alt="User Profile"
+      referrerpolicy="no-referrer" />
+  </div>
+</ng-template>
+
+<ng-template #logoDefaultRef>
+  <div class="navigation-logo">
+    <a routerLink="/">
+      <svg width="130" height="51" viewBox="0 0 369.77824267782427 44.6188115822362" class="css-1j8o68f">
+        <defs id="SvgjsDefs6012"></defs>
+        <g
+          id="SvgjsG6013"
+          featurekey="S6ay6y-0"
+          transform="matrix(0.5720360459261051,0,0,0.5720360459261051,0.0005696760568221429,-14.300901148152628)"
+          fill="#ce93d8">
+          <path
+            xmlns="http://www.w3.org/2000/svg"
+            d="M74.313 0l-28.094 78h8.469l28.094-78h-8.469zm-36.313 11.25l-2.188 1.406-34 22-1.813 1.156v4.25l1.688 1.219 34 24 2.313 1.594v-9.781l-26.844-18.969 26.844-17.375v-9.5zm52 0v9.5l26.844 17.375-26.844 18.969v9.781l2.313-1.594 34-24 1.688-1.219v-4.25l-1.813-1.156-34-22-2.188-1.406z"
+            transform="translate(0 25)"></path>
+        </g>
+        <g
+          id="SvgjsG6014"
+          featurekey="j5pGhi-0"
+          transform="matrix(1.943900394475602,0,0,1.943900394475602,90.89308519990438,-0.42859539356183696)"
+          fill="#e8e6e6">
+          <path
+            d="M15.244 7.715 l-1.1523 0.85938 q-0.9375 -1.23046875 -2.260742188 -1.860351563 t-2.9053 -0.62988 q-1.73828125 0 -3.212890625 0.830078125 t-2.29 2.2314 t-0.81543 3.1592 q0 2.646484375 1.81640625 4.262695313 t4.5801 1.6162 q3.046875 0 5.087890625 -2.3828125 l1.1523 0.86914 q-1.083984375 1.376953125 -2.705078125 2.12890625 t-3.6133 0.75195 q-3.80859375 0 -6.005859375 -2.529296875 q-1.8359375 -2.138671875 -1.8359375 -4.84375 q0 -3.173828125 2.231445313 -5.3515625 t5.5811 -2.1777 q2.03125 0 3.666992188 0.8056640625 t2.6807 2.2607 z M27.59521796875 8.203 q2.470703125 0 4.1015625 1.787109375 q1.474609375 1.640625 1.474609375 3.876953125 t-1.5625 3.9111 t-4.0137 1.6748 q-2.4609375 0 -4.018554688 -1.674804688 t-1.5576 -3.9111 q0 -2.2265625 1.474609375 -3.8671875 q1.630859375 -1.796875 4.1015625 -1.796875 z M27.59521796875 9.551 q-1.708984375 0 -2.939453125 1.26953125 t-1.2305 3.0664 q0 1.162109375 0.5615234375 2.172851563 t1.5186 1.5527 t2.0898 0.54199 q1.15234375 0 2.104492188 -0.5419921875 t1.5088 -1.5527 t0.55664 -2.1729 q0 -1.796875 -1.23046875 -3.06640625 t-2.9395 -1.2695 z M50.2397109375 17.3633 q0.87890625 -1.46484375 1.0546875 -2.880859375 q0 -10.16601563 0 -10.14648438 l-1.3672 0 l0 5.9766 q-0.869140625 -1.064453125 -1.943359375 -1.586914063 t-2.3535 -0.52246 q-2.265625 0 -3.876953125 1.650390625 t-1.6113 4.0039 q0 2.314453125 1.62109375 3.955078125 t3.9063 1.6406 q1.30859375 0 2.456054688 -0.5029296875 t2.1143 -1.5869 z M45.7861109375 18.1348 q-1.162109375 0 -2.133789063 -0.5712890625 t-1.5479 -1.5869 t-0.57617 -2.168 q0 -1.1328125 0.5810546875 -2.172851563 t1.5625 -1.6113 t2.0947 -0.57129 q1.1328125 0 2.1484375 0.5712890625 t1.5625 1.5527 t0.54688 2.1924 q0 1.865234375 -1.23046875 3.115234375 t-3.0078 1.25 z M67.75647265625 15.6348 l1.1523 0.61523 q-0.556640625 1.123046875 -1.30859375 1.806640625 t-1.6895 1.04 t-2.1191 0.35645 q-2.6171875 0 -4.091796875 -1.713867188 t-1.4746 -3.8721 q0 -2.041015625 1.25 -3.6328125 q1.58203125 -2.03125 4.248046875 -2.03125 q2.724609375 0 4.365234375 2.080078125 q1.162109375 1.46484375 1.171875 3.65234375 l-9.6191 0 q0.0390625 1.875 1.19140625 3.071289063 t2.8418 1.1963 q0.8203125 0 1.591796875 -0.2880859375 t1.3135 -0.75684 t1.1768 -1.5234 z M67.75647265625 12.7539 q-0.2734375 -1.103515625 -0.80078125 -1.762695313 t-1.3965 -1.0645 t-1.8262 -0.40527 q-1.572265625 0 -2.705078125 1.015625 q-0.8203125 0.7421875 -1.240234375 2.216796875 l7.9688 0 z M76.660175 4.901999999999999 l2.8809 0 q2.490234375 0 3.349609375 0.21484375 q1.25 0.3125 2.03125 1.259765625 t0.78125 2.3926 q0 1.435546875 -0.7666015625 2.377929688 t-2.1143 1.2646 q-0.986328125 0.234375 -3.681640625 0.234375 l-1.0352 0 l0 6.7383 l-1.4453 0 l0 -14.482 z M78.105475 6.308999999999999 l0 4.9219 l2.4609 0.029297 q1.474609375 0 2.163085938 -0.2685546875 t1.084 -0.87891 t0.39551 -1.3428 q0 -0.7421875 -0.3955078125 -1.34765625 t-1.04 -0.85938 t-2.1094 -0.25391 l-2.5586 0 z M92.77103671875 4.59 l1.3867 0 l0 14.854 l-1.3867 0 l0 -14.854 z M106.6943390625 8.203 q2.470703125 0 4.1015625 1.787109375 q1.50390625 1.630859375 1.50390625 3.876953125 q0.01953125 5.546875 0 5.634765625 l-1.4551 0 l0 -2.4316 q-1.142578125 2.12890625 -4.150390625 2.3828125 q-2.4609375 0 -4.018554688 -1.674804688 t-1.5576 -3.9111 q0 -2.2265625 1.474609375 -3.8671875 q1.630859375 -1.796875 4.1015625 -1.796875 z M106.6943390625 9.551 q-1.708984375 0 -2.939453125 1.26953125 t-1.2305 3.0664 q0 1.162109375 0.6298828125 2.236328125 t2.1338 1.8164 q3.76953125 0.83984375 5.361328125 -3.427734375 q0.087890625 -1.3671875 -0.29296875 -2.6171875 q-0.2734375 -0.56640625 -0.751953125 -1.07421875 q-1.201171875 -1.26953125 -2.91015625 -1.26953125 z M118.73290765625 8.613 l7.8613 0 l-6.0742 9.6094 l5.8789 0 l0 1.2207 l-8.2422 0 l6.0547 -9.6191 l-5.4785 0 l0 -1.2109 z M137.851565625 8.203 q2.470703125 0 4.1015625 1.787109375 q1.50390625 1.630859375 1.50390625 3.876953125 q0.01953125 5.546875 0 5.634765625 l-1.4551 0 l0 -2.4316 q-1.142578125 2.12890625 -4.150390625 2.3828125 q-2.4609375 0 -4.018554688 -1.674804688 t-1.5576 -3.9111 q0 -2.2265625 1.474609375 -3.8671875 q1.630859375 -1.796875 4.1015625 -1.796875 z M137.851565625 9.551 q-1.708984375 0 -2.939453125 1.26953125 t-1.2305 3.0664 q0 1.162109375 0.6298828125 2.236328125 t2.1338 1.8164 q3.76953125 0.83984375 5.361328125 -3.427734375 q0.087890625 -1.3671875 -0.29296875 -2.6171875 q-0.2734375 -0.56640625 -0.751953125 -1.07421875 q-1.201171875 -1.26953125 -2.91015625 -1.26953125 z"></path>
+        </g>
+      </svg>
+    </a>
+  </div>
+</ng-template>

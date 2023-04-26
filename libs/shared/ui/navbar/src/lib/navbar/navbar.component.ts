@@ -3,7 +3,9 @@ import {
   ChangeDetectorRef,
   Component,
   ElementRef,
+  Input,
   Renderer2,
+  TemplateRef,
   ViewChild,
 } from '@angular/core'
 import { LoginDialogService } from '@mymonorepo/shared/ui/login'
@@ -23,6 +25,15 @@ export class NavbarComponent {
   @ViewChild('profileOptionsRef') profileOptionsRef: ElementRef
   @ViewChild('sideBarRef') sideBarRef: Sidebar
   @ViewChild('barsRef') barsRef: ElementRef
+
+  @Input()
+  logoTemplate: TemplateRef<any>
+  @Input()
+  navigationListTemplate: TemplateRef<any>
+  @Input()
+  userOptionsTemplate: TemplateRef<any>
+  @Input()
+  userProfileTemplate: TemplateRef<any>
 
   user$: Observable<UserState> = this.store.select(getUser)
 
