@@ -13,10 +13,10 @@
 ::ng-deep {
   .p-toolbar {
     height: $navbar-height !important;
-    flex-wrap: nowrap !important;
+    display: grid !important;
+    grid-template-columns: auto 1fr auto;
     .p-button {
       min-width: 0 !important;
-      // padding: 0.77rem 1rem !important;
       height: 2.7rem;
       color: white;
       border-radius: 10px !important;
@@ -52,11 +52,12 @@
 }
 
 .navigation-logo {
-  padding: 0 4rem;
+  padding: 0 1rem;
 }
 
 .navigation-list {
   display: flex;
+  margin: 0 2rem;
   gap: 1rem;
   a {
     position: relative;
@@ -83,6 +84,12 @@
   }
 }
 
+.user-image,
+.user-image-sidebar {
+  border-radius: 50%;
+  width: 2.3rem;
+}
+
 .right-wrapper {
   padding-right: 1rem;
   .user-details {
@@ -90,11 +97,6 @@
     cursor: pointer;
     user-select: none;
     position: relative;
-
-    .user-image {
-      border-radius: 50%;
-      width: 2.3rem;
-    }
 
     .user-username {
       min-width: 80px;
@@ -199,6 +201,17 @@ em[title='Profile'] {
     }
     em {
       margin-right: 0.5rem;
+    }
+  }
+
+  ::ng-deep .p-toolbar {
+    grid-template-columns: auto auto;
+  }
+
+  .navigation-logo {
+    svg {
+      width: 100px;
+      height: 60px;
     }
   }
 }

@@ -22,3 +22,6 @@ body,
 .p-radiobutton-label {
   font-family: $font-family--primary !important;
 }
+body {
+  min-width: 300px;
+}
