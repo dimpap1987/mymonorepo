@@ -5,6 +5,7 @@
 
   <!-- navigation list -->
   <div class="navigation-list">
+    <!-- navigationListTemplate -->
     <ng-container
       [ngTemplateOutlet]="navigationListTemplate || navigationDefaultRef"
       [ngTemplateOutletContext]="{ $implicit: (user$ | async) }">
@@ -14,40 +15,37 @@
   <div class="p-toolbar-group-right right-wrapper">
     <div *ngIf="(user$ | async)?.loggedIn" class="user-details dp-shadow">
       <div class="user-logo-username" #toggleButton (click)="toggleProfileOptions()">
+        <!-- userProfileTemplate -->
         <ng-container
           [ngTemplateOutlet]="userProfileTemplate || userProfileDefaultRef"
           [ngTemplateOutletContext]="{ $implicit: (user$ | async) }">
         </ng-container>
       </div>
+
       <!-- User options dropdown -->
       <div
         #profileOptionsRef
         class="profile-options dp-shadow"
-        *ngIf="(user$ | async)?.loggedIn && profileOptionsShow && profileOptionsList?.length">
+        *ngIf="(user$ | async)?.loggedIn && profileOptionsShow">
+        <!-- profileOptionsTemplate -->
+        <ng-container
+          *ngIf="profileOptionsTemplate"
+          [ngTemplateOutlet]="profileOptionsTemplate"
+          [ngTemplateOutletContext]="{ $implicit: (user$ | async) }">
+        </ng-container>
+
         <ul>
-          <li *ngFor="let item of profileOptionsList">
-            <p-button
-              *ngIf="item.type !== 'SING_IN'"
-              [styleClass]="item.style"
-              [icon]="item.icon"
-              [label]="item.label"
-              (click)="item.clickCallback()">
-            </p-button>
+          <li *ngIf="(user$ | async)?.loggedIn">
+            <!-- logoutTemplate -->
+            <ng-container [ngTemplateOutlet]="logoutTemplate || logoutDefaultRef"> </ng-container>
           </li>
         </ul>
       </div>
     </div>
 
-    <div class="login-wrapper">
-      <div *ngIf="!(user$ | async)?.loggedIn">
-        <p-button
-          styleClass="p-button-text dp-shadow"
-          iconPos="left"
-          label="Sign in"
-          icon="pi pi-sign-in"
-          (click)="login()">
-        </p-button>
-      </div>
+    <div *ngIf="!(user$ | async)?.loggedIn" class="login-wrapper">
+      <!--loginTemplate  -->
+      <ng-container [ngTemplateOutlet]="loginTemplate || loginDefaultRef"> </ng-container>
     </div>
     <div #barsRef class="menu-bar">
       <em class="pi pi-bars" (click)="sidebarVisible = true"></em>
@@ -55,9 +53,10 @@
   </div>
 </p-toolbar>
 
+<!-- Side Bar -->
 <p-sidebar #sideBarRef [(visible)]="sidebarVisible" position="right" [modal]="false" [showCloseIcon]="false">
   <section class="side-bar-items">
-    <!-- navigation list -->
+    <!-- navigationListTemplate -->
     <ng-container
       [ngTemplateOutlet]="navigationListTemplate || navigationDefaultRef"
       [ngTemplateOutletContext]="{ $implicit: (user$ | async) }">
@@ -66,44 +65,47 @@
     <div>
       <hr />
       <!-- User's Profile options -->
+      <ng-container
+        [ngTemplateOutlet]="profileOptionsTemplate"
+        [ngTemplateOutletContext]="{ $implicit: (user$ | async) }">
+      </ng-container>
+
       <ul>
-        <ng-container *ngFor="let item of profileOptionsList">
-          <ng-container *ngIf="(user$ | async)?.loggedIn && item.type !== 'SING_IN'">
-            <li (click)="item.clickCallback()">
-              <a> <em [class]="item.icon"></em> {{ item.label }} </a>
-            </li>
-          </ng-container>
-          <ng-container *ngIf="!(user$ | async)?.loggedIn && item.type === 'SING_IN'">
-            <li (click)="item.clickCallback()">
-              <a> <em [class]="item.icon"></em> {{ item.label }} </a>
-            </li>
-          </ng-container>
-        </ng-container>
+        <li *ngIf="(user$ | async)?.loggedIn">
+          <!-- logoutTemplate -->
+          <ng-container [ngTemplateOutlet]="logoutTemplate || logoutDefaultRef"> </ng-container>
+        </li>
+        <li *ngIf="!(user$ | async)?.loggedIn">
+          <!-- loginTemplate -->
+          <ng-container [ngTemplateOutlet]="loginTemplate || loginDefaultRef"> </ng-container>
+        </li>
       </ul>
     </div>
   </section>
 </p-sidebar>
 
-<ng-template #navigationDefaultRef>
+<!-- Templates -->
+
+<ng-template #navigationDefaultRef let-user>
   <ul>
     <li>
       <a routerLink="/browse"> Browse </a>
     </li>
-    <li *ngIf="(user$ | async)?.loggedIn">
+    <li *ngIf="user?.loggedIn">
       <a routerLink="/dashboard"> Dashboard </a>
     </li>
   </ul>
 </ng-template>
 
-<ng-template #userProfileDefaultRef>
+<ng-template #userProfileDefaultRef let-user>
   <div class="user-username">
-    <span>{{ (user$ | async)?.username }}</span>
+    <span>{{ user?.username }}</span>
   </div>
-  <div *ngIf="(user$ | async)?.picture">
+  <div *ngIf="user?.picture">
     <img
       crossorigin="anonymous"
       class="user-image"
-      [src]="(user$ | async)?.picture"
+      [src]="user?.picture"
       alt="User Profile"
       referrerpolicy="no-referrer" />
   </div>
@@ -135,4 +137,23 @@
       </svg>
     </a>
   </div>
+</ng-template>
+
+<ng-template #loginDefaultRef let-state>
+  <p-button
+    styleClass="p-button-text button-radius"
+    iconPos="left"
+    label="Sign in"
+    icon="pi pi-sign-in"
+    (click)="login()">
+  </p-button>
+</ng-template>
+
+<ng-template #logoutDefaultRef>
+  <p-button
+    styleClass="p-button-text button-radius"
+    icon="pi pi-sign-out"
+    label="Sign out"
+    (click)="this.logOut()">
+  </p-button>
 </ng-template>

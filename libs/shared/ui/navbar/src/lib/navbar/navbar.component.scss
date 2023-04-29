@@ -131,11 +131,6 @@
   display: none;
 }
 
-em[title='Sign out'],
-em[title='Profile'] {
-  margin-left: 10px;
-}
-
 .profile-options {
   position: absolute;
   display: flex;
@@ -206,13 +201,6 @@ em[title='Profile'] {
 
   ::ng-deep .p-toolbar {
     grid-template-columns: auto auto;
-  }
-
-  .navigation-logo {
-    svg {
-      width: 100px;
-      height: 60px;
-    }
   }
 }
 

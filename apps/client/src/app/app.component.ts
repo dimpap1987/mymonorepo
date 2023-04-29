@@ -14,24 +14,7 @@ export class AppComponent implements OnInit {
 
   constructor(private store: Store<{ user: User }>, private http: HttpClient) {}
 
-  ngOnInit(): void {
-    // this.user$
-    //   .pipe(
-    //     filter(user => true),
-    //     take(1)
-    //   )
-    //   .subscribe(user => {
-    //     if (user?.loggedIn) {
-    //       //  this.webSocketService.connect()
-    //     }
-    //   })
-    // setInterval(() => {
-    //   this.loader.show()
-    // }, 2000)
-    // setInterval(() => {
-    //   this.loader.hide()
-    // }, 4000)
-  }
+  ngOnInit(): void {}
 
   clickMePOST() {
     this.http.post('//localhost:3333/api/v1/users/secure', {}).subscribe(res => console.log(res))

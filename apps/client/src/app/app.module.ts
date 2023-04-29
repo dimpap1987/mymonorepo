@@ -16,6 +16,7 @@ import {
   SharedStateModule,
 } from '@mymonorepo/shared/utils'
 import { CookieService } from 'ngx-cookie-service'
+import { ButtonModule } from 'primeng/button'
 import { environment } from '../environments/environment'
 import { AppRoutingModule } from './app-routing.module'
 import { AppComponent } from './app.component'
@@ -48,6 +49,7 @@ export function load(
     }),
     BrowserAnimationsModule,
     SharedUiNavbarModule,
+    ButtonModule,
   ],
   providers: [
     AppLoader,

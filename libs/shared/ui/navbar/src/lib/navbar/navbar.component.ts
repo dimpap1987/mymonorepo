@@ -34,6 +34,12 @@ export class NavbarComponent {
   userOptionsTemplate: TemplateRef<any>
   @Input()
   userProfileTemplate: TemplateRef<any>
+  @Input()
+  loginTemplate: TemplateRef<any>
+  @Input()
+  logoutTemplate: TemplateRef<any>
+  @Input()
+  profileOptionsTemplate: TemplateRef<any>
 
   user$: Observable<UserState> = this.store.select(getUser)
 
@@ -49,7 +55,6 @@ export class NavbarComponent {
     private renderer: Renderer2,
     private cdr: ChangeDetectorRef
   ) {
-    this.initProfileOptionsList()
     //TODO make a directive
     this.renderer.listen('window', 'click', (e: Event) => {
       if (
@@ -78,31 +83,5 @@ export class NavbarComponent {
 
   toggleProfileOptions() {
     this.profileOptionsShow = !this.profileOptionsShow
-  }
-
-  initProfileOptionsList() {
-    this.profileOptionsList = [
-      {
-        icon: 'pi pi-sign-in',
-        style: 'p-button-text button-radius',
-        label: 'Sign in',
-        type: 'SING_IN',
-        clickCallback: () => this.login(),
-      },
-      {
-        icon: 'pi pi-user',
-        style: 'p-button-text button-radius',
-        label: 'Profile',
-        type: 'USER_PROFILE',
-        clickCallback: () => {},
-      },
-      {
-        icon: 'pi pi-sign-out',
-        style: 'p-button-text button-radius',
-        label: 'Sign out',
-        type: 'SIGN_OUT',
-        clickCallback: () => this.logOut(),
-      },
-    ]
   }
 }
