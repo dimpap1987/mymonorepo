@@ -44,6 +44,7 @@
       "@mymonorepo/shared/ui/social-button": ["libs/shared/ui/social-button/src/index.ts"],
       "@mymonorepo/shared/ui/theme": ["libs/shared/ui/theme/src/index.ts"],
       "@mymonorepo/shared/ui/toolbar": ["libs/shared/ui/toolbar/src/index.ts"],
+      "@mymonorepo/shared/ui/under-construction": ["libs/shared/ui/under-construction/src/index.ts"],
       "@mymonorepo/shared/utils": ["libs/shared/utils/src/index.ts"],
       "@mymonorepo/user": ["libs/user/src/index.ts"],
       "@mymonorepo/validators": ["libs/validators/src/index.ts"]

@@ -7,6 +7,7 @@ import { LoaderService } from '@mymonorepo/shared/ui/loader'
 import { RegisterDialogService } from '@mymonorepo/shared/ui/login'
 import { SharedUiNavbarModule } from '@mymonorepo/shared/ui/navbar'
 import { SharedUiOnlineUsersModule } from '@mymonorepo/shared/ui/online-users'
+import { SharedUiUnderConstructionModule } from '@mymonorepo/shared/ui/under-construction'
 import {
   AppLoader,
   APP_ENVIRONMENT,
@@ -50,6 +51,7 @@ export function load(
     BrowserAnimationsModule,
     SharedUiNavbarModule,
     ButtonModule,
+    SharedUiUnderConstructionModule,
   ],
   providers: [
     AppLoader,
