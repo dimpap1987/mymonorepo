@@ -6,16 +6,18 @@ export class LoggerMiddleware implements NestMiddleware {
   constructor(private jwtService: JwtTokenService) {}
 
   use(req, res, next) {
-    const { ip, method, path: url } = req
-    const email = this.jwtService.extractPayload(req.cookies['accessToken'])?.user?.email
+    const { method, path: url } = req
+    const username = this.jwtService.extractPayload(req.cookies['accessToken'])?.user?.username
     const userAgent = req.get('user-agent') || ''
 
     res.on('close', () => {
       const { statusCode } = res
-      const contentLength = res.get('content-length')
-      const emailLog = `${email ? `- email: ${email}` : ''}`
+      const usernameLog = `${username ? ` - username: '${username}'` : ''}`
+      const remoteIp = req.headers['x-forwarded-for'] || req.socket?.remoteAddress || req.ip
 
-      Logger.log(`${method} ${url} ${statusCode} ${contentLength} - ${userAgent} ${ip} ${emailLog}`)
+      Logger.log(
+        `- ${method} ${url} - status code: '${statusCode}' - agent: '${userAgent}' - x-forwarded-for: '${remoteIp}'${usernameLog}`
+      )
     })
     next()
   }
